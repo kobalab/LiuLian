@@ -26,6 +26,7 @@ suite('inline()', ()=>{
         [ '&_(tag param="1" param);', '<tag param="1" param>'               ],
         [ '&_(tag param=">");',       '&amp;_(tag param=&quot;&gt;&quot;);' ],
         [ '&tag;',                    '&amp;tag;'                           ],
+        [ '&_(tag1){&_(tag2){<>}}',   '<tag1><tag2>&lt;&gt;</tag2></tag1>'  ],
       ];
       do_test(inline, test_case);
     });
