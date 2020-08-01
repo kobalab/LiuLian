@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/kobalab/LiuLian/issues"
   },
-  "homepage": "https://github.com/kobalab/LiuLian#readme"
+  "homepage": "https://github.com/kobalab/LiuLian#readme",
+  "devDependencies": {
+    "mocha": "^8.1.0"
+  }
 }
