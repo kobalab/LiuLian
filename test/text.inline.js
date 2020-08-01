@@ -1,5 +1,18 @@
 const assert  = require('assert');
-const inline = require('../lib/text/inline');
+
+function module(str, name, param, value) {
+    if (param || value) return `&${name}(${param}){${value}}`;
+    else return `&${name};`;
+}
+
+const note = [];
+
+function noteref(str) {
+    if (str) note.push(str);
+    return note.length;
+}
+
+const inline = require('../lib/text/inline')(module, noteref);
 
 const test_case = [
     [ undefined,                    ''                                  ],
@@ -73,6 +86,7 @@ const test_case = [
     [ '&_(tag param1 param2);',     '<tag param1 param2>'               ],
     [ '&_(tag param=">");',         '&amp;_(tag param=&quot;&gt;&quot;);'   ],
     [ '&_(div){<&_(span){&}>}',     '<div>&lt;<span>&amp;</span>&gt;</div>' ],
+    [ '&name(param){value}',        '&name(param){value}'               ],
     [ '&copy;',                     '&copy;'                            ],
 ];
 
