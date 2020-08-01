@@ -1,5 +1,117 @@
 const assert  = require('assert');
 
+function do_test(inline, test_case) {
+    for (let t of test_case) {
+        let rv = inline(t[0]);
+        test(`${t[0]} → ${t[1]}`, ()=>assert.equal(rv, t[1]));
+        if (! t[2]) continue;
+        let fn = note[note.length - 1];
+        test(`${t[0]} → ${fn}`, ()=>assert.equal(fn, t[2]));
+    }
+}
+
+suite('inline()', ()=>{
+
+  const inline = require('../lib/text/inline')();
+  test('require', ()=>assert.ok(inline));
+  test('undefined → \'\'', ()=>assert.equal(inline(), ''));
+
+  suite('markup', ()=>{
+    suite('module', ()=>{
+      const test_case = [
+        [ '&_(tag param="1"){value}', '<tag param="1">value</tag>'          ],
+        [ '&_(tag param="1"){}',      '<tag param="1"></tag>'               ],
+        [ '&_(tag param="1");',       '<tag param="1">'                     ],
+        [ '&_(tag);',                 '<tag>'                               ],
+        [ '&_(tag param="1" param);', '<tag param="1" param>'               ],
+        [ '&_(tag param=">");',       '&amp;_(tag param=&quot;&gt;&quot;);' ],
+        [ '&tag;',                    '&amp;tag;'                           ],
+      ];
+      do_test(inline, test_case);
+    });
+    suite('strong', ()=>{
+      const test_case = [
+        [ '**&strong**',              '<strong>&amp;strong</strong>'        ],
+        [ '**\'\'strong\'\'**',       '<strong><em>strong</em></strong>'    ],
+      ];
+      do_test(inline, test_case);
+    });
+    suite('em', ()=>{
+      const test_case = [
+        [ '\'\'&em\'\'',              '<em>&amp;em</em>'                    ],
+        [ '\'\'%%em%%\'\'',           '<em><del>em</del></em>'              ],
+      ];
+      do_test(inline, test_case);
+    });
+    suite('del', ()=>{
+      const test_case = [
+        [ '%%&del%%',                 '<del>&amp;del</del>'                 ],
+        [ '%%``em``%%',               '<del><code>em</code></del>'          ],
+      ];
+      do_test(inline, test_case);
+    });
+    suite('code', ()=>{
+      const test_case = [
+        [ '``&code``',                '<code>&amp;code</code>'              ],
+        [ '``**code**``',             '<code><strong>code</strong></code>'  ],
+      ];
+    });
+    suite('kbd', ()=>{
+      const test_case = [
+        [ '```&kbd```',               '<kbd>&amp;kbd</kbd>'                 ],
+        [ '```**kbd**```',            '<kbd><strong>kbd</strong></kbd>'     ],
+      ];
+      do_test(inline, test_case);
+    });
+    suite('as-is', ()=>{
+      const test_case = [
+        [ '{{&as-is}}',               '&amp;as-is'                          ],
+        [ '{{%%as-is%%}}',            '%%as-is%%'                           ],
+        [ '{{&#1234;}}',              '&amp;#1234;'                         ],
+      ];
+      do_test(inline, test_case);
+    });
+    suite('bracket', ()=>{
+      const test_case = [
+        [ '[[&bracket]]',       '<a href="&amp;bracket">&amp;bracket</a>'   ],
+        [ '[[A & B]]',          '<a href="A%20&amp;%20B">A &amp; B</a>'     ],
+        [ '[[[bracket]]]',      '[<a href="bracket">bracket</a>]'           ],
+        [ '[[bracket|./]]',      '<a href="./">bracket</a>'                 ],
+        [ '[[|bracket||./]]',    '<a href="./">|bracket|</a>'               ],
+        [ '[[``bracket``]]', '<a href="%60%60bracket%60%60">``bracket``</a>'],
+        [ '[[``bracket``|./]]',  '<a href="./"><code>bracket</code></a>'    ],
+      ];
+      do_test(inline, test_case);
+    });
+    suite('footnote', ()=>{
+      const test_case = [
+        [ '((&footnote))',            '(&amp;footnote)'                     ],
+        [ '(([[note]]))',             '(<a href="note">note</a>)'           ],
+      ];
+      do_test(inline, test_case);
+    });
+  });
+
+  suite('text', ()=>{
+    suite('link', ()=>{
+      const test_case = [
+        [ 'http://kobalab.net/',
+          '<a href="http://kobalab.net/">http://kobalab.net/</a>'           ],
+        [ 'mailto:koba@kobalab.net',
+          '<a href="mailto:koba@kobalab.net">mailto:koba@kobalab.net</a>'   ],
+        [ 'koba@kobalab.net',
+          '<a href="mailto:koba@kobalab.net">koba@kobalab.net</a>'          ],
+        [ 'http://kobalab.net/?a=1&b=2',
+          '<a href="http://kobalab.net/?a=1&amp;b=2">'
+            + 'http://kobalab.net/?a=1&amp;b=2</a>'                         ],
+        [ '<koba@kobalab.net>',
+          '&lt;<a href="mailto:koba@kobalab.net">koba@kobalab.net</a>&gt;'  ],
+      ];
+      do_test(inline, test_case);
+    });
+  });
+});
+
 function module(str, name, param, value) {
     if (param || value) return `&${name}(${param}){${value}}`;
     else return `&${name};`;
@@ -8,91 +120,33 @@ function module(str, name, param, value) {
 const note = [];
 
 function noteref(str) {
-    if (str) note.push(str);
+    note.push(str);
     return note.length;
 }
 
-const inline = require('../lib/text/inline')(module, noteref);
+suite('inline(module, noteref)', ()=>{
 
-const test_case = [
-    [ undefined,                    ''                                  ],
-  // cdata
-    [ 'Hello',                      'Hello'                             ],
-    [ '&',                          '&amp;'                             ],
-    [ '"',                          '&quot;'                            ],
-    [ '<',                          '&lt;'                              ],
-    [ '>',                          '&gt;'                              ],
-    [ '&&',                         '&amp;&amp;'                        ],
-    [ '""',                         '&quot;&quot;'                      ],
-    [ '<<',                         '&lt;&lt;'                          ],
-    [ '>>',                         '&gt;&gt;'                          ],
-    [ '_<"&">_',                    '_&lt;&quot;&amp;&quot;&gt;_'       ],
-  // cref
-    [ '&#9834;',                    '&#9834;'                           ],
-    [ '&#x266A;',                   '&#x266A;'                          ],
-    [ '_&#9835;&#x266f;_',          '_&#9835;&#x266f;_'                 ],
-    [ '_&#983A;_',                  '_&amp;#983A;_'                     ],
-  // strong
-    [ '**Hello**',                  '<strong>Hello</strong>'            ],
-    [ '**<"&">**',          '<strong>&lt;&quot;&amp;&quot;&gt;</strong>'],
-    [ '***next***',                 '<strong>*next</strong>*'           ],
-  // em
-    [ '\'\'Hello\'\'',              '<em>Hello</em>'                    ],
-    [ '\'\'<"&">\'\'',              '<em>&lt;&quot;&amp;&quot;&gt;</em>'],
-    [ '\'\'\'next\'\'\'',           '<em>\'next</em>\''                 ],
-  // del
-    [ '%%Hello%%',                  '<del>Hello</del>'                  ],
-    [ '%%<"&">%%',                  '<del>&lt;&quot;&amp;&quot;&gt;</del>'  ],
-    [ '%%%next%%%',                 '<del>%next</del>%'                 ],
-  // code
-    [ '``Hello``',                  '<code>Hello</code>'                ],
-    [ '``<"&">``',                  '<code>&lt;&quot;&amp;&quot;&gt;</code>'],
-  // kbd
-    [ '```Hello```',                '<kbd>Hello</kbd>'                  ],
-    [ '```<"&">```',                '<kbd>&lt;&quot;&amp;&quot;&gt;</kbd>'  ],
-  // as-is
-    [ '{{Hello}}',                  'Hello'                             ],
-    [ '{{<"&">}}',                  '&lt;&quot;&amp;&quot;&gt;'         ],
-    [ '{{{next}}}',                 '{next}'                            ],
-    [ '{{&#9834;}}',                '&amp;#9834;'                       ],
-  // bracket
-    [ '[[Hello]]',                  '<a href="Hello">Hello</a>'         ],
-    [ '[[B & W]]',                  '<a href="B%20&amp;%20W">B &amp; W</a>' ],
-    [ '[[[next]]]',                 '[<a href="next">next</a>]'         ],
-    [ '[[|Home||./]]',              '<a href="./">|Home|</a>'           ],
-    [ '[[``a``|./]]',               '<a href="./"><code>a</code></a>'   ],
-    [ '[[``a``]]',                  '<a href="%60%60a%60%60">``a``</a>' ],
-  // footnote
-    [ '((Hello))',
-      '<sup class="ll-footnote">'
-        + '<a id="NOTEREF.1" href="#FOOTNOTE.1" title="Hello">*1</a></sup>' ],
-  // link
-    [ 'http://kobalab.net/',
-      '<a href="http://kobalab.net/">http://kobalab.net/</a>'           ],
-    [ 'mailto:koba@kobalab.net',
-      '<a href="mailto:koba@kobalab.net">mailto:koba@kobalab.net</a>'   ],
-    [ 'koba@kobalab.net',
-      '<a href="mailto:koba@kobalab.net">koba@kobalab.net</a>'          ],
-    [ 'http://kobalab.net/?a=1&b=2',
-      '<a href="http://kobalab.net/?a=1&amp;b=2">'+
-      'http://kobalab.net/?a=1&amp;b=2</a>'           ],
-    [ '<koba@kobalab.net>',
-      '&lt;<a href="mailto:koba@kobalab.net">koba@kobalab.net</a>&gt;'  ],
-  // module
-    [ '&_(tag param="1"){value}',   '<tag param="1">value</tag>'        ],
-    [ '&_(tag param="1"){}',        '<tag param="1"></tag>'             ],
-    [ '&_(tag param="1");',         '<tag param="1">'                   ],
-    [ '&_(tag);',                   '<tag>'                             ],
-    [ '&_(tag param1 param2);',     '<tag param1 param2>'               ],
-    [ '&_(tag param=">");',         '&amp;_(tag param=&quot;&gt;&quot;);'   ],
-    [ '&_(div){<&_(span){&}>}',     '<div>&lt;<span>&amp;</span>&gt;</div>' ],
-    [ '&name(param){value}',        '&name(param){value}'               ],
-    [ '&copy;',                     '&copy;'                            ],
-];
+  const inline = require('../lib/text/inline')(module, noteref);
+  test('require', ()=>assert.ok(inline));
 
-suite('inline', ()=>{
-    for (let tc of test_case) {
-        test(`${tc[0]||'undefined'} → ${tc[1]}`,
-            ()=>assert.equal(inline(tc[0]), tc[1]));
-    }
+  suite('module', ()=>{
+    const test_case = [
+      [ '&name(param){value}',      '&name(param){value}'                   ],
+      [ '&name;',                   '&name;'                                ],
+    ];
+    do_test(inline, test_case);
+  });
+  suite('noteref', ()=>{
+    const test_case = [
+      [ '((&noteref))',
+        '<sup class="ll-footnote"><a id="NOTEREF.1" href="#FOOTNOTE.1" '
+          + 'title="&amp;noteref">*1</a></sup>',
+        '&amp;noteref'                                                      ],
+      [ '(([[&note]]))',
+        '<sup class="ll-footnote"><a id="NOTEREF.2" href="#FOOTNOTE.2" '
+          + 'title="&amp;note">*2</a></sup>',
+        '<a href="&amp;note">&amp;note</a>'                                 ],
+    ];
+    do_test(inline, test_case);
+  });
 });
