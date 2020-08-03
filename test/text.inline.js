@@ -19,14 +19,15 @@ suite('inline()', ()=>{
   suite('markup', ()=>{
     suite('module', ()=>{
       const test_case = [
-        [ '&_(tag param="1"){value}', '<tag param="1">value</tag>'          ],
-        [ '&_(tag param="1"){}',      '<tag param="1"></tag>'               ],
+        [ '&_(tag param="1"){value};','<tag param="1">value</tag>'          ],
+        [ '&_(tag param="1"){};',     '<tag param="1"></tag>'               ],
         [ '&_(tag param="1");',       '<tag param="1">'                     ],
         [ '&_(tag);',                 '<tag>'                               ],
         [ '&_(tag param="1" param);', '<tag param="1" param>'               ],
         [ '&_(tag param=">");',       '&amp;_(tag param=&quot;&gt;&quot;);' ],
         [ '&tag;',                    '&amp;tag;'                           ],
-        [ '&_(tag1){&_(tag2){<>}}',   '<tag1><tag2>&lt;&gt;</tag2></tag1>'  ],
+        [ '&_(tag){}};',              '<tag>}</tag>'                        ],
+        [ '&_(tag1){&_(tag2){}};};' , '<tag1><tag2>}</tag2></tag1>'         ],
       ];
       do_test(inline, test_case);
     });
@@ -114,7 +115,7 @@ suite('inline()', ()=>{
 });
 
 function module(str, name, param, value) {
-    if (param || value) return `&${name}(${param}){${value}}`;
+    if (param || value) return `&${name}(${param}){${value}};`;
     else return `&${name};`;
 }
 
@@ -132,7 +133,7 @@ suite('inline(module, noteref)', ()=>{
 
   suite('module', ()=>{
     const test_case = [
-      [ '&name(param){value}',      '&name(param){value}'                   ],
+      [ '&name(param){value};',     '&name(param){value};'                  ],
       [ '&name;',                   '&name;'                                ],
     ];
     do_test(inline, test_case);
