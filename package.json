@@ -5,6 +5,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
+    "start": "node bin/liulian.js",
     "test": "mocha -u tdd",
     "test:cover": "nyc -r lcov -r text npm test"
   },
