@@ -4,6 +4,9 @@
   "description": "Node.jsで動作するWebサイト作成ツール",
   "private": true,
   "main": "index.js",
+  "bin": {
+    "liulian": "./bin/liulian.js"
+  },
   "scripts": {
     "start": "node bin/liulian.js",
     "test": "mocha -u tdd",
