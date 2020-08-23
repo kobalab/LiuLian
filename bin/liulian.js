@@ -17,7 +17,7 @@ const locale = require('../lib/util/locale')(locale_dir, 'en');
 const liulian = require('../lib/liulian')(locale);
 
 const app = express();
-app.use(liulian);
+app.use('/liulian', liulian);
 
 app.listen(port, ()=>{
     console.log(`Server start on http://127.0.0.1:${port}/`);
