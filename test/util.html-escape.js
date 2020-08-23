@@ -15,11 +15,12 @@ suite('util.html-escape', ()=>{
     suite('cdata()', ()=>{
         const { cdata } = require('../lib/util/html-escape');
         const test_case = [
-            [ '&<">',       '&amp;&lt;&quot;&gt;'                     ],
-            [ '&<">_&<">',  '&amp;&lt;&quot;&gt;_&amp;&lt;&quot;&gt;' ],
-            [ '&copy;',     '&amp;copy;'                              ]
+            [ '&<">',       '&amp;&lt;&quot;&gt;'                       ],
+            [ '&<">_&<">',  '&amp;&lt;&quot;&gt;_&amp;&lt;&quot;&gt;'   ],
+            [ '&copy;',     '&amp;copy;'                                ]
         ];
         do_test(cdata, test_case);
+        test('パラメータなし', ()=>assert.equal(cdata(), ''));
     });
     suite('cref', ()=>{
         const { cref } = require('../lib/util/html-escape');
@@ -31,6 +32,7 @@ suite('util.html-escape', ()=>{
             [ '&copy;&&#4321;', '&copy;&amp;&#4321;'                ]
         ];
         do_test(cref, test_case);
+        test('パラメータなし', ()=>assert.equal(cref(), ''));
     });
     suite('strip', ()=>{
         const { strip } = require('../lib/util/html-escape');
@@ -40,5 +42,6 @@ suite('util.html-escape', ()=>{
             [ '&quot; &amp; &quot;',        '" & "'                 ]
         ];
         do_test(strip, test_case);
+        test('パラメータなし', ()=>assert.equal(strip(), ''));
     });
 });
