@@ -20,6 +20,7 @@ const liulian = require('../lib/liulian');
 
 const app = express();
 if (mount) app.enable('trust proxy');
+app.use('/css', express.static(path.join(__dirname, '../css')));
 app.use(liulian({
     locale: locale,
     mount:  mount,
