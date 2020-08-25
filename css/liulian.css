@@ -31,3 +31,7 @@ th, td {
 th {
     background: #cfc;
 }
+
+.ll-error {
+    color: red;
+}
