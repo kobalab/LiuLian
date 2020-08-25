@@ -4,6 +4,7 @@ body {
     font-family: "Century Gothic", sans-serif;
     font-size: 14px;
     color: #333;
+    -webkit-text-size-adjust: 100%;
 }
 
 h1 {
