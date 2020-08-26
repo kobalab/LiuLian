@@ -12,7 +12,7 @@ const argv = yargs
     .argv;
 const port  = argv['port'];
 const mount = argv['mount'];
-const base  = argv['base'] || '';
+const base  = (argv['base'] || '').replace(/\/$/,'');
 
 const path = require('path');
 const locale_dir = path.join(__dirname, '../locale');
