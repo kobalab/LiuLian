@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+body {
+    font-family: "Century Gothic", sans-serif;
+    font-size: 14px;
+    color: #333;
+    -webkit-text-size-adjust: 100%;
+}
+
+h1 {
+    font-size: 240%;
+    border-bottom: solid 2px #080;
+}
+h2 {
+    font-size: 180%;
+    padding-left: 0.5em;
+    border-left: solid 6px #080;
+}
+
+table {
+    border-collapse: collapse;
+    border-top:    solid 1px #080;
+    border-bottom: solid 1px #080;
+/*    font-family: Menlo, Consolas, Courier, monospace; */
+}
+tr + tr {
+    border-top: solid 1px #9c9;
+}
+th, td {
+    padding: 2px 0.5em;
+}
+th {
+    background: #cfc;
+}
+
+.ll-error {
+    color: red;
+}
