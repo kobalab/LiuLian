@@ -7,6 +7,18 @@ body {
     -webkit-text-size-adjust: 100%;
 }
 
+input[type="text"], input[type="password"] {
+    padding: 2px;
+    font-family: Menlo, Consolas, Courier, monospace;
+    font-size: 100%;
+}
+input[type="submit"] {
+    padding: 2px 1em;
+    background: #080;
+    color: white;
+    font-size: 100%;
+}
+
 h1 {
     font-size: 240%;
     border-bottom: solid 2px #080;
@@ -21,7 +33,6 @@ table {
     border-collapse: collapse;
     border-top:    solid 1px #080;
     border-bottom: solid 1px #080;
-/*    font-family: Menlo, Consolas, Courier, monospace; */
 }
 tr + tr {
     border-top: solid 1px #9c9;
@@ -31,6 +42,10 @@ th, td {
 }
 th {
     background: #cfc;
+}
+
+dt {
+    font-weight: bold;
 }
 
 .ll-error {
