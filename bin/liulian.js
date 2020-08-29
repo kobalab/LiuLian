@@ -4,6 +4,7 @@
 
 const yargs   = require('yargs');
 const express = require('express');
+const session = require('express-session');
 
 const argv = yargs
     .option('port',     { alias: 'p', default: 3571 })
@@ -22,6 +23,12 @@ const liulian = require('../lib/liulian');
 
 const app = express();
 if (mount) app.enable('trust proxy');
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: null }
+}));
 app.use(`${base}/css`, express.static(path.join(__dirname, '../css')));
 app.use(base, liulian({
     locale: locale,
