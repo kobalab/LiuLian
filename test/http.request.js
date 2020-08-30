@@ -12,6 +12,7 @@ const _req = {
     ip:          '127.0.0.2',
     query:       {},
     sessionID:   'sessionID',
+    user:        'user',
     headers: {
         host:           '127.0.0.1:3571',
         'user-agent':   'Mozilla/5.0',
@@ -36,6 +37,7 @@ suite('http/request', ()=>{
         test('.path',      ()=>assert.equal(req.path,      '/path'));
         test('.remote',    ()=>assert.equal(req.remote,    '127.0.0.2'));
         test('.sessionID', ()=>assert.equal(req.sessionID, 'sessionID'));
+        test('.user',      ()=>assert.equal(req.user,      'user'));
         suite('.query', ()=>{
             test('パラメータなし', ()=>assert.equal(req.query, null));
             test('パラメータあり', ()=>{
@@ -118,6 +120,7 @@ suite('http/request', ()=>{
         test('.path',      ()=>assert.equal(req.path,      '/path'));
         test('.remote',    ()=>assert.equal(req.remote,    '127.0.0.2'));
         test('.sessionID', ()=>assert.equal(req.sessionID, 'sessionID'));
+        test('.user',      ()=>assert.equal(req.user,      'user'));
         suite('.fullUrl()', ()=>{
             test('外部URL: http://', ()=>
                 assert.equal(req.fullUrl('http://kobalab.net/'),
