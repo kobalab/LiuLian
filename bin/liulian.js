@@ -43,8 +43,8 @@ app.use(passport.session());
 app.use(express.urlencoded({extended: false}));
 app.post(`${base}/LOGIN`,
     passport.authenticate('local', {
-        successRedirect: '/LOGIN?SUCESS',
-        failureRedirect: '/LOGIN?ERROR'
+        successRedirect: './LOGIN?SUCESS',
+        failureRedirect: './LOGIN?ERROR'
     })
 );
 app.use(`${base}/css`, express.static(path.join(__dirname, '../css')));
