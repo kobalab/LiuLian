@@ -7,17 +7,26 @@ const express = require('express');
 const session = require('express-session');
 
 const argv = yargs
+    .usage('Usage: $0 <app-dir>')
     .option('port',     { alias: 'p', default: 3571 })
     .option('mount',    { alias: 'm'                })
     .option('base',     { alias: 'b',               })
+    .demandCommand(1)
     .argv;
-const port  = argv['port'];
-const mount = argv['mount'];
-const base  = (argv['base'] || '').replace(/\/$/,'');
+const home  = argv._[0];
+const port  = argv.port;
+const mount = argv.mount;
+const base  = (argv.base || '').replace(/\/$/,'');
 
 const path = require('path');
+
 const locale_dir = path.join(__dirname, '../locale');
 const locale = require('../lib/util/locale')(locale_dir, 'en');
+
+const auth_file = path.join(home, '/auth/local/passwd');
+const auth = require('../lib/auth/file')(auth_file);
+
+const passport = require('../lib/auth/passport')(auth);
 
 const liulian = require('../lib/liulian');
 
@@ -26,9 +35,18 @@ if (mount) app.enable('trust proxy');
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: { maxAge: null }
 }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.urlencoded({extended: false}));
+app.post(`${base}/LOGIN`,
+    passport.authenticate('local', {
+        successRedirect: '/LOGIN?SUCESS',
+        failureRedirect: '/LOGIN?ERROR'
+    })
+);
 app.use(`${base}/css`, express.static(path.join(__dirname, '../css')));
 app.use(base, liulian({
     locale: locale,
