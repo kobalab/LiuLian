@@ -30,7 +30,7 @@ const session  = require('express-session')({
                             secret: 'keyboard cat',
                             resave: false,
                             saveUninitialized: false,
-                            cookie: { maxAge: null }    });
+                            cookie: { maxAge: 1000*60*60*24*14 } });
 const passport = require('../lib/auth/passport')(auth);
 const login    = {
     local: passport.authenticate('local', {
