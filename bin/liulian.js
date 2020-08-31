@@ -46,6 +46,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({extended: false}));
 app.post('/LOGIN', login.local);
+app.get('/LOGOUT', (req, res)=>{ req.logout(); res.redirect(303, './') });
 app.use('/css', express.static(path.join(__dirname, '../css')));
 app.use(liulian);
 
