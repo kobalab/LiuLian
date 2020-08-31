@@ -15,8 +15,6 @@ const home  = argv._[0];
 const port  = argv.port;
 const mount = argv.mount;
 
-const baseUrl = mount ? mount.replace(/^.*?:\/\/[^\/]*/,'') : '/';
-
 const locale   = require('../lib/util/locale')(
                             path.join(__dirname, '../locale'),
                             'en');
@@ -36,10 +34,7 @@ const session  = require('express-session')({
                             resave: false,
                             saveUninitialized: false,
                             store: store,
-                            cookie: {
-                                path: baseUrl,
-                                maxAge: 1000*60*60*24*14
-                            } });
+                            cookie: { maxAge: 1000*60*60*24*14 } });
 const passport = require('../lib/auth/passport')(auth);
 const login    = {
     local: passport.authenticate('local', {
