@@ -30,6 +30,7 @@ const store    = new (require('session-file-store')(
                         require('express-session')))({
                                 path: path.join(home, '/auth/session') });
 const session  = require('express-session')({
+                            name:   'LIULIAN',
                             secret: 'keyboard cat',
                             resave: false,
                             saveUninitialized: false,
