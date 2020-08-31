@@ -50,7 +50,7 @@ app.use('/css', express.static(path.join(__dirname, '../css')));
 app.use(liulian);
 
 app.listen(port, ()=>{
-    console.log(`Server start on http://127.0.0.1:${port}`);
+    console.log(`Server start on ${mount || `http://127.0.0.1:${port}`}`);
 }).on('error', (e)=>{
     console.error(''+e);
     process.exit(-1);
