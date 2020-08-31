@@ -26,16 +26,25 @@ const liulian  = require('../lib/liulian')({
                             mount:  mount   });
 
 const express  = require('express');
+const store    = new (require('session-file-store')(
+                        require('express-session')))({
+                                path: path.join(home, '/auth/session') });
 const session  = require('express-session')({
                             secret: 'keyboard cat',
                             resave: false,
                             saveUninitialized: false,
+                            store: store,
                             cookie: { maxAge: 1000*60*60*24*14 } });
 const passport = require('../lib/auth/passport')(auth);
 const login    = {
     local: passport.authenticate('local', {
                             successRedirect: './LOGIN?SUCESS',
                             failureRedirect: './LOGIN?ERROR'    })
+};
+const logout   = (req, res)=>{
+    req.logout();
+    req.session.destroy();
+    res.redirect(303, './')
 };
 
 const app = express();
@@ -46,7 +55,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({extended: false}));
 app.post('/LOGIN', login.local);
-app.get('/LOGOUT', (req, res)=>{ req.logout(); res.redirect(303, './') });
+app.get('/LOGOUT', logout);
 app.use('/css', express.static(path.join(__dirname, '../css')));
 app.use(liulian);
 
