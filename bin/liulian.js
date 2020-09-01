@@ -2,34 +2,55 @@
 
 "use strict";
 
-const yargs   = require('yargs');
-const express = require('express');
+const path  = require('path');
+const yargs = require('yargs');
 
 const argv = yargs
+    .usage('Usage: $0 <app-dir>')
     .option('port',     { alias: 'p', default: 3571 })
     .option('mount',    { alias: 'm'                })
-    .option('base',     { alias: 'b',               })
+    .demandCommand(1)
     .argv;
-const port  = argv['port'];
-const mount = argv['mount'];
-const base  = (argv['base'] || '').replace(/\/$/,'');
+const home  = argv._[0];
+const port  = argv.port;
+const mount = argv.mount;
 
-const path = require('path');
-const locale_dir = path.join(__dirname, '../locale');
-const locale = require('../lib/util/locale')(locale_dir, 'en');
+const locale   = require('../lib/util/locale')(
+                            path.join(__dirname, '../locale'),
+                            'en');
+const auth     = require('../lib/auth/file')(
+                            path.join(home, '/auth/local/passwd'));
 
-const liulian = require('../lib/liulian');
+const express  = require('express');
+const store    = new (require('session-file-store')(
+                        require('express-session')))({
+                                path: path.join(home, '/auth/session') });
+const session  = require('express-session')({
+                            name:   'LIULIAN',
+                            secret: 'keyboard cat',
+                            resave: false,
+                            saveUninitialized: false,
+                            store: store,
+                            cookie: { maxAge: 1000*60*60*24*14 } });
+const passport = require('../lib/auth/passport')(auth);
+
+const liulian  = require('../lib/liulian')({
+                            locale:   locale,
+                            mount:    mount,
+                            passport: passport  });
 
 const app = express();
+
 if (mount) app.enable('trust proxy');
-app.use(`${base}/css`, express.static(path.join(__dirname, '../css')));
-app.use(base, liulian({
-    locale: locale,
-    mount:  mount,
-}));
+app.use(session);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.urlencoded({extended: false}));
+app.use('/css', express.static(path.join(__dirname, '../css')));
+app.use(liulian);
 
 app.listen(port, ()=>{
-    console.log(`Server start on http://127.0.0.1:${port}${base}`);
+    console.log(`Server start on ${mount || `http://127.0.0.1:${port}`}`);
 }).on('error', (e)=>{
     console.error(''+e);
     process.exit(-1);

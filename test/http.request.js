@@ -11,6 +11,8 @@ const _req = {
     path:        '/path',
     ip:          '127.0.0.2',
     query:       {},
+    sessionID:   'sessionID',
+    user:        'user',
     headers: {
         host:           '127.0.0.1:3571',
         'user-agent':   'Mozilla/5.0',
@@ -24,25 +26,30 @@ suite('http/request', ()=>{
     test('モジュールが存在すること', ()=>assert.ok(Request));
 
     suite('--mount なし', ()=>{
-        const liulian = { '_': { locale: ()=>{} } };
+        const liulian = { _version: '1.0.0',
+                          _: { locale: ()=>{} } };
         const req = new Request(liulian, _req);
         test('インスタンスが生成できること', ()=>assert.ok(req));
-        test('.method()',  ()=>assert.equal(req.method(),  'GET'));
-        test('.scheme()',  ()=>assert.equal(req.scheme(),  'http'));
-        test('.host()',    ()=>assert.equal(req.host(),    '127.0.0.1:3571'));
-        test('.url()',     ()=>assert.equal(req.url(),     '/liulian/path'));
-        test('.baseUrl()', ()=>assert.equal(req.baseUrl(), '/liulian'));
-        test('.path()',    ()=>assert.equal(req.path(),    '/path'));
-        test('.remote()',  ()=>assert.equal(req.remote(), '127.0.0.2'));
-        suite('.query()', ()=>{
-            test('パラメータなし', ()=>assert.equal(req.query(), null));
+        test('.version',   ()=>assert.equal(req.version,   '1.0.0'));
+        test('.config',    ()=>assert.ok(req.config === liulian._))
+        test('.method',    ()=>assert.equal(req.method,    'GET'));
+        test('.scheme',    ()=>assert.equal(req.scheme,    'http'));
+        test('.host',      ()=>assert.equal(req.host,      '127.0.0.1:3571'));
+        test('.url',       ()=>assert.equal(req.url,       '/liulian/path'));
+        test('.baseUrl',   ()=>assert.equal(req.baseUrl,   '/liulian'));
+        test('.path',      ()=>assert.equal(req.path,      '/path'));
+        test('.remote',    ()=>assert.equal(req.remote,    '127.0.0.2'));
+        test('.sessionID', ()=>assert.equal(req.sessionID, 'sessionID'));
+        test('.user',      ()=>assert.equal(req.user,      'user'));
+        suite('.query', ()=>{
+            test('パラメータなし', ()=>assert.equal(req.query, null));
             test('パラメータあり', ()=>{
                 _req.url += '?x=1&y=2';
-                assert.equal(req.query(), 'x=1&y=2');
+                assert.equal(req.query, 'x=1&y=2');
             });
             test('QUERYに ? があるケース', ()=>{
                 _req.url += '&z=1?2';
-                assert.equal(req.query(), 'x=1&y=2&z=1?2');
+                assert.equal(req.query, 'x=1&y=2&z=1?2');
             });
         });
         suite('.params()', ()=>{
@@ -107,14 +114,16 @@ suite('http/request', ()=>{
         };
         const req = new Request(liulian, _req);
         test('インスタンスが生成できること', ()=>assert.ok(req));
-        test('.method()',  ()=>assert.equal(req.method(),  'GET'));
-        test('.scheme()',  ()=>assert.equal(req.scheme(),  'https'));
-        test('.host()',    ()=>assert.equal(req.host(),    'kobalab.net'));
-        test('.url()',     ()=>assert.equal(req.url(),
+        test('.method',    ()=>assert.equal(req.method,    'GET'));
+        test('.scheme',    ()=>assert.equal(req.scheme,    'https'));
+        test('.host',      ()=>assert.equal(req.host,      'kobalab.net'));
+        test('.url',       ()=>assert.equal(req.url,
                                             '/liulian2/path?x=1&y=2&z=1?2'));
-        test('.baseUrl()', ()=>assert.equal(req.baseUrl(), '/liulian2'));
-        test('.path()',    ()=>assert.equal(req.path(),    '/path'));
-        test('.remote()',  ()=>assert.equal(req.remote(), '127.0.0.2'));
+        test('.baseUrl',   ()=>assert.equal(req.baseUrl, '/liulian2'));
+        test('.path',      ()=>assert.equal(req.path,      '/path'));
+        test('.remote',    ()=>assert.equal(req.remote,    '127.0.0.2'));
+        test('.sessionID', ()=>assert.equal(req.sessionID, 'sessionID'));
+        test('.user',      ()=>assert.equal(req.user,      'user'));
         suite('.fullUrl()', ()=>{
             test('外部URL: http://', ()=>
                 assert.equal(req.fullUrl('http://kobalab.net/'),
