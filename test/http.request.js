@@ -26,9 +26,12 @@ suite('http/request', ()=>{
     test('モジュールが存在すること', ()=>assert.ok(Request));
 
     suite('--mount なし', ()=>{
-        const liulian = { '_': { locale: ()=>{} } };
+        const liulian = { _version: '1.0.0',
+                          _: { locale: ()=>{} } };
         const req = new Request(liulian, _req);
         test('インスタンスが生成できること', ()=>assert.ok(req));
+        test('.version',   ()=>assert.equal(req.version,   '1.0.0'));
+        test('.config',    ()=>assert.ok(req.config === liulian._))
         test('.method',    ()=>assert.equal(req.method,    'GET'));
         test('.scheme',    ()=>assert.equal(req.scheme,    'http'));
         test('.host',      ()=>assert.equal(req.host,      '127.0.0.1:3571'));
