@@ -81,6 +81,16 @@ dt {
     display: none;
 }
 
+#ll-footer {
+    margin-top: 1em;
+    border-top: solid 1px #9c9;
+    color: #090;
+    text-align: right;
+}
+#ll-footer hr {
+    display: none;
+}
+
 .ll-error {
     color: red;
 }
