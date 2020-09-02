@@ -42,6 +42,7 @@ const liulian  = require('../lib/liulian')({
 const app = express();
 
 if (mount) app.enable('trust proxy');
+app.disable('x-powered-by');
 app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
