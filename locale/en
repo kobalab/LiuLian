@@ -17,3 +17,8 @@ login.user:Login Name
 login.passwd:Password
 login.submit:LOGIN
 # -----------------------------------------------------------------------------
+folder.thead.name:Name
+folder.thead.time:Last Modified
+folder.thead.size:Size
+folder.thead.type:Type
+# -----------------------------------------------------------------------------

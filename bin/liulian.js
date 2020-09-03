@@ -35,6 +35,7 @@ const session  = require('express-session')({
 const passport = require('../lib/auth/passport')(auth);
 
 const liulian  = require('../lib/liulian')({
+                            home:     home,
                             locale:   locale,
                             mount:    mount,
                             passport: passport  });
