@@ -68,9 +68,12 @@ dt {
 }
 #ll-toolbar li {
     display: inline;
+    margin-left: 0.5em;
 }
 #ll-toolbar a {
     text-decoration: none;
+    display: inline-block;
+    padding: 2px;
 }
 #ll-toolbar a:link,
 #ll-toolbar a:visited {
