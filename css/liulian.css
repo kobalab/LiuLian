@@ -101,6 +101,26 @@ dt {
 #ll-folder {
     min-width: 800px;
 }
+#ll-folder th.ll-asc,
+#ll-folder th.ll-desc {
+    background: #afa;
+}
+#ll-folder th.ll-asc a,
+#ll-folder th.ll-desc a {
+    background: no-repeat right center;
+    background-size: 0.6em;
+}
+#ll-folder th.ll-asc a {
+    background-image: url(icon-chevron-up.png);
+}
+#ll-folder th.ll-desc a {
+    background-image: url(icon-chevron-down.png);
+}
+#ll-folder th a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
 #ll-folder tbody .ll-time,
 #ll-folder tbody .ll-size {
     text-align: right;
