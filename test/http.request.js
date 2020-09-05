@@ -11,6 +11,7 @@ const _req = {
     path:        '/path',
     ip:          '127.0.0.2',
     query:       {},
+    body:        {},
     sessionID:   'sessionID',
     user:        'user',
     headers: {
@@ -53,20 +54,40 @@ suite('http/request', ()=>{
             });
         });
         suite('.params()', ()=>{
-            test('パラメータなし', ()=>assert.equal(req.params().length, 0));
-            test('パラメータあり', ()=>{
+            test('パラメータなし (GET)', ()=>
+                assert.equal(req.params().length, 0));
+            test('パラメータあり (GET)', ()=>{
                 _req.query = { x: 1, y: [ 2, 3 ] };
+                assert.deepEqual(req.params(),    ['x', 'y']);
+                assert.deepEqual(req.params('x'), [ 1 ]);
+                assert.deepEqual(req.params('y'), [ 2, 3 ]);
+            });
+            test('パラメータなし (POST)', ()=>{
+                _req.method = 'POST';
+                assert.equal(req.params().length, 0);
+            });
+            test('パラメータあり (POST)', ()=>{
+                _req.body = { x: 1, y: [ 2, 3 ] };
                 assert.deepEqual(req.params(),    ['x', 'y']);
                 assert.deepEqual(req.params('x'), [ 1 ]);
                 assert.deepEqual(req.params('y'), [ 2, 3 ]);
             });
         });
         suite('.param()', ()=>{
-            test('パラメータあり', ()=>{
+            test('パラメータあり (GET)', ()=>{
+                _req.method = 'GET';
                 _req.query = { x: 1, y: [ 2, 3 ] };
                 assert.deepEqual(req.param(), ['x', 'y']);
                 assert.equal(req.param('x'), 1);
                 assert.equal(req.param('y'), 2);
+            });
+            test('パラメータあり (POST)', ()=>{
+                _req.method = 'POST';
+                _req.body = { x: 1, y: [ 2, 3 ] };
+                assert.deepEqual(req.param(), ['x', 'y']);
+                assert.equal(req.param('x'), 1);
+                assert.equal(req.param('y'), 2);
+                _req.method = 'GET';
             });
         });
         suite('.header()', ()=>{
