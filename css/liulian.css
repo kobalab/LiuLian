@@ -100,6 +100,14 @@ dt {
     display: none;
 }
 
+#l-title a {
+    text-decoration: none;
+    color: inherit;
+}
+#l-title a:hover {
+    color: #080;
+}
+
 #l-path {
     margin: 1em auto;
 }
