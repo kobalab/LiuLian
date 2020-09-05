@@ -24,3 +24,7 @@ folder.time:Last Modified
 folder.size:Size
 folder.type:Type
 # -----------------------------------------------------------------------------
+mkfile.label:Add New File
+mkfile.filename:File Name
+mkfile.submit:ADD
+# -----------------------------------------------------------------------------

@@ -105,7 +105,7 @@ dt {
 }
 
 #l-folder {
-    min-width: 800px;
+    width: 100%;
 }
 #l-folder th.l-asc,
 #l-folder th.l-desc {
@@ -133,6 +133,29 @@ dt {
 }
 #l-folder td {
     padding: 2px 1em;
+}
+
+#l-mkfile fieldset {
+    border: solid 1px #080;
+}
+#l-mkfile input[type="file"] {
+    display: none;
+}
+#l-mkfile label {
+    cursor: pointer;
+}
+#l-mkfile img {
+    height: 20px;
+    padding: 4px;
+    border-radius: 4px;
+    vertical-align: middle;
+    background: #999;
+}
+#l-mkfile img.l-enable {
+    background: #080;
+}
+#l-mkfile input[name="filename"] {
+    width: 320px;
 }
 
 .l-error {
