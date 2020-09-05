@@ -56,6 +56,8 @@ dt {
 #ll-toolbar {
     font-size: 90%;
     border-bottom: solid 1px #9c9;
+    background: url(liulian.png) no-repeat;
+    background-size: contain;
 }
 #ll-toolbar ul {
     margin: 0;
