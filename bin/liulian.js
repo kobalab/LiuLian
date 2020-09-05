@@ -32,6 +32,8 @@ const session  = require('express-session')({
                             saveUninitialized: false,
                             store: store,
                             cookie: { maxAge: 1000*60*60*24*14 } });
+const upload   = require('multer')({
+                            dest:   path.join(home, '/tmp') });
 const passport = require('../lib/auth/passport')(auth);
 
 const liulian  = require('../lib/liulian')({
@@ -48,6 +50,7 @@ app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({extended: false}));
+app.use(upload.fields([{name: 'file'}]));
 app.use('/css', express.static(path.join(__dirname, '../css')));
 app.use(liulian);
 
