@@ -9,6 +9,7 @@ error.405:The requested method {$1} is not allowed for the URL {$2}.
 error.406:An appropriate representation of the requested resource {$1} could not be found on this server.
 error.500:The server encountered an internal error or misconfiguration and was unable to complete your request.
 # -----------------------------------------------------------------------------
+toolbar.home:Home
 toolbar.login:Login
 toolbar.logout:Logout
 toolbar.edit:Edit

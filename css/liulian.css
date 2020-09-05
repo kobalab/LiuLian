@@ -56,11 +56,12 @@ dt {
 #ll-toolbar {
     font-size: 90%;
     border-bottom: solid 1px #9c9;
-    background: url(liulian.png) no-repeat;
-    background-size: contain;
+}
+#ll-toolbar .ll-home img {
+    height: 24px;
 }
 #ll-toolbar ul {
-    margin: 0;
+    margin: 2px;
     float: right;
 }
 #ll-toolbar::after {
@@ -72,16 +73,16 @@ dt {
     display: inline;
     margin-left: 0.5em;
 }
-#ll-toolbar a {
+#ll-toolbar ul a {
     text-decoration: none;
     display: inline-block;
     padding: 2px;
 }
-#ll-toolbar a:link,
-#ll-toolbar a:visited {
+#ll-toolbar ul a:link,
+#ll-toolbar ul a:visited {
     color: #090;
 }
-#ll-toolbar a:hover {
+#ll-toolbar ul a:hover {
     color: white;
     background: #090;
 }
