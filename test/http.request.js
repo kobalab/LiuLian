@@ -90,6 +90,28 @@ suite('http/request', ()=>{
                 _req.method = 'GET';
             });
         });
+        suite('.files()', ()=>{
+            test('アップロードなし', ()=>{
+                assert.deepEqual(req.files(), []);
+                assert.deepEqual(req.files('file'), []);
+            });
+            test('ファイルなし', ()=>{
+                _req.files = {};
+                assert.deepEqual(req.files(), []);
+                assert.deepEqual(req.files('file'), []);
+            });
+            test('ファイルあり', ()=>{
+                _req.files = {
+                    file: [{ originalname: 'C:\\tmp\\index.html',
+                             path:         '/tmp/0123456789' }]
+                };
+                assert.deepEqual(req.files(), ['file']);
+                assert.deepEqual(req.files('file'), [
+                                            { name: 'index.html',
+                                              path: '/tmp/0123456789' }]);
+                assert.deepEqual(req.files('file2'), []);
+            });
+        });
         suite('.header()', ()=>{
             test('一覧取得', ()=>assert.deepEqual(req.header().sort(),
                                                 ['host', 'user-agent']));
