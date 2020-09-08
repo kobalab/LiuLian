@@ -14,6 +14,7 @@ input[type="text"], input[type="password"] {
     font-size: 100%;
 }
 input[type="submit"] {
+    -webkit-appearance: none;
     padding: 2px 1em;
     background: #080;
     color: white;
