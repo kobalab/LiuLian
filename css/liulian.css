@@ -144,17 +144,21 @@ dt {
     padding: 2px 1em;
 }
 
-#l-mkfile fieldset {
+#l-mkfile fieldset,
+#l-udfile fieldset {
     border: solid 1px #080;
 }
-#l-mkfile input[type="file"] {
+#l-mkfile input[type="file"],
+#l-udfile input[type="file"] {
     display: none;
 }
-#l-mkfile label {
+#l-mkfile label.
+#l-udfile label {
     display: inline-block;
     cursor: pointer;
 }
-#l-mkfile img {
+#l-mkfile img,
+#l-udfile img {
     height: 20px;
     padding: 4px;
     border-radius: 4px;
@@ -162,10 +166,12 @@ dt {
     background: #999;
     pointer-events: none;
 }
-#l-mkfile img.l-enable {
+#l-mkfile img.l-enable,
+#l-udfile img.l-enable {
     background: #080;
 }
-#l-mkfile input[name="filename"] {
+#l-mkfile input[name="filename"],
+#l-udfile input[name="filename"] {
     width: 320px;
 }
 

@@ -28,3 +28,6 @@ mkfile.label:Add New File
 mkfile.filename:File Name
 mkfile.submit:ADD
 # -----------------------------------------------------------------------------
+udfile.label:Update This File
+udfile.submit:UPLOAD
+# -----------------------------------------------------------------------------
