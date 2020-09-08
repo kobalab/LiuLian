@@ -150,6 +150,7 @@ dt {
     display: none;
 }
 #l-mkfile label {
+    display: inline-block;
     cursor: pointer;
 }
 #l-mkfile img {
@@ -158,6 +159,7 @@ dt {
     border-radius: 4px;
     vertical-align: middle;
     background: #999;
+    pointer-events: none;
 }
 #l-mkfile img.l-enable {
     background: #080;
