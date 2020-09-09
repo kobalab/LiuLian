@@ -152,8 +152,8 @@ dt {
 #l-udfile input[type="file"] {
     display: none;
 }
-#l-mkfile label.
-#l-udfile label {
+#l-mkfile label,
+#l-udfile span {
     display: inline-block;
     cursor: pointer;
 }
@@ -173,6 +173,10 @@ dt {
 #l-mkfile input[name="filename"],
 #l-udfile input[name="filename"] {
     width: 320px;
+}
+#l-udfile input[name="filename"] {
+    pointer-events: none;
+    cursor: pointer;
 }
 
 .l-error {
