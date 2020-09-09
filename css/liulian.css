@@ -152,7 +152,7 @@ dt {
 #l-udfile input[type="file"] {
     display: none;
 }
-#l-mkfile label,
+#l-mkfile span,
 #l-udfile span {
     display: inline-block;
     cursor: pointer;
@@ -172,7 +172,7 @@ dt {
 }
 #l-mkfile input[name="filename"],
 #l-udfile input[name="filename"] {
-    width: 320px;
+    width: 240px;
 }
 #l-udfile input[name="filename"] {
     pointer-events: none;
