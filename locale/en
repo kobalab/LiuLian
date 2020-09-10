@@ -31,3 +31,10 @@ mkfile.submit:ADD
 udfile.label:Update This File
 udfile.submit:UPLOAD
 # -----------------------------------------------------------------------------
+mkdir.label:Add New Folder
+mkdir.dirname:Folder Name
+mkdir.submit:CREATE
+# -----------------------------------------------------------------------------
+rmdir.label:Remove This Folder
+rmdir.submit:REMOVE
+# -----------------------------------------------------------------------------

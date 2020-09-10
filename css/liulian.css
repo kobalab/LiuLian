@@ -8,19 +8,6 @@ body {
     margin-top: 0;
 }
 
-input[type="text"], input[type="password"] {
-    padding: 2px;
-    font-family: Menlo, Consolas, Courier, monospace;
-    font-size: 100%;
-}
-input[type="submit"] {
-    -webkit-appearance: none;
-    padding: 2px 1em;
-    background: #080;
-    color: white;
-    font-size: 100%;
-}
-
 h1 {
     margin-top: 0.5em;
     font-size: 240%;
@@ -52,6 +39,25 @@ th {
 
 dt {
     font-weight: bold;
+}
+
+form {
+    margin: 1em auto;
+}
+fieldset {
+    border: solid 1px #080;
+}
+input[type="text"], input[type="password"] {
+    padding: 2px;
+    font-family: Menlo, Consolas, Courier, monospace;
+    font-size: 100%;
+}
+input[type="submit"] {
+    -webkit-appearance: none;
+    padding: 2px 1em;
+    background: #080;
+    color: white;
+    font-size: 100%;
 }
 
 #l-toolbar {
@@ -144,10 +150,6 @@ dt {
     padding: 2px 1em;
 }
 
-#l-mkfile fieldset,
-#l-udfile fieldset {
-    border: solid 1px #080;
-}
 #l-mkfile input[type="file"],
 #l-udfile input[type="file"] {
     display: none;
@@ -171,10 +173,11 @@ dt {
     background: #080;
 }
 #l-mkfile input[name="filename"],
-#l-udfile input[name="filename"] {
+#l-udfile input[name="filename"],
+#l-mkdir  input[name="dirname"]   {
     width: 240px;
 }
-#l-udfile input[name="filename"] {
+#l-udfile input[disable] {
     pointer-events: none;
     cursor: pointer;
 }
