@@ -8,18 +8,6 @@ body {
     margin-top: 0;
 }
 
-input[type="text"], input[type="password"] {
-    padding: 2px;
-    font-family: Menlo, Consolas, Courier, monospace;
-    font-size: 100%;
-}
-input[type="submit"] {
-    padding: 2px 1em;
-    background: #080;
-    color: white;
-    font-size: 100%;
-}
-
 h1 {
     margin-top: 0.5em;
     font-size: 240%;
@@ -36,6 +24,9 @@ table {
     border-top:    solid 1px #080;
     border-bottom: solid 1px #080;
 }
+tbody {
+    border-top: solid 1px #080;
+}
 tr + tr {
     border-top: solid 1px #9c9;
 }
@@ -50,47 +41,147 @@ dt {
     font-weight: bold;
 }
 
-#ll-toolbar {
+form {
+    margin: 1em auto;
+}
+fieldset {
+    border: solid 1px #080;
+}
+input[type="text"], input[type="password"] {
+    padding: 2px;
+    font-family: Menlo, Consolas, Courier, monospace;
+    font-size: 100%;
+}
+input[type="submit"] {
+    -webkit-appearance: none;
+    padding: 2px 1em;
+    background: #080;
+    color: white;
+    font-size: 100%;
+}
+
+#l-toolbar {
     font-size: 90%;
     border-bottom: solid 1px #9c9;
 }
-#ll-toolbar ul {
-    margin: 0;
+#l-toolbar .l-home img {
+    height: 24px;
+}
+#l-toolbar ul {
+    margin: 2px;
     float: right;
 }
-#ll-toolbar::after {
+#l-toolbar::after {
     display: block;
     content: '';
     clear: both;
 }
-#ll-toolbar li {
+#l-toolbar li {
     display: inline;
+    margin-left: 0.5em;
 }
-#ll-toolbar a {
+#l-toolbar ul a {
     text-decoration: none;
+    display: inline-block;
+    padding: 2px;
 }
-#ll-toolbar a:link,
-#ll-toolbar a:visited {
+#l-toolbar ul a:link,
+#l-toolbar ul a:visited {
     color: #090;
 }
-#ll-toolbar a:hover {
+#l-toolbar ul a:hover {
     color: white;
     background: #090;
 }
-#ll-toolbar hr {
+#l-toolbar hr {
     display: none;
 }
 
-#ll-footer {
+#l-footer {
     margin-top: 1em;
     border-top: solid 1px #9c9;
     color: #090;
     text-align: right;
 }
-#ll-footer hr {
+#l-footer hr {
     display: none;
 }
 
-.ll-error {
+#l-title a {
+    text-decoration: none;
+    color: inherit;
+}
+#l-title a:hover {
+    color: #080;
+}
+
+#l-path {
+    margin: 1em auto;
+}
+
+#l-folder {
+    width: 100%;
+}
+#l-folder th.l-asc,
+#l-folder th.l-desc {
+    background: #afa;
+}
+#l-folder th.l-asc a,
+#l-folder th.l-desc a {
+    background: no-repeat right center;
+    background-size: 0.6em;
+}
+#l-folder th.l-asc a {
+    background-image: url(icon-chevron-up.png);
+}
+#l-folder th.l-desc a {
+    background-image: url(icon-chevron-down.png);
+}
+#l-folder th a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+#l-folder tbody .l-time,
+#l-folder tbody .l-size {
+    text-align: right;
+}
+#l-folder td {
+    padding: 2px 1em;
+}
+
+#l-mkfile input[type="file"],
+#l-udfile input[type="file"] {
+    display: none;
+}
+#l-mkfile span,
+#l-udfile span {
+    display: inline-block;
+    cursor: pointer;
+}
+#l-mkfile img,
+#l-udfile img {
+    height: 20px;
+    padding: 4px;
+    border-radius: 4px;
+    vertical-align: middle;
+    background: #999;
+    pointer-events: none;
+}
+#l-mkfile img.l-enable,
+#l-udfile img.l-enable {
+    background: #080;
+}
+#l-mkfile input[name="filename"],
+#l-udfile input[name="filename"],
+#l-mkdir  input[name="dirname"]   {
+    width: 240px;
+}
+#l-udfile input[disable] {
+    pointer-events: none;
+    cursor: pointer;
+}
+
+.l-error {
     color: red;
 }

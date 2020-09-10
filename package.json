@@ -1,6 +1,6 @@
 {
   "name": "@kobalab/liulian",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Node.jsで動作するWebサイト作成ツール",
   "private": true,
   "main": "index.js",
@@ -30,6 +30,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "mime": "^2.4.6",
+    "multer": "^1.4.2",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "session-file-store": "^1.4.0",

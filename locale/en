@@ -1,19 +1,40 @@
 Lang:en
 greeting:Hello
 # -----------------------------------------------------------------------------
-error.400.message:Your browser sent a request that this server could not understand.
-error.401.message:This server could not verify that you are authorized to access the document requested. Either you supplied the wrong credentials (e.g., bad password).
-error.403.message:You don't have permission to access {$1} on this server.
-error.404.message:The requested URL {$1} was not found on this server.
-error.405.message:The requested method {$1} is not allowed for the URL {$2}.
-error.406.message:An appropriate representation of the requested resource {$1} could not be found on this server.
-error.500.message:The server encountered an internal error or misconfiguration and was unable to complete your request.
+error.400:Your browser sent a request that this server could not understand.
+error.401:This server could not verify that you are authorized to access the document requested. Either you supplied the wrong credentials (e.g., bad password).
+error.403:You don't have permission to access {$1} on this server.
+error.404:The requested URL {$1} was not found on this server.
+error.405:The requested method {$1} is not allowed for the URL {$2}.
+error.406:An appropriate representation of the requested resource {$1} could not be found on this server.
+error.500:The server encountered an internal error or misconfiguration and was unable to complete your request.
 # -----------------------------------------------------------------------------
+toolbar.home:Home
 toolbar.login:Login
 toolbar.logout:Logout
+toolbar.edit:Edit
 # -----------------------------------------------------------------------------
 login.title:Login
 login.user:Login Name
 login.passwd:Password
 login.submit:LOGIN
+# -----------------------------------------------------------------------------
+folder.name:Name
+folder.time:Last Modified
+folder.size:Size
+folder.type:Type
+# -----------------------------------------------------------------------------
+mkfile.label:Add New File
+mkfile.filename:File Name
+mkfile.submit:ADD
+# -----------------------------------------------------------------------------
+udfile.label:Update This File
+udfile.submit:UPLOAD
+# -----------------------------------------------------------------------------
+mkdir.label:Add New Folder
+mkdir.dirname:Folder Name
+mkdir.submit:CREATE
+# -----------------------------------------------------------------------------
+rmdir.label:Remove This Folder
+rmdir.submit:REMOVE
 # -----------------------------------------------------------------------------
