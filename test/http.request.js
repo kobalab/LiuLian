@@ -6,20 +6,19 @@ const _req = {
     method:      'GET',
     protocol:    'http',
     url:         '/path',
-    originalUrl: '/liulian/path',
-    baseUrl:     '/liulian',
-    path:        '/path',
+    originalUrl: '/base/path/file',
+    baseUrl:     '/base',
+    path:        '/path/file',
     ip:          '127.0.0.2',
-    query:       {},
-    body:        {},
+    query:       { cmd: 'test' },
     sessionID:   'sessionID',
     user:        'user',
     headers: {
         host:           '127.0.0.1:3571',
         'user-agent':   'Mozilla/5.0',
     },
-    acceptsLanguages:   ()=>{},
-    header:             ()=>'Mozilla/5.0'
+    acceptsLanguages: ()=>'ja',
+    header:           ()=>'Mozilla/5.0'
 };
 
 suite('http/request', ()=>{
@@ -28,20 +27,22 @@ suite('http/request', ()=>{
 
     suite('--mount なし', ()=>{
         const liulian = { _version: '1.0.0',
-                          _: { locale: ()=>{} } };
+                          _: { locale: (lang)=>lang == 'ja' } };
         const req = new Request(liulian, _req);
         test('インスタンスが生成できること', ()=>assert.ok(req));
         test('.version',   ()=>assert.equal(req.version,   '1.0.0'));
-        test('.config',    ()=>assert.ok(req.config === liulian._))
+        test('.config',    ()=>assert.strictEqual(req.config, liulian._));
         test('.method',    ()=>assert.equal(req.method,    'GET'));
         test('.scheme',    ()=>assert.equal(req.scheme,    'http'));
         test('.host',      ()=>assert.equal(req.host,      '127.0.0.1:3571'));
-        test('.url',       ()=>assert.equal(req.url,       '/liulian/path'));
-        test('.baseUrl',   ()=>assert.equal(req.baseUrl,   '/liulian'));
-        test('.path',      ()=>assert.equal(req.path,      '/path'));
+        test('.url',       ()=>assert.equal(req.url,       '/base/path/file'));
+        test('.baseUrl',   ()=>assert.equal(req.baseUrl,   '/base'));
+        test('.path',      ()=>assert.equal(req.path,      '/path/file'));
+        test('.pathDir',   ()=>assert.equal(req.pathDir,   '/path/'));
         test('.remote',    ()=>assert.equal(req.remote,    '127.0.0.2'));
         test('.sessionID', ()=>assert.equal(req.sessionID, 'sessionID'));
         test('.user',      ()=>assert.equal(req.user,      'user'));
+        test('.cmd',       ()=>assert.equal(req.cmd,       'test'));
         suite('.query', ()=>{
             test('パラメータなし', ()=>assert.equal(req.query, null));
             test('パラメータあり', ()=>{
@@ -54,16 +55,20 @@ suite('http/request', ()=>{
             });
         });
         suite('.params()', ()=>{
-            test('パラメータなし (GET)', ()=>
-                assert.equal(req.params().length, 0));
+            test('パラメータなし (GET)', ()=>{
+                _req.query = {};
+                assert.equal(req.params().length, 0);
+            });
             test('パラメータあり (GET)', ()=>{
                 _req.query = { x: 1, y: [ 2, 3 ] };
                 assert.deepEqual(req.params(),    ['x', 'y']);
                 assert.deepEqual(req.params('x'), [ 1 ]);
                 assert.deepEqual(req.params('y'), [ 2, 3 ]);
+                assert.deepEqual(req.params('z'), []);
             });
             test('パラメータなし (POST)', ()=>{
                 _req.method = 'POST';
+                _req.body = {};
                 assert.equal(req.params().length, 0);
             });
             test('パラメータあり (POST)', ()=>{
@@ -71,6 +76,7 @@ suite('http/request', ()=>{
                 assert.deepEqual(req.params(),    ['x', 'y']);
                 assert.deepEqual(req.params('x'), [ 1 ]);
                 assert.deepEqual(req.params('y'), [ 2, 3 ]);
+                assert.deepEqual(req.params('z'), []);
             });
         });
         suite('.param()', ()=>{
@@ -80,6 +86,7 @@ suite('http/request', ()=>{
                 assert.deepEqual(req.param(), ['x', 'y']);
                 assert.equal(req.param('x'), 1);
                 assert.equal(req.param('y'), 2);
+                assert.equal(req.param('z'), null);
             });
             test('パラメータあり (POST)', ()=>{
                 _req.method = 'POST';
@@ -87,7 +94,7 @@ suite('http/request', ()=>{
                 assert.deepEqual(req.param(), ['x', 'y']);
                 assert.equal(req.param('x'), 1);
                 assert.equal(req.param('y'), 2);
-                _req.method = 'GET';
+                assert.equal(req.param('z'), null);
             });
         });
         suite('.files()', ()=>{
@@ -102,7 +109,7 @@ suite('http/request', ()=>{
             });
             test('ファイルあり', ()=>{
                 _req.files = {
-                    file: [{ originalname: 'C:\\tmp\\index.html',
+                    file: [{ originalname: 'index.html',
                              path:         '/tmp/0123456789' }]
                 };
                 assert.deepEqual(req.files(), ['file']);
@@ -113,7 +120,7 @@ suite('http/request', ()=>{
             });
         });
         suite('.header()', ()=>{
-            test('一覧取得', ()=>assert.deepEqual(req.header().sort(),
+            test('一覧取得', ()=>assert.deepEqual(req.header(),
                                                 ['host', 'user-agent']));
             test('項目取得', ()=>assert.equal(req.header('User-Agent'),
                                                         'Mozilla/5.0'));
@@ -121,8 +128,8 @@ suite('http/request', ()=>{
         suite('.fixpath()', ()=>{
             test('file → file', ()=>
                         assert.equal(req.fixpath('file'), 'file'));
-            test('/file → /liulian/file', ()=>
-                        assert.equal(req.fixpath('/file'), '/liulian/file'));
+            test('/file → /base/file', ()=>
+                        assert.equal(req.fixpath('/file'), '/base/file'));
             test('//file → //file', ()=>
                         assert.equal(req.fixpath('//file'), '//file'));
         });
@@ -135,16 +142,16 @@ suite('http/request', ()=>{
                              'http://kobalab.net/'));
             test('絶対パス: /file', ()=>
                 assert.equal(req.fullUrl('/file'),
-                             'http://127.0.0.1:3571/liulian/file'));
+                             'http://127.0.0.1:3571/base/file'));
             test('相対パス: file', ()=>
                 assert.equal(req.fullUrl('file'),
-                             'http://127.0.0.1:3571/liulian/file'));
+                             'http://127.0.0.1:3571/base/path/file'));
             test('相対パス: ./file', ()=>
-                assert.equal(req.fullUrl('file'),
-                             'http://127.0.0.1:3571/liulian/file'));
+                assert.equal(req.fullUrl('./file'),
+                             'http://127.0.0.1:3571/base/path/file'));
             test('相対パス: ../file', ()=>
-                assert.equal(req.fullUrl('file'),
-                             'http://127.0.0.1:3571/liulian/file'));
+                assert.equal(req.fullUrl('../file'),
+                             'http://127.0.0.1:3571/base/file'));
         });
     });
 
@@ -153,20 +160,15 @@ suite('http/request', ()=>{
         liulian._mount = {
             scheme: 'https',
             host:   'kobalab.net',
-            base:   '/liulian2'
+            base:   '/liulian'
         };
         const req = new Request(liulian, _req);
         test('インスタンスが生成できること', ()=>assert.ok(req));
-        test('.method',    ()=>assert.equal(req.method,    'GET'));
         test('.scheme',    ()=>assert.equal(req.scheme,    'https'));
         test('.host',      ()=>assert.equal(req.host,      'kobalab.net'));
         test('.url',       ()=>assert.equal(req.url,
-                                            '/liulian2/path?x=1&y=2&z=1?2'));
-        test('.baseUrl',   ()=>assert.equal(req.baseUrl, '/liulian2'));
-        test('.path',      ()=>assert.equal(req.path,      '/path'));
-        test('.remote',    ()=>assert.equal(req.remote,    '127.0.0.2'));
-        test('.sessionID', ()=>assert.equal(req.sessionID, 'sessionID'));
-        test('.user',      ()=>assert.equal(req.user,      'user'));
+                                                '/liulian/path?x=1&y=2&z=1?2'));
+        test('.baseUrl',   ()=>assert.equal(req.baseUrl,   '/liulian'));
         suite('.fullUrl()', ()=>{
             test('外部URL: http://', ()=>
                 assert.equal(req.fullUrl('http://kobalab.net/'),
@@ -176,16 +178,16 @@ suite('http/request', ()=>{
                              'https://kobalab.net/'));
             test('絶対パス: /file', ()=>
                 assert.equal(req.fullUrl('/file'),
-                             'https://kobalab.net/liulian2/file'));
+                             'https://kobalab.net/liulian/file'));
             test('相対パス: file', ()=>
                 assert.equal(req.fullUrl('file'),
-                             'https://kobalab.net/liulian2/file'));
+                             'https://kobalab.net/liulian/path/file'));
             test('相対パス: ./file', ()=>
-                assert.equal(req.fullUrl('file'),
-                             'https://kobalab.net/liulian2/file'));
+                assert.equal(req.fullUrl('./file'),
+                             'https://kobalab.net/liulian/path/file'));
             test('相対パス: ../file', ()=>
-                assert.equal(req.fullUrl('file'),
-                             'https://kobalab.net/liulian2/file'));
+                assert.equal(req.fullUrl('../file'),
+                             'https://kobalab.net/liulian/file'));
         });
     });
 });
