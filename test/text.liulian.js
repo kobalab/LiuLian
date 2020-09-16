@@ -74,35 +74,35 @@ suite('text.liulian', ()=>{
     suite('見出し (h2 ~ h6)', ()=>{
         test('行頭の * は見出しになる', ()=>{
             r.text = '* 見出し\n';
-            result = '<h2>見出し</h2>\n\n';
+            result = '<h2 id="l-sec.1">見出し</h2>\n\n';
             assert.equal(liulian(r), result);
         });
         test('見出しは最大5レベル', ()=>{
-            r.text = '** 見出し\n'
-                   + '*** 見出し\n'
-                   + '**** 見出し\n'
-                   + '***** 見出し\n'
-                   + '****** 見出し\n';
-            result = '<h3>見出し</h3>\n\n'
-                   + '<h4>見出し</h4>\n\n'
-                   + '<h5>見出し</h5>\n\n'
-                   + '<h6>見出し</h6>\n\n'
-                   + '<h6>見出し</h6>\n\n';
+            r.text = '** 見出し1\n'
+                   + '*** 見出し2\n'
+                   + '**** 見出し3\n'
+                   + '***** 見出し4\n'
+                   + '****** 見出し5\n';
+            result = '<h3 id="l-sec.1">見出し1</h3>\n\n'
+                   + '<h4 id="l-sec.2">見出し2</h4>\n\n'
+                   + '<h5 id="l-sec.3">見出し3</h5>\n\n'
+                   + '<h6 id="l-sec.4">見出し4</h6>\n\n'
+                   + '<h6 id="l-sec.5">見出し5</h6>\n\n';
             assert.equal(liulian(r), result);
         });
         test('見出しは連結しない', ()=>{
             r.text = '* 見出しは\n連結しない\n';
-            result = '<h2>見出しは</h2>\n\n<p>連結しない</p>\n\n';
+            result = '<h2 id="l-sec.1">見出しは</h2>\n\n<p>連結しない</p>\n\n';
             assert.equal(liulian(r), result);
         });
         test('見出しにリンクを貼ることもできる', ()=>{
             r.text = '* [[見出し|./]]\n';
-            result = '<h2><a href="./">見出し</a></h2>\n\n';
+            result = '<h2 id="l-sec.1"><a href="./">見出し</a></h2>\n\n';
             assert.equal(liulian(r), result);
         });
         test('見出しは段落を終了させる', ()=>{
             r.text = '段落\n* 見出し\n';
-            result = '<p>段落</p>\n\n<h2>見出し</h2>\n\n';
+            result = '<p>段落</p>\n\n<h2 id="l-sec.1">見出し</h2>\n\n';
             assert.equal(liulian(r), result);
         });
     });
