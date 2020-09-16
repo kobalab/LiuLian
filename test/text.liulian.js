@@ -124,4 +124,35 @@ suite('text.liulian', ()=>{
             assert.equal(liulian(r), result);
         });
     });
+
+    suite('箇条書き (ul, ol)', ()=>{
+        test('行頭が - で黒丸リスト', ()=>{
+            r.text = '-リスト\n- リスト\n';
+            result = '<ul>\n<li>リスト</li>\n<li>リスト</li>\n</ul>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('行頭が + で数字リスト', ()=>{
+            r.text = '+リスト\n+ リスト\n';
+            result = '<ol>\n<li>リスト</li>\n<li>リスト</li>\n</ol>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('連続した行は連結される', ()=>{
+            r.text = '-連続した行は\n連結される。\n';
+            result = '<ul>\n<li>連続した行は\n連結される。</li>\n</ul>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('行末の ~ は改行になる', ()=>{
+            r.text = '-行末の ~ は~\n改行になる。\n';
+            result = '<ul>\n<li>行末の ~ は<br>\n改行になる。</li>\n</ul>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('入れ子のリスト', ()=>{
+            r.text = '-リスト1\n--リスト2\n-リスト3\n';
+            result = '<ul>\n<li>リスト1\n'
+                   + '<ul>\n<li>リスト2</li>\n'
+                   + '</ul></li>\n'
+                   + '<li>リスト3</li>\n</ul>\n\n';
+            assert.equal(liulian(r), result);
+        });
+    });
 });
