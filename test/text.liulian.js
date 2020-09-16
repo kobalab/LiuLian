@@ -105,6 +105,11 @@ suite('text.liulian', ()=>{
             result = '<p>段落</p>\n\n<h2 id="l-sec.1">見出し</h2>\n\n';
             assert.equal(liulian(r), result);
         });
+        test('アンカー名は指定可能', ()=>{
+            r.text = '* 見出し [anchor]\n';
+            result = '<h2 id="anchor">見出し</h2>\n\n';
+            assert.equal(liulian(r), result);
+        });
     });
 
     suite('水平線 (hr)', ()=>{
