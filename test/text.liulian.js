@@ -154,5 +154,36 @@ suite('text.liulian', ()=>{
                    + '<li>リスト3</li>\n</ul>\n\n';
             assert.equal(liulian(r), result);
         });
+        test('とび段の入れ子', ()=>{
+            r.text = '-リスト1\n---リスト2\n-リスト3\n';
+            result = '<ul>\n<li>リスト1\n'
+                   + '<ul>\n'
+                   + '<li style="display: inline; list-style-type: none;">\n'
+                   + '<ul>\n<li>リスト2</li>\n'
+                   + '</ul></li>\n'
+                   + '</ul></li>\n'
+                   + '<li>リスト3</li>\n</ul>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('異種の入れ子', ()=>{
+            r.text = '-リスト1\n++リスト2\n-リスト3\n';
+            result = '<ul>\n<li>リスト1\n'
+                   + '<ol>\n<li>リスト2</li>\n'
+                   + '</ol></li>\n'
+                   + '<li>リスト3</li>\n</ul>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('異種の隣接', ()=>{
+            r.text = '-リスト1\n--リスト2\n++リスト3\n+リスト4\n';
+            result = '<ul>\n<li>リスト1\n'
+                   + '<ul>\n<li>リスト2</li>\n'
+                   + '</ul>\n'
+                   + '<ol>\n<li>リスト3</li>\n'
+                   + '</ol></li>\n'
+                   + '</ul>\n'
+                   + '<ol>\n<li>リスト4</li>\n'
+                   + '</ul>\n\n';
+            assert.equal(liulian(r), result);
+        });
     });
 });
