@@ -106,4 +106,17 @@ suite('text.liulian', ()=>{
             assert.equal(liulian(r), result);
         });
     });
+
+    suite('水平線 (hr)', ()=>{
+        test('- だけの行は水平線になる', ()=>{
+            r.text = '-\n--\n';
+            result = '<hr>\n\n<hr>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('水平線は段落を終了させる', ()=>{
+            r.text = '段落\n-\n';
+            result = '<p>段落</p>\n\n<hr>\n\n';
+            assert.equal(liulian(r), result);
+        });
+    });
 });
