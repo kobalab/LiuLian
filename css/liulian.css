@@ -18,6 +18,25 @@ h2 {
     padding-left: 0.5em;
     border-left: solid 6px #080;
 }
+h3 {
+    font-size: 150%;
+    border-bottom: solid 1px #080;
+}
+h4 {
+    font-size: 125%;
+    border-bottom: solid 1px #F1E054;
+}
+h5 {
+    font-size: 110%;
+}
+h6 {
+    font-size: 100%;
+}
+
+hr {
+    border-style: solid;
+    border-color: #F1E054;
+}
 
 table {
     border-collapse: collapse;
