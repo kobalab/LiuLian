@@ -255,4 +255,22 @@ suite('text.liulian', ()=>{
             assert.equal(liulian(r), result);
         });
     });
+
+    suite('整形済みテキスト (pre)', ()=>{
+        test('行頭が空白文字の場合、整形済みテキストになる', ()=>{
+            r.text = ' 整形済み\n';
+            result = '<pre>整形済み</pre>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('先頭が空白文字である限り、整形済みテキストを継続する', ()=>{
+            r.text = ' 整形済み\n 継続\n段落\n';
+            result = '<pre>整形済み\n継続</pre>\n\n<p>段落</p>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('>| と |< で囲まれた部分も整形済みテキストになる', ()=>{
+            r.text = '>|\n! 整形済み\n* 継続\n|<\n';
+            result = '<pre>! 整形済み\n* 継続</pre>\n\n';
+            assert.equal(liulian(r), result);
+        });
+    });
 });

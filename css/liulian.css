@@ -45,6 +45,16 @@ dd {
     margin-bottom: 1em;
 }
 
+pre {
+    padding: 0.5em;
+    border-radius: 0.2em;
+    border: solid 1px #080;
+    background: #efe;
+    overflow: auto;
+    font-family: Osaka-Mono, "ＭＳ ゴシック", Courier, monospace;
+    font-size: 100%;
+}
+
 table {
     border-collapse: collapse;
     border-top:    solid 1px #080;
