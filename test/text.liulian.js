@@ -200,6 +200,11 @@ suite('text.liulian', ()=>{
             result = '<ol>\n<li>リスト</li>\n</ol>\n\n<p>段落</p>\n\n';
             assert.equal(liulian(r), result);
         });
+        test('水平線で箇条書きは終了する', ()=>{
+            r.text = '+リスト\n--\n';
+            result = '<ol>\n<li>リスト</li>\n</ol>\n\n<hr>\n\n';
+            assert.equal(liulian(r), result);
+        });
     });
 
     suite('用語説明 (dl)', ()=>{
