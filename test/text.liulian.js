@@ -201,4 +201,53 @@ suite('text.liulian', ()=>{
             assert.equal(liulian(r), result);
         });
     });
+
+    suite('用語説明 (dl)', ()=>{
+        test('行頭の : は用語説明になる', ()=>{
+            r.text = ':用語\n説明\n:用語\n説明\n';
+            result = '<dl>\n<dt>用語</dt>\n<dd>説明</dd>\n'
+                   + '<dt>用語</dt>\n<dd>説明</dd>\n</dl>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('説明の連続した行は連結される', ()=>{
+            r.text = ':用語\n説明\n説明\n';
+            result = '<dl>\n<dt>用語</dt>\n<dd>説明\n説明</dd>\n</dl>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('説明の行末の ~ は改行になる', ()=>{
+            r.text = ':用語\n説明~\n説明\n';
+            result = '<dl>\n<dt>用語</dt>\n<dd>説明<br>\n説明</dd>\n</dl>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('用語は連続できる', ()=>{
+            r.text = ':用語1\n:用語2\n説明\n';
+            result = '<dl>\n<dt>用語1</dt>\n'
+                   + '<dt>用語2</dt>\n<dd>説明</dd>\n</dl>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test(': だけの行は説明の段落区切りになる', ()=>{
+            r.text = ':用語\n説明\n:\n説明\n';
+            result = '<dl>\n<dt>用語</dt>\n<dd>説明</dd>\n'
+                   + '<dd>説明</dd>\n</dl>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('空行で用語説明は終了する', ()=>{
+            r.text = ':用語\n説明\n\n段落\n'
+                   + ':用語\n\n段落\n';
+            result = '<dl>\n<dt>用語</dt>\n<dd>説明</dd>\n</dl>\n\n'
+                   + '<p>段落</p>\n\n'
+                   + '<dl>\n<dt>用語</dt>\n</dl>\n\n'
+                   + '<p>段落</p>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('段落で用語説明は終了する', ()=>{
+            r.text = ':用語\n説明\n~段落\n'
+                   + ':用語\n~段落\n';
+            result = '<dl>\n<dt>用語</dt>\n<dd>説明</dd>\n</dl>\n\n'
+                   + '<p>段落</p>\n\n'
+                   + '<dl>\n<dt>用語</dt>\n</dl>\n\n'
+                   + '<p>段落</p>\n\n';
+            assert.equal(liulian(r), result);
+        });
+    });
 });
