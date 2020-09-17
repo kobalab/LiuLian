@@ -38,6 +38,13 @@ hr {
     border-color: #F1E054;
 }
 
+dt {
+    font-weight: bold;
+}
+dd {
+    margin-bottom: 1em;
+}
+
 table {
     border-collapse: collapse;
     border-top:    solid 1px #080;
