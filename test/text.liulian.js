@@ -142,8 +142,8 @@ suite('text.liulian', ()=>{
             assert.equal(liulian(r), result);
         });
         test('行末の ~ は改行になる', ()=>{
-            r.text = '-行末の ~ は~\n改行になる。\n';
-            result = '<ul>\n<li>行末の ~ は<br>\n改行になる。</li>\n</ul>\n\n';
+            r.text = '-行末の ~ は~\n改行になる。~\n';
+            result = '<ul>\n<li>行末の ~ は<br>\n改行になる。<br></li>\n</ul>\n\n';
             assert.equal(liulian(r), result);
         });
         test('入れ子のリスト', ()=>{
@@ -174,15 +174,30 @@ suite('text.liulian', ()=>{
             assert.equal(liulian(r), result);
         });
         test('異種の隣接', ()=>{
-            r.text = '-リスト1\n--リスト2\n++リスト3\n+リスト4\n';
+            r.text = '-リスト1\n--リスト2\n++リスト3\n+リスト4\n-リスト5\n';
             result = '<ul>\n<li>リスト1\n'
                    + '<ul>\n<li>リスト2</li>\n'
                    + '</ul>\n'
                    + '<ol>\n<li>リスト3</li>\n'
                    + '</ol></li>\n'
-                   + '</ul>\n'
-                   + '<ol>\n<li>リスト4</li>\n'
-                   + '</ul>\n\n';
+                   + '</ul>\n\n'
+                   + '<ol>\n<li>リスト4</li>\n</ol>\n\n'
+                   + '<ul>\n<li>リスト5</li>\n</ul>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('箇条書きは段落を終了させる', ()=>{
+            r.text = '段落\n+リスト\n';
+            result = '<p>段落</p>\n\n<ol>\n<li>リスト</li>\n</ol>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('空行で箇条書きは終了する', ()=>{
+            r.text = '+リスト\n\n段落\n';
+            result = '<ol>\n<li>リスト</li>\n</ol>\n\n<p>段落</p>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('段落で箇条書きは終了する', ()=>{
+            r.text = '+リスト\n~段落\n';
+            result = '<ol>\n<li>リスト</li>\n</ol>\n\n<p>段落</p>\n\n';
             assert.equal(liulian(r), result);
         });
     });
