@@ -8,6 +8,24 @@ body {
     margin-top: 0;
 }
 
+a:link {
+    color: #0c0;
+}
+a:visited {
+    color: #080;
+}
+code, kbd, tt {
+    font-family: Menlo, Consolas, Courier, monospace;
+    font-size: 100%;
+}
+kbd {
+    display: inline-block;
+    padding: 1px 2px;
+    background: #eee;
+    border: solid 1px #ccc;
+    border-radius: 2px;
+}
+
 h1 {
     margin-top: 0.5em;
     font-size: 240%;
