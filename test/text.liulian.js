@@ -344,4 +344,44 @@ suite('text.liulian', ()=>{
             assert.equal(liulian(r), result);
         });
     });
+
+    suite('コメント', ()=>{
+        test('// ではじまる行はコメントになる', ()=>{
+            r.text = '// コメント\n';
+            result = '';
+            assert.equal(liulian(r), result);
+        });
+        test('//- の場合は、HTMLのコメントになる', ()=>{
+            r.text = '//- コメント\n';
+            result = '<!-- コメント -->\n';
+            assert.equal(liulian(r), result);
+        });
+        test('/* と */ で囲まれた部分もコメントになる', ()=>{
+            r.text = '/* コメント\nコメントの続き\n*/\n';
+            result = '';
+            assert.equal(liulian(r), result);
+        });
+        test('/** と */ の場合は、HTMLのコメントになる', ()=>{
+            r.text = '/** コメント\nコメントの続き\n*/\n';
+            result = '<!-- コメント\nコメントの続き\n-->\n';
+            assert.equal(liulian(r), result);
+        });
+        test('コメントは段落を終了させる', ()=>{
+            r.text = '段落\n// コメント\n';
+            result = '<p>段落</p>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('コメントは箇条書きを終了させる', ()=>{
+            r.text = '- リスト\n// コメント\n';
+            result = '<ul>\n<li>リスト</li>\n</ul>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('コメントは用語説明を終了させる', ()=>{
+            r.text = ':用語\n//- コメント\n:用語\n説明\n// コメント';
+            result = '<dl>\n<dt>用語</dt>\n</dl>\n\n'
+                   + '<!-- コメント -->\n'
+                   + '<dl>\n<dt>用語</dt>\n<dd>説明</dd>\n</dl>\n\n';
+            assert.equal(liulian(r), result);
+        });
+    });
 });
