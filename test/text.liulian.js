@@ -278,4 +278,25 @@ suite('text.liulian', ()=>{
             assert.equal(liulian(r), result);
         });
     });
+
+    suite('引用 (blockquote)', ()=>{
+        test('>> と << で囲まれた部分は引用になる', ()=>{
+            r.text = '>>\n引用\n継続\n<<\n';
+            result = '<blockquote>\n<p>引用\n継続</p>\n</blockquote>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('引用内には箇条書きも記述可能', ()=>{
+            r.text = '>>\n引用\n-リスト\n<<\n';
+            result = '<blockquote>\n<p>引用</p>\n\n'
+                   + '<ul>\n<li>リスト</li>\n</ul>\n</blockquote>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('引用は入れ子にできる', ()=>{
+            r.text = '>>\n引用\n>>\n入れ子\n<<\n<<\n';
+            result = '<blockquote>\n<p>引用</p>\n\n'
+                   + '<blockquote>\n<p>入れ子</p>\n</blockquote>\n'
+                   + '</blockquote>\n\n';
+            assert.equal(liulian(r), result);
+        });
+    });
 });
