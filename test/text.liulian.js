@@ -299,4 +299,23 @@ suite('text.liulian', ()=>{
             assert.equal(liulian(r), result);
         });
     });
+
+    suite('脚注', ()=>{
+        test('(( と )) で囲まれた部分は脚注になる', ()=>{
+            r.text = '((脚注1)) ((脚注2))\n';
+            result = '<p><sup class="l-footnote">'
+                        + '<a id="l-noteref.1" href="#l-footnote.1" '
+                            + 'title="脚注1">*1</a></sup> '
+                   + '<sup class="l-footnote">'
+                        + '<a id="l-noteref.2" href="#l-footnote.2" '
+                            + 'title="脚注2">*2</a></sup></p>\n\n'
+                   + '<div class="l-footnote">\n<ol>\n'
+                        + '<li><a id="l-footnote.1" href="#l-noteref.1">'
+                            + '^</a> 脚注1</li>\n'
+                        + '<li><a id="l-footnote.2" href="#l-noteref.2">'
+                            + '^</a> 脚注2</li>\n'
+                   + '</ol>\n</div>\n\n';
+            assert.equal(liulian(r), result);
+        });
+    });
 });

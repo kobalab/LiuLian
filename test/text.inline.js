@@ -141,11 +141,11 @@ suite('inline(module, noteref)', ()=>{
   suite('noteref', ()=>{
     const test_case = [
       [ '((&noteref))',
-        '<sup class="ll-footnote"><a id="NOTEREF.1" href="#FOOTNOTE.1" '
+        '<sup class="l-footnote"><a id="l-noteref.1" href="#l-footnote.1" '
           + 'title="&amp;noteref">*1</a></sup>',
         '&amp;noteref'                                                      ],
       [ '(([[&note]]))',
-        '<sup class="ll-footnote"><a id="NOTEREF.2" href="#FOOTNOTE.2" '
+        '<sup class="l-footnote"><a id="l-noteref.2" href="#l-footnote.2" '
           + 'title="&amp;note">*2</a></sup>',
         '<a href="&amp;note">&amp;note</a>'                                 ],
     ];

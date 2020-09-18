@@ -102,6 +102,17 @@ dt {
     font-weight: bold;
 }
 
+sup.l-footnote a {
+    text-decoration: none;
+}
+div.l-footnote {
+    font-size: 90%;
+    border-top: solid 1px #F1E054;
+}
+div.l-footnote a[id] {
+    text-decoration: none;
+}
+
 form {
     margin: 1em auto;
 }
