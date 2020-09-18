@@ -37,6 +37,25 @@ suite('text.liulian', ()=>{
             result = '<p>行頭の ~ は</p>\n\n<p>段落の開始となる。</p>\n\n';
             assert.equal(liulian(r), result);
         });
+        test('行頭の < は左寄せの段落となる', ()=>{
+            r.text = '行頭の < は\n<左寄せの段落となる。\n';
+            result = '<p>行頭の &lt; は</p>\n\n'
+                   + '<p style="text-align: left">左寄せの段落となる。</p>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('行頭の = はセンタリングの段落となる', ()=>{
+            r.text = '行頭の = は\n=センタリングの段落となる。\n';
+            result = '<p>行頭の = は</p>\n\n'
+                   + '<p style="text-align: center">センタリングの段落となる。'
+                   + '</p>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('行頭の > は右寄せの段落となる', ()=>{
+            r.text = '行頭の > は\n>右寄せの段落となる。\n';
+            result = '<p>行頭の &gt; は</p>\n\n'
+                   + '<p style="text-align: right">右寄せの段落となる。</p>\n\n';
+            assert.equal(liulian(r), result);
+        });
     });
 
     suite('タイトル (title, h1)', ()=>{
