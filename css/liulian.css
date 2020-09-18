@@ -73,6 +73,13 @@ pre {
     font-size: 100%;
 }
 
+blockquote {
+    margin: 0px 1em;
+    padding-left: 0.5em;
+    border-left: solid 2px #080;
+    opacity: 0.8;
+}
+
 table {
     border-collapse: collapse;
     border-top:    solid 1px #080;
