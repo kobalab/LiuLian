@@ -272,6 +272,13 @@ suite('text.liulian', ()=>{
             result = '<pre>! 整形済み\n* 継続</pre>\n\n';
             assert.equal(liulian(r), result);
         });
+        test('>|bash のように言語を指定するとシンタックス・ハイライトする', ()=>{
+            r.text = '>|bash\n$ echo "Hello"\n|<\n';
+            result = '<pre><code>$ <span class="hljs-built_in">echo</span> '
+                   + '<span class="hljs-string">&quot;Hello&quot;</span>'
+                   + '</code></pre>\n\n';
+            assert.equal(liulian(r), result);
+        });
         test('>|| と ||< で囲まれた整形済みテキストでは文字飾りが使用可能', ()=>{
             r.text = '>||\n! **整形済み**\n* 継続\n||<\n';
             result = '<pre>! <strong>整形済み</strong>\n* 継続</pre>\n\n';
