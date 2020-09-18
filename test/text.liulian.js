@@ -272,5 +272,10 @@ suite('text.liulian', ()=>{
             result = '<pre>! 整形済み\n* 継続</pre>\n\n';
             assert.equal(liulian(r), result);
         });
+        test('>|| と ||< で囲まれた整形済みテキストでは文字飾りが使用可能', ()=>{
+            r.text = '>||\n! **整形済み**\n* 継続\n||<\n';
+            result = '<pre>! <strong>整形済み</strong>\n* 継続</pre>\n\n';
+            assert.equal(liulian(r), result);
+        });
     });
 });
