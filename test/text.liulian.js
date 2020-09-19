@@ -445,4 +445,67 @@ suite('text.liulian', ()=>{
             assert.equal(liulian(r), result);
         });
     });
+
+    suite('モジュール', ()=>{
+        test('#_(tag)', ()=>{
+            r.text = '#_(tag)\n';
+            result = '<tag>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('#_(tag param)', ()=>{
+            r.text = '#_(tag param)\n';
+            result = '<tag param>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('#_(tag param="param")', ()=>{
+            r.text = '#_(tag param="param")\n';
+            result = '<tag param="param">\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('#_(tag param="param" param)', ()=>{
+            r.text = '#_(tag param="param" param)\n';
+            result = '<tag param="param" param>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('#_(tag param="param" param)<<EOD', ()=>{
+            r.text = '#_(tag param="param" param)<<EOD\n段落\nEOD\n';
+            result = '<tag param="param" param>\n<p>段落</p>\n</tag>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('#_(style)<<EOD', ()=>{
+            r.text = '#_(style)<<EOD\n  p { color: red; }\nEOD\n';
+            result = '<style>\n  p { color: red; }\n</style>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('#_(tag param=1)', ()=>{
+            r.text = '#_(tag param=1)\n';
+            result = '<div style="color:red">'
+                   + '#_(tag param=1)</div>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('#module(param)', ()=>{
+            r.text = '#module(param)\n';
+            result = '<div style="color:red">'
+                   + '#module(param)</div>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('モジュールは段落を終了させる', ()=>{
+            r.text = '段落\n#_(tag param)\n';
+            result = '<p>段落</p>\n\n<tag param>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('モジュールは箇条書きを終了させる', ()=>{
+            r.text = '- リスト\n#_(tag param)\n';
+            result = '<ul>\n<li>リスト</li>\n</ul>\n\n<tag param>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('モジュールは用語説明を終了させる', ()=>{
+            r.text = ':用語\n#_(tag param)\n'
+                   + ':用語\n説明\n#_(tag param)\n';
+            result = '<dl>\n<dt>用語</dt>\n</dl>\n\n<tag param>\n\n'
+                   + '<dl>\n<dt>用語</dt>\n<dd>説明</dd>\n</dl>\n\n'
+                   + '<tag param>\n\n';
+            assert.equal(liulian(r), result);
+        });
+    });
 });
