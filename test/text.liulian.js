@@ -424,7 +424,7 @@ suite('text.liulian', ()=>{
         });
         test('/** と */ の場合は、HTMLのコメントになる', ()=>{
             r.text = '/** コメント\nコメントの続き\n*/\n';
-            result = '<!-- コメント\nコメントの続き\n-->\n';
+            result = '<!-- コメント\nコメントの続き\n-->\n\n';
             assert.equal(liulian(r), result);
         });
         test('コメントは段落を終了させる', ()=>{
