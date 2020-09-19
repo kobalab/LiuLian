@@ -275,6 +275,67 @@ suite('text.liulian', ()=>{
         });
     });
 
+    suite('表 (table)', ()=>{
+        test('行頭が | の場合、表になる', ()=>{
+            r.text = '|テーブル|\n';
+            result = '<table>\n<tr><td>テーブル</td></tr>\n</table>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('~ ではじまるセルはヘッダになる', ()=>{
+            r.text = '|~ヘッダ|~ヘッダ|\n|セル|セル|\n';
+            result = '<table>\n'
+                   + '<tr><th>ヘッダ</th><th>ヘッダ</th></tr>\n'
+                   + '<tr><td>セル</td><td>セル</td></tr>\n'
+                   + '</table>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('- ではじまるセルは左と結合する', ()=>{
+            r.text = '|~ヘッダ|~ヘッダ|\n|セル|-|\n';
+            result = '<table>\n'
+                   + '<tr><th>ヘッダ</th><th>ヘッダ</th></tr>\n'
+                   + '<tr><td colspan="2">セル</td></tr>\n'
+                   + '</table>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('^ ではじまるセルは上と結合する', ()=>{
+            r.text = '|~ヘッダ|セル|\n|^|セル|\n';
+            result = '<table>\n'
+                   + '<tr><th rowspan="2">ヘッダ</th><td>セル</td></tr>\n'
+                   + '<tr><td>セル</td></tr>\n'
+                   + '</table>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('結合の複合', ()=>{
+            r.text = '|セル|-|\n|^|-|\n';
+            result = '<table>\n'
+                   + '<tr><td colspan="2" rowspan="2">セル</td></tr>\n'
+                   + '<tr></tr>\n'
+                   + '</table>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('< = > で左寄せ、センタリング、右寄せを指定できる', ()=>{
+            r.text = '|~<ヘッダ|~>ヘッダ|\n|=セル|-|\n';
+            result = '<table>\n'
+                   + '<tr><th style="text-align:left">ヘッダ</th>'
+                        + '<th style="text-align:right">ヘッダ</th></tr>\n'
+                   + '<tr><td colspan="2" style="text-align:center">'
+                        + 'セル</td></tr>\n'
+                   + '</table>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('#fcf の形式で背景色を指定できる', ()=>{
+            r.text = '|~<ヘッダ|~>ヘッダ|\n|=#fcf セル|-|\n';
+            result = '<table>\n'
+                   + '<tr><th style="text-align:left">ヘッダ</th>'
+                        + '<th style="text-align:right">ヘッダ</th></tr>\n'
+                   + '<tr><td colspan="2" '
+                        + 'style="text-align:center;background:#fcf">'
+                        + ' セル</td></tr>\n'
+                   + '</table>\n\n';
+            assert.equal(liulian(r), result);
+        });
+    });
+
     suite('整形済みテキスト (pre)', ()=>{
         test('行頭が空白文字の場合、整形済みテキストになる', ()=>{
             r.text = ' 整形済み\n';

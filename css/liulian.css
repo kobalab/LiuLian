@@ -82,16 +82,9 @@ blockquote {
 
 table {
     border-collapse: collapse;
-    border-top:    solid 1px #080;
-    border-bottom: solid 1px #080;
-}
-tbody {
-    border-top: solid 1px #080;
-}
-tr + tr {
-    border-top: solid 1px #9c9;
 }
 th, td {
+    border:  solid 1px #9c9;
     padding: 2px 0.5em;
 }
 th {
