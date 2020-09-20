@@ -1,11 +1,23 @@
 const assert  = require('assert');
 
-function do_test(inline, test_case) {
+class Parser {
+    constructor() { this._note = [] }
+    module(str, name, param, value) {
+        if (param || value) return `&${name}(${param}){${value}};`;
+        else return `&${name};`;
+    }
+    noteref(str) {
+        this._note.push(str);
+        return this._note.length;
+    }
+}
+
+function do_test(inline, test_case, parser) {
     for (let t of test_case) {
         let rv = inline(t[0]);
         test(`${t[0]} → ${t[1]}`, ()=>assert.equal(rv, t[1]));
         if (! t[2]) continue;
-        let fn = note[note.length - 1];
+        let fn = parser._note[parser._note.length - 1];
         test(`${t[0]} → ${fn}`, ()=>assert.equal(fn, t[2]));
     }
 }
@@ -114,21 +126,10 @@ suite('inline()', ()=>{
   });
 });
 
-function module(str, name, param, value) {
-    if (param || value) return `&${name}(${param}){${value}};`;
-    else return `&${name};`;
-}
-
-const note = [];
-
-function noteref(str) {
-    note.push(str);
-    return note.length;
-}
-
 suite('inline(module, noteref)', ()=>{
 
-  const inline = require('../lib/text/inline')(module, noteref);
+  const parser = new Parser();
+  const inline = require('../lib/text/inline')(parser);
   test('require', ()=>assert.ok(inline));
 
   suite('module', ()=>{
@@ -136,7 +137,7 @@ suite('inline(module, noteref)', ()=>{
       [ '&name(param){value};',     '&name(param){value};'                  ],
       [ '&name;',                   '&name;'                                ],
     ];
-    do_test(inline, test_case);
+    do_test(inline, test_case, parser);
   });
   suite('noteref', ()=>{
     const test_case = [
@@ -149,6 +150,6 @@ suite('inline(module, noteref)', ()=>{
           + 'title="&amp;note">*2</a></sup>',
         '<a href="&amp;note">&amp;note</a>'                                 ],
     ];
-    do_test(inline, test_case);
+    do_test(inline, test_case, parser);
   });
 });
