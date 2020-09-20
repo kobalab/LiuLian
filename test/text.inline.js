@@ -2,7 +2,7 @@ const assert  = require('assert');
 
 class Parser {
     constructor() { this._note = [] }
-    module(str, name, param, value) {
+    inlineModule(str, name, param, value) {
         if (param || value) return `&${name}(${param}){${value}};`;
         else return `&${name};`;
     }
