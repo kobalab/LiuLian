@@ -56,6 +56,11 @@ suite('text.liulian', ()=>{
                    + '<p style="text-align: right">右寄せの段落となる。</p>\n\n';
             assert.equal(liulian(r), result);
         });
+        test('段落内では文字飾りを使うことができる', ()=>{
+            r.text = 'これは**段落**になる。\n';
+            result = '<p>これは<strong>段落</strong>になる。</p>\n\n';
+            assert.equal(liulian(r), result);
+        });
     });
 
     suite('タイトル (title, h1)', ()=>{
@@ -165,6 +170,11 @@ suite('text.liulian', ()=>{
             result = '<ul>\n<li>行末の ~ は<br>\n改行になる。<br></li>\n</ul>\n\n';
             assert.equal(liulian(r), result);
         });
+        test('文字飾りを使うことができる', ()=>{
+            r.text = '- **リスト**\n';
+            result = '<ul>\n<li><strong>リスト</strong></li>\n</ul>\n\n';
+            assert.equal(liulian(r), result);
+        });
         test('入れ子のリスト', ()=>{
             r.text = '-リスト1\n--リスト2\n-リスト3\n';
             result = '<ul>\n<li>リスト1\n'
@@ -255,6 +265,12 @@ suite('text.liulian', ()=>{
                    + '<dd>説明</dd>\n</dl>\n\n';
             assert.equal(liulian(r), result);
         });
+        test('文字飾りを使うことができる', ()=>{
+            r.text = ':**用語**\n\'\'説明\'\'\n';
+            result = '<dl>\n<dt><strong>用語</strong>'
+                   + '</dt>\n<dd><em>説明</em></dd>\n</dl>\n\n';
+            assert.equal(liulian(r), result);
+        });
         test('空行で用語説明は終了する', ()=>{
             r.text = ':用語\n説明\n\n段落\n'
                    + ':用語\n\n段落\n';
@@ -334,6 +350,13 @@ suite('text.liulian', ()=>{
                    + '</table>\n\n';
             assert.equal(liulian(r), result);
         });
+        test('文字飾りを使うことができる', ()=>{
+            r.text = '|**テーブル**|\n';
+            result = '<table>\n'
+                   + '<tr><td><strong>テーブル</strong></td></tr>\n'
+                   + '</table>\n\n';
+            assert.equal(liulian(r), result);
+        });
     });
 
     suite('整形済みテキスト (pre)', ()=>{
@@ -347,9 +370,19 @@ suite('text.liulian', ()=>{
             result = '<pre>整形済み\n継続</pre>\n\n<p>段落</p>\n\n';
             assert.equal(liulian(r), result);
         });
+        test('文字飾りは使用できない', ()=>{
+            r.text = ' **整形済み**\n';
+            result = '<pre>**整形済み**</pre>\n\n';
+            assert.equal(liulian(r), result);
+        });
         test('>| と |< で囲まれた部分も整形済みテキストになる', ()=>{
             r.text = '>|\n! 整形済み\n* 継続\n|<\n';
             result = '<pre>! 整形済み\n* 継続</pre>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('文字飾りは使用できない', ()=>{
+            r.text = '>|\n**整形済み**\n|<\n';
+            result = '<pre>**整形済み**</pre>\n\n';
             assert.equal(liulian(r), result);
         });
         test('>|bash のように言語を指定するとシンタックス・ハイライトする', ()=>{
@@ -401,6 +434,17 @@ suite('text.liulian', ()=>{
                             + '^</a> 脚注1</li>\n'
                         + '<li><a id="l-footnote.2" href="#l-noteref.2">'
                             + '^</a> 脚注2</li>\n'
+                   + '</ol>\n</div>\n\n';
+            assert.equal(liulian(r), result);
+        });
+        test('文字飾りを使うことができる', ()=>{
+            r.text = '((**脚注**))\n';
+            result = '<p><sup class="l-footnote">'
+                        + '<a id="l-noteref.1" href="#l-footnote.1" '
+                            + 'title="脚注">*1</a></sup></p>\n\n'
+                   + '<div class="l-footnote">\n<ol>\n'
+                        + '<li><a id="l-footnote.1" href="#l-noteref.1">'
+                            + '^</a> <strong>脚注</strong></li>\n'
                    + '</ol>\n</div>\n\n';
             assert.equal(liulian(r), result);
         });
