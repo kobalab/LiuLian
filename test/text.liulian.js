@@ -32,6 +32,11 @@ suite('text.liulian', ()=>{
             result = '<p>行末の ~ は<br>\n改行になる。</p>\n\n';
             liulian(r).then(html=>{assert.equal(html, result); done()});
         });
+        test('行末の \\ は継続行になる', (done)=>{
+            r.text = '行末の \\ は\\\n継続行になる。\n';
+            result = '<p>行末の \\ は継続行になる。</p>\n\n';
+            liulian(r).then(html=>{assert.equal(html, result); done()});
+        });
         test('行頭の ~ は段落の開始となる', (done)=>{
             r.text = '行頭の ~ は\n~段落の開始となる。\n';
             result = '<p>行頭の ~ は</p>\n\n<p>段落の開始となる。</p>\n\n';
