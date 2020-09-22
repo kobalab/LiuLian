@@ -2,6 +2,10 @@ const assert = require('assert');
 
 const liulian = require('../lib/text/liulian');
 const r = {
+    _req: {
+        config: { home: __dirname + '/data/' },
+        pathDir: '/path/'
+    },
     _title: null,
     title(title) { this._title = title },
 };
@@ -42,6 +46,34 @@ suite('module/core', ()=>{
                    + '</div>\n\n'
                    + '<h2 id="l-sec.1">見出し1</h2>\n\n'
                    + '<h3 id="anchor">見出し2</h3>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+    });
+
+    suite('include - 別のファイルを読み込む', ()=>{
+        test('ファイルを読み込んで処理すること', ()=>{
+            r.text = '#include(file)\n';
+            result = '<h1>タイトル</h1>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('相対パスでもファイルを読み込んで処理できること', ()=>{
+            r.text = '#include(../path/file)\n';
+            result = '<h1>タイトル</h1>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('絶対パスでもファイルを読み込んで処理できること', ()=>{
+            r.text = '#include(/path/file)\n';
+            result = '<h1>タイトル</h1>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('ファイルが存在しない場合エラーとなること', ()=>{
+            r.text = '#include(../file)\n';
+            result = '<div style="color:red">#include(../file)</div>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('ファイルがLiuLian形式でない場合エラーとなること', ()=>{
+            r.text = '#include(file.txt)\n';
+            result = '<div style="color:red">#include(file.txt)</div>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
     });
