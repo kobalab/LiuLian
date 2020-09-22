@@ -37,6 +37,11 @@ suite('text.liulian', ()=>{
             result = '<p>行末の \\ は継続行になる。</p>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
+        test('行頭の \\ は捨てられる', ()=>{
+            r.text = '行頭の \n\\ は捨てられる。\n';
+            result = '<p>行頭の \n は捨てられる。</p>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
         test('行頭の ~ は段落の開始となる', ()=>{
             r.text = '行頭の ~ は\n~段落の開始となる。\n';
             result = '<p>行頭の ~ は</p>\n\n<p>段落の開始となる。</p>\n\n';
@@ -181,6 +186,11 @@ suite('text.liulian', ()=>{
         test('行末の ~ は改行になる', ()=>{
             r.text = '-行末の ~ は~\n改行になる。~\n';
             result = '<ul>\n<li>行末の ~ は<br>\n改行になる。<br></li>\n</ul>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('行頭の \\ は捨てられる', ()=>{
+            r.text = '-行頭の \n\\ は捨てられる。\n';
+            result = '<ul>\n<li>行頭の \n は捨てられる。</li>\n</ul>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('文字飾りを使うことができる', ()=>{
