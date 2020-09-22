@@ -9,7 +9,7 @@ let result;
 
 suite('module/core', ()=>{
 
-    suite('title', ()=>{
+    suite('title - HTMLのタイトルを指定する', ()=>{
         test('HTMLのタイトルが変更されること', ()=>{
             r.text = '#title(Title)\n! タイトル\n';
             return liulian(r).then(html=>assert.equal(r._title, 'Title'));
@@ -28,6 +28,21 @@ suite('module/core', ()=>{
             r.text = '#title(Title: $$)\n! タイトル\n#title(TITLE: $$)\n';
             return liulian(r).then(html=>
                 assert.equal(r._title, 'TITLE: タイトル'));
+        });
+    });
+
+    suite('contentss - 目次を作成する', ()=>{
+        test('目次が作成されること', ()=>{
+            r.text = '#contents\n* 見出し1\n** 見出し2[anchor]\n';
+            result = '<div class="l-contents">\n'
+                   + '<ul>\n'
+                   + '<li><a href="#l-sec.1">見出し1</a>\n'
+                   + '<ul>\n<li><a href="#anchor">見出し2</a></li>\n</ul></li>\n'
+                   + '</ul>\n'
+                   + '</div>\n\n'
+                   + '<h2 id="l-sec.1">見出し1</h2>\n\n'
+                   + '<h3 id="anchor">見出し2</h3>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
         });
     });
 });
