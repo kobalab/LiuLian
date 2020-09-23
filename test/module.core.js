@@ -173,4 +173,12 @@ suite('module/core', ()=>{
             return liulian(r).then(html=>assert.equal(html, result));
         });
     });
+
+    suite('size - 文字の大きさを変える', ()=>{
+        test('文字サイズが指定できること', ()=>{
+            r.text = '&size(18px){サイズ};\n';
+            result = '<p><span style="font-size:18px">サイズ</span></p>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+    });
 });
