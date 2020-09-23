@@ -94,6 +94,9 @@ suite('inline()', ()=>{
         [ '[[|bracket||./]]',    '<a href="./">|bracket|</a>'               ],
         [ '[[``bracket``]]', '<a href="%60%60bracket%60%60">``bracket``</a>'],
         [ '[[``bracket``|./]]',  '<a href="./"><code>bracket</code></a>'    ],
+        [ '[[テスト|%E3%83%86%E3%82%B9%E3%83%88]]',
+                          '<a href="%E3%83%86%E3%82%B9%E3%83%88">テスト</a>' ],
+        [ '[[100%|100%]]',       '<a href="100%25">100%</a>'                ],
       ];
       do_test(inline, test_case);
     });
