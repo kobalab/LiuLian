@@ -181,4 +181,12 @@ suite('module/core', ()=>{
             return liulian(r).then(html=>assert.equal(html, result));
         });
     });
+
+    suite('br - 改行する', ()=>{
+        test('改行できること', ()=>{
+            r.text = '改行&br;する\n';
+            result = '<p>改行<br>する</p>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+    });
 });
