@@ -152,4 +152,25 @@ suite('module/core', ()=>{
             return liulian(r).then(html=>assert.equal(html, result));
         });
     });
+
+    suite('color - 文字の色を変える', ()=>{
+        test('文字色が指定できること', ()=>{
+            r.text = '&color(red){文字色};\n';
+            result = '<p><span style="color:red;">文字色</span></p>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('背景色が指定できること', ()=>{
+            r.text = '&color(,red){背景色};\n';
+            result = '<p><span style="background:red;display:inline-block;'
+                   + 'padding:1px 2px;">背景色</span></p>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('縁取色が指定できること', ()=>{
+            r.text = '&color(,,red){縁取色};\n';
+            result = '<p><span style="border:solid 1px red;'
+                   + 'display:inline-block;padding:1px 2px;'
+                   + 'border-radius:2px;">縁取色</span></p>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+    });
 });
