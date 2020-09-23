@@ -23,7 +23,8 @@ suite('auth/file', ()=>{
     });
 
     suite('.add()', ()=>{
-        test('追加後にユーザ数が増えていること', ()=>{
+        test('追加後にユーザ数が増えていること', (done)=>{
+            auth._callback = done;
             auth.add('admin', 'passwd');
             assert.deepEqual(auth.users(), ['admin']);
         });
@@ -33,14 +34,16 @@ suite('auth/file', ()=>{
             assert.equal(auth.admin(), 'admin'));
         test('ユーザ認証できること', ()=>
             assert.ok(auth.validate('admin', 'passwd')));
-        test('2人目のユーザが正しく登録されること', ()=>{
+        test('2人目のユーザが正しく登録されること', (done)=>{
+            auth._callback = done;
             auth.add('user', 'passwd');
             assert.deepEqual(auth.users(), ['admin', 'user']);
             assert.ok(auth.exist('user'));
             assert.equal(auth.admin(), 'admin');
             assert.ok(auth.validate('user', 'passwd'));
         });
-        test('パスワードなしでもユーザが登録できること', ()=>{
+        test('パスワードなしでもユーザが登録できること', (done)=>{
+            auth._callback = done;
             auth.add('user2');
             assert.deepEqual(auth.users(), ['admin', 'user', '#user2']);
             assert.ok(auth.exist('user2'));
@@ -55,24 +58,23 @@ suite('auth/file', ()=>{
             assert.equal(auth.users().length, 3);
             assert.ok(! auth.exist('user:'));
         });
-        test('再読み込みで正しく情報が反映されること', (done)=>{
-            setTimeout(()=>{
-                auth = require('../lib/auth/file')(auth_file);
-                assert.deepEqual(auth.users(), ['admin', 'user', '#user2']);
-                assert.equal(auth.admin(), 'admin');
-                assert.ok(auth.validate('admin', 'passwd'));
-                assert.ok(auth.validate('user', 'passwd'));
-                done();
-            }, 10);
+        test('再読み込みで正しく情報が反映されること', ()=>{
+            auth = require('../lib/auth/file')(auth_file);
+            assert.deepEqual(auth.users(), ['admin', 'user', '#user2']);
+            assert.equal(auth.admin(), 'admin');
+            assert.ok(auth.validate('admin', 'passwd'));
+            assert.ok(auth.validate('user', 'passwd'));
         });
     });
 
     suite('.passwd()', ()=>{
-        test('パスワードが変更できること', ()=>{
+        test('パスワードが変更できること', (done)=>{
+            auth._callback = done;
             auth.passwd('user', 'new-passwd');
             assert.ok(auth.validate('user', 'new-passwd'));
         });
-        test('停止中ユーザを復旧できること', ()=>{
+        test('停止中ユーザを復旧できること', (done)=>{
+            auth._callback = done;
             auth.passwd('user2', 'passwd');
             assert.ok(auth.validate('user2', 'passwd'));
         });
@@ -81,43 +83,41 @@ suite('auth/file', ()=>{
             assert.equal(auth.users().length, 3);
             assert.ok(! auth.validate('*', 'passwd'));
         });
-        test('再読み込みで正しく情報が反映されること', (done)=>{
-            setTimeout(()=>{
-                auth = require('../lib/auth/file')(auth_file);
-                assert.deepEqual(auth.users(), ['admin', 'user', 'user2']);
-                done();
-            }, 10);
+        test('再読み込みで正しく情報が反映されること', ()=>{
+            auth = require('../lib/auth/file')(auth_file);
+            assert.deepEqual(auth.users(), ['admin', 'user', 'user2']);
         });
     });
 
     suite('.del()', ()=>{
-        test('ユーザを停止できること', ()=>{
+        test('ユーザを停止できること', (done)=>{
+            auth._callback = done;
             auth.del('user');
             assert.ok(! auth.validate('user', 'new-passwd'));
             assert.ok(auth.exist('user'));
             assert.deepEqual(auth.users(), ['admin', '#user', 'user2']);
         });
-        test('管理者でも停止できること', ()=>{
+        test('管理者でも停止できること', (done)=>{
+            auth._callback = done;
             auth.del('admin');
             assert.ok(auth.admin(), 'admin');
             assert.deepEqual(auth.users(), ['#admin', '#user', 'user2']);
         });
-        test('ユーザを削除できること', ()=>{
+        test('ユーザを削除できること', (done)=>{
+            auth._callback = done;
             auth.del('user2', true);
             assert.ok(! auth.exist('user2'));
             assert.deepEqual(auth.users(), ['#admin', '#user']);
         });
-        test('再読み込みで正しく情報が反映されること', (done)=>{
-            setTimeout(()=>{
-                auth = require('../lib/auth/file')(auth_file);
-                assert.deepEqual(auth.users(), ['#admin', '#user']);
-                done();
-            }, 10);
+        test('再読み込みで正しく情報が反映されること', ()=>{
+            auth = require('../lib/auth/file')(auth_file);
+            assert.deepEqual(auth.users(), ['#admin', '#user']);
         });
     });
 
     suite('.admin()', ()=>{
-        test('管理者が変更できること', ()=>{
+        test('管理者が変更できること', (done)=>{
+            auth._callback = done;
             auth.admin('user');
             assert.equal(auth.admin(), 'user');
         });
@@ -125,12 +125,9 @@ suite('auth/file', ()=>{
             auth.admin('*');
             assert.equal(auth.admin(), 'user');
         });
-        test('再読み込みで正しく情報が反映されること', (done)=>{
-            setTimeout(()=>{
-                auth = require('../lib/auth/file')(auth_file);
-                assert.equal(auth.admin(), 'user');
-                done();
-            }, 10);
+        test('再読み込みで正しく情報が反映されること', ()=>{
+            auth = require('../lib/auth/file')(auth_file);
+            assert.equal(auth.admin(), 'user');
         });
     });
 
