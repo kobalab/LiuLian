@@ -8,7 +8,7 @@ class Parser {
     }
     noteref(str) {
         this._note.push(str);
-        return this._note.length;
+        return '.' + this._note.length;
     }
 }
 
