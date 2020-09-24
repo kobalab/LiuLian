@@ -12,6 +12,7 @@ const r = {
     stylesheet(...arg) { this._.stylesheet = arg },
     style(text) { this._.style = text },
     icon(url) { this._.icon = url },
+    lang(lang) { this._.lang = lang },
 };
 let result;
 
@@ -256,6 +257,19 @@ suite('module/core', ()=>{
         test('アイコンが指定できること', ()=>{
             r.text = '#icon(url)\n';
             return liulian(r).then(html=>assert.equal(r._.icon, 'url'));
+        });
+    });
+
+    suite('lang - コンテンツの言語を指定する', ()=>{
+        test('文書全体の言語が指定できること', ()=>{
+            r.text = '#lang(ja)\n';
+            return liulian(r).then(html=>assert.equal(r._.lang, 'ja'));
+        });
+        test('指定範囲の言語が指定できること', ()=>{
+            r.text = '#lang(ja)<<++\n日本語\n++\n&lang(ja){日本語};\n';
+            result = '<div lang="ja">\n<p>日本語</p>\n</div>\n\n'
+                   + '<p><span lang="ja">日本語</span></p>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
         });
     });
 });
