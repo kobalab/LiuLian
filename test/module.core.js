@@ -13,6 +13,7 @@ const r = {
     style(text) { this._.style = text },
     icon(url) { this._.icon = url },
     lang(lang) { this._.lang = lang },
+    script(script) { this._.script = script }
 };
 let result;
 
@@ -249,7 +250,7 @@ suite('module/core', ()=>{
         test('スタイルを展開できること', ()=>{
             r.text = '#style<<++\nbody { color: #333; }\n++\n';
             return liulian(r).then(html=>
-                    assert.deepEqual(r._.style, 'body { color: #333; }\n'));
+                    assert.equal(r._.style, 'body { color: #333; }\n'));
         });
     });
 
@@ -270,6 +271,18 @@ suite('module/core', ()=>{
             result = '<div lang="ja">\n<p>日本語</p>\n</div>\n\n'
                    + '<p><span lang="ja">日本語</span></p>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
+        });
+    });
+
+    suite('script - JavaScriptを使う', ()=>{
+        test('外部スクリプトを指定できること', ()=>{
+            r.text = '#script(url)\n';
+            return liulian(r).then(html=>assert.equal(r._.script.url, 'url'));
+        });
+        test('スクリプトを展開できること', ()=>{
+            r.text = '#script<<++\nvar a = 1 + 2;\n++\n';
+            return liulian(r).then(html=>
+                    assert.equal(r._.script.code, 'var a = 1 + 2;\n'));
         });
     });
 });
