@@ -221,4 +221,13 @@ suite('module/core', ()=>{
             return liulian(r).then(html=>assert.equal(html, result));
         });
     });
+
+    suite('class - スタイルシート用のクラスを定義する', ()=>{
+        test('クラスが定義できること', ()=>{
+            r.text = '#class(name)<<++\nクラス\n++\n&class(name){クラス};\n';
+            result = '<div class="name">\n<p>クラス</p>\n</div>\n\n'
+                   + '<p><span class="name">クラス</span></p>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+    });
 });
