@@ -10,7 +10,8 @@ const r = {
     _: {},
     title(title) { this._.title = title },
     stylesheet(...arg) { this._.stylesheet = arg },
-    style(text)  { this._.style = text },
+    style(text) { this._.style = text },
+    icon(url) { this._.icon = url },
 };
 let result;
 
@@ -248,6 +249,13 @@ suite('module/core', ()=>{
             r.text = '#style<<++\nbody { color: #333; }\n++\n';
             return liulian(r).then(html=>
                     assert.deepEqual(r._.style, 'body { color: #333; }\n'));
+        });
+    });
+
+    suite('icon - アイコンを指定する', ()=>{
+        test('アイコンが指定できること', ()=>{
+            r.text = '#icon(url)\n';
+            return liulian(r).then(html=>assert.equal(r._.icon, 'url'));
         });
     });
 });
