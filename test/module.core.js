@@ -51,6 +51,27 @@ suite('module/core', ()=>{
         });
     });
 
+    suite('footnote - 脚注を表示する', ()=>{
+        test('脚注が表示されること', ()=>{
+            r.text = '((脚注1))\n#footnote\n((脚注2))\n';
+            result = '<p><sup class="l-footnote">'
+                   + '<a id="l-noteref.1" href="#l-footnote.1" title="脚注1">'
+                   + '*1</a></sup></p>\n\n'
+                   + '<div class="l-footnote">\n<ol>\n'
+                   + '<li><a id="l-footnote.1" href="#l-noteref.1">'
+                        + '^</a> 脚注1</li>\n'
+                   + '</ol>\n</div>\n\n'
+                   + '<p><sup class="l-footnote">'
+                   + '<a id="l-noteref1.1" href="#l-footnote1.1" title="脚注2">'
+                   + '*1</a></sup></p>\n\n'
+                   + '<div class="l-footnote">\n<ol>\n'
+                   + '<li><a id="l-footnote1.1" href="#l-noteref1.1">'
+                        + '^</a> 脚注2</li>\n'
+                   + '</ol>\n</div>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+    });
+
     suite('include - 別のファイルを読み込む', ()=>{
         test('ファイルを読み込んで処理すること', ()=>{
             r.text = '#include(file)\n';
