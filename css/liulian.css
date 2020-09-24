@@ -91,10 +91,6 @@ th {
     background: #cfc;
 }
 
-dt {
-    font-weight: bold;
-}
-
 sup.l-footnote a {
     text-decoration: none;
 }
@@ -111,16 +107,26 @@ form {
 }
 fieldset {
     border: solid 1px #080;
+    border-radius: 4px;
 }
 input[type="text"], input[type="password"] {
+    -webkit-appearance: none;
     padding: 2px;
     font-family: Menlo, Consolas, Courier, monospace;
     font-size: 100%;
+    border: solid 1px #999;
+    border-radius: 2px;
+}
+input[disabled] {
+    background: #eee;
+    opacity: 1;
 }
 textarea {
-    padding: 2px;
+    padding: 4px;
     font-family: Osaka-Mono, "ＭＳ ゴシック", Courier, monospace;
     font-size: 100%;
+    border: solid 1px #999;
+    border-radius: 4px;
 }
 input[type="submit"] {
     -webkit-appearance: none;
@@ -128,6 +134,8 @@ input[type="submit"] {
     background: #080;
     color: white;
     font-size: 100%;
+    border: solid 1px #080;
+    border-radius: 4px;
 }
 
 #l-toolbar {

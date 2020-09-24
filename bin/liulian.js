@@ -49,7 +49,7 @@ app.disable('x-powered-by');
 app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ limit: '4mb', extended: false }));
 app.use('/css', express.static(path.join(__dirname, '../css')));
 app.use(upload.fields([{name: 'file'}]));
 app.use(liulian);
