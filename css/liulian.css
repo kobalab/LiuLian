@@ -110,6 +110,7 @@ fieldset {
     border-radius: 4px;
 }
 input[type="text"], input[type="password"] {
+    -webkit-appearance: none;
     padding: 2px;
     font-family: Menlo, Consolas, Courier, monospace;
     font-size: 100%;
@@ -118,6 +119,7 @@ input[type="text"], input[type="password"] {
 }
 input[disabled] {
     background: #eee;
+    opacity: 1;
 }
 textarea {
     padding: 4px;
