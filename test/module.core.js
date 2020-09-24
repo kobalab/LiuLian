@@ -210,4 +210,15 @@ suite('module/core', ()=>{
             return liulian(r).then(html=>assert.equal(html, result));
         });
     });
+
+    suite('clear - 文字の回り込みを解除する', ()=>{
+        test('文字の回り込みを解除できること', ()=>{
+            r.text = '#clear(left)\n#clear\n&clear(right);&clear;\n';
+            result = '<div style="clear:left"></div>\n\n'
+                   + '<div style="clear:both"></div>\n\n'
+                   + '<p><br style="clear:right">'
+                        + '<br style="clear:both"></p>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+    });
 });
