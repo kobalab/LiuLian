@@ -7,8 +7,10 @@ const r = {
         pathDir: '/path/',
         fixpath: (path)=>path,
     },
-    _title: null,
-    title(title) { this._title = title },
+    _: {},
+    title(title) { this._.title = title },
+    stylesheet(...arg) { this._.stylesheet = arg },
+    style(text)  { this._.style = text },
 };
 let result;
 
@@ -17,7 +19,7 @@ suite('module/core', ()=>{
     suite('title - HTMLのタイトルを指定する', ()=>{
         test('HTMLのタイトルが変更されること', ()=>{
             r.text = '#title(Title)\n! タイトル\n';
-            return liulian(r).then(html=>assert.equal(r._title, 'Title'));
+            return liulian(r).then(html=>assert.equal(r._.title, 'Title'));
         });
         test('文書のタイトルは変更されないこと', ()=>{
             r.text = '#title(Title)\n! タイトル\n';
@@ -27,12 +29,12 @@ suite('module/core', ()=>{
         test('$$ に文書のタイトルが埋め込まれること', ()=>{
             r.text = '#title(Title: $$)\n! タイトル\n';
             return liulian(r).then(html=>
-                assert.equal(r._title, 'Title: タイトル'));
+                assert.equal(r._.title, 'Title: タイトル'));
         });
         test('最後に指定されたものが有効になること', ()=>{
             r.text = '#title(Title: $$)\n! タイトル\n#title(TITLE: $$)\n';
             return liulian(r).then(html=>
-                assert.equal(r._title, 'TITLE: タイトル'));
+                assert.equal(r._.title, 'TITLE: タイトル'));
         });
     });
 
@@ -228,6 +230,24 @@ suite('module/core', ()=>{
             result = '<div class="name">\n<p>クラス</p>\n</div>\n\n'
                    + '<p><span class="name">クラス</span></p>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
+        });
+    });
+
+    suite('style - スタイルシートを指定する', ()=>{
+        test('スタイルシートが指定できること', ()=>{
+            r.text = '#style(url)\n';
+            return liulian(r).then(html=>
+                        assert.deepEqual(r._.stylesheet, ['url']));
+        });
+        test('スタイルシートの media が指定できること', ()=>{
+            r.text = '#style(url, media)\n';
+            return liulian(r).then(html=>
+                        assert.deepEqual(r._.stylesheet, ['url','media']));
+        });
+        test('スタイルを展開できること', ()=>{
+            r.text = '#style<<++\nbody { color: #333; }\n++\n';
+            return liulian(r).then(html=>
+                    assert.deepEqual(r._.style, 'body { color: #333; }\n'));
         });
     });
 });
