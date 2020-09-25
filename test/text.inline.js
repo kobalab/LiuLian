@@ -40,7 +40,8 @@ suite('inline()', ()=>{
         [ '&_(tag);',                 '<tag>'                               ],
         [ '&_(tag param="1" param);', '<tag param="1" param>'               ],
         [ '&_(tag param=">");',       '&amp;_(tag param=&quot;&gt;&quot;);' ],
-        [ '&tag;',                    '&amp;tag;'                           ],
+        [ '&tag;',                    '&tag;'                               ],
+        [ '&tag();',                  '&amp;tag();'                         ],
         [ '&_(tag){}};',              '<tag>}</tag>'                        ],
         [ '&_(tag1){&_(tag2){}};};' , '<tag1><tag2>}</tag2></tag1>'         ],
       ];
