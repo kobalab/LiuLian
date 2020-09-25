@@ -54,6 +54,30 @@ suite('module/core', ()=>{
                    + '<h3 id="anchor">見出し2</h3>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
+        test('すでに登場済の見出しは目次に含めないこと', ()=>{
+            r.text = '* 見出し1\n#contents\n* 見出し2\n';
+            result = '<h2 id="l-sec.1">見出し1</h2>\n\n'
+                   + '<div class="l-contents">\n'
+                   + '<ul>\n'
+                   + '<li><a href="#l-sec.2">見出し2</a></li>\n'
+                   + '</ul>\n'
+                   + '</div>\n\n'
+                   + '<h2 id="l-sec.2">見出し2</h2>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('「ブロック外」の見出しは目次に含めないこと', ()=>{
+            r.text = '#class(class)<<++\n#contents\n* 見出し1\n++\n* 見出し2\n';
+            result = '<div class="class">\n'
+                   + '<div class="l-contents">\n'
+                   + '<ul>\n'
+                   + '<li><a href="#l-sec.1">見出し1</a></li>\n'
+                   + '</ul>\n'
+                   + '</div>\n\n'
+                   + '<h2 id="l-sec.1">見出し1</h2>\n'
+                   + '</div>\n\n'
+                   + '<h2 id="l-sec.2">見出し2</h2>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
     });
 
     suite('footnote - 脚注を表示する', ()=>{
