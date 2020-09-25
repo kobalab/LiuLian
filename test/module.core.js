@@ -198,12 +198,24 @@ suite('module/core', ()=>{
                    + 'border-radius:2px;">縁取色</span></p>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
+        test('文字飾りが使えること', ()=>{
+            r.text = '&color(red){**文字色**};\n';
+            result = '<p><span style="color:red;"><strong>'
+                   + '文字色</strong></span></p>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
     });
 
     suite('size - 文字の大きさを変える', ()=>{
         test('文字サイズが指定できること', ()=>{
             r.text = '&size(18px){サイズ};\n';
             result = '<p><span style="font-size:18px">サイズ</span></p>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('文字飾りが使えること', ()=>{
+            r.text = '&size(18px){**サイズ**};\n';
+            result = '<p><span style="font-size:18px"><strong>'
+                   + 'サイズ</strong></span></p>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
     });
