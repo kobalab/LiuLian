@@ -5,7 +5,7 @@ const r = {
     _req: {
         config: { home: __dirname + '/data/' },
         pathDir: '/path/',
-        fixpath: (path)=>path,
+        fixpath: (path)=>path.match(/^#/) ? path : '/path/' + path,
     },
     _: {},
     title(title) { this._.title = title },
@@ -107,74 +107,74 @@ suite('module/core', ()=>{
 
     suite('img - 画像を埋め込む', ()=>{
         test('URLが指定できること', ()=>{
-            r.text = '#img(path/file.png)\n';
-            result = '<img src="path/file.png" alt="">';
+            r.text = '#img(file.png)\n';
+            result = '<img src="/path/file.png" alt="">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('代替文字列が指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列)\n';
-            result = '<img src="path/file.png" alt="代替文字列">';
+            r.text = '#img(file.png,代替文字列)\n';
+            result = '<img src="/path/file.png" alt="代替文字列">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('リンクが貼れること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,link)\n';
-            result = '<a href="path/file.png">'
-                   + '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,link)\n';
+            result = '<a href="/path/file.png">'
+                   + '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="border:solid 1px"></a>';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('回り込みが指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,left)\n';
-            result = '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,left)\n';
+            result = '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="float:left">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('位置合わせが指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,top)\n';
-            result = '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,top)\n';
+            result = '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="vertical-align:top">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('枠幅が指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,b3)\n';
-            result = '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,b3)\n';
+            result = '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="border:solid 3px">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('枠幅なしが指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,link,b0)\n';
-            result = '<a href="path/file.png">'
-                   + '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,link,b0)\n';
+            result = '<a href="/path/file.png">'
+                   + '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="border:none"></a>';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('幅が指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,w32)\n';
-            result = '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,w32)\n';
+            result = '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="width:32px">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('高さが指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,h24)\n';
-            result = '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,h24)\n';
+            result = '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="height:24px">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('幅と高さが指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,32x24)\n';
-            result = '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,32x24)\n';
+            result = '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="width:32px;height:24px">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('CSSが指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,opacity:0.8)\n';
-            result = '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,opacity:0.8)\n';
+            result = '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="opacity:0.8">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('インラインでも使用できること', ()=>{
-            r.text = '&img(path/file.png);\n';
-            result = '<p><img src="path/file.png" alt=""></p>\n\n';
+            r.text = '&img(file.png);\n';
+            result = '<p><img src="/path/file.png" alt=""></p>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
     });
