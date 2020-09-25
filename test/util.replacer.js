@@ -14,7 +14,7 @@ function escape(str) {
 
 const str = '&copy;<&#1234;&#x567F;>';
 
-suite('replacer', ()=>{
+suite('util/replacer', ()=>{
     test('モジュールが存在すること', ()=>assert.ok(replacer));
     test('置換できること', ()=>{
         const replace = replacer(pattern, cref, escape, 'i');

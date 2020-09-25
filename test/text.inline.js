@@ -25,6 +25,8 @@ function do_test(inline, test_case, parser) {
     }
 }
 
+suite('text/inline', ()=>{
+
 suite('inline()', ()=>{
 
   const inline = require('../lib/text/inline')();
@@ -158,4 +160,6 @@ suite('inline(module, noteref)', ()=>{
     ];
     do_test(inline, test_case, parser);
   });
+});
+
 });

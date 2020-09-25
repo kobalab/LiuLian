@@ -8,7 +8,7 @@ const r = {
 };
 let result;
 
-suite('text.liulian', ()=>{
+suite('text/liulian', ()=>{
 
     test('モジュールが存在すること', ()=>assert.ok(liulian));
 
