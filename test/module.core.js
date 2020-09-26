@@ -7,6 +7,7 @@ const r = {
         pathDir: '/path/',
         fixpath: (path)=>path.match(/^#/) ? path : '/path/' + path,
     },
+    openFile: require('../lib/resource'),
     _: {},
     title(title) { this._.title = title },
     stylesheet(...arg) { this._.stylesheet = arg },
