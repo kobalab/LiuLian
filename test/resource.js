@@ -9,7 +9,7 @@ const Text    = require('../lib/resource/text');
 const LiuLian = require('../lib/resource/liulian');
 
 const HOME = join(__dirname, '/data/');
-const files = ['file','file.txt','file.png','noperm'];
+const files = ['file','file.txt','file.png'];
 
 const resource = require('../lib/resource');
 const req = {
@@ -24,7 +24,7 @@ suite('resource', ()=>{
         for (let file of files) {
             fs.writeFileSync(join(HOME, '/docs/', file));
         }
-        fs.chmodSync(join(HOME, '/docs/', 'noperm'), 0);
+        fs.symlinkSync('/dev/null', join(HOME, '/docs/null'));
     });
 
     test('モジュールが存在すること', ()=>assert.ok(resource));
@@ -47,12 +47,14 @@ suite('resource', ()=>{
             assert.equal(r.location, '/');
         });
     });
-    test('特殊ファイル');
+    test('特殊ファイル', ()=>{
+        return resource(req, 'null').then(assert.fail)
+                                    .catch(code=>assert.equal(code, 404));
+    });
     test('ファイルなし', ()=>{
         return resource(req, 'file.html').then(assert.fail)
                                          .catch(code=>assert.equal(code, 404));
     });
-    test('アクセス権なし');
     test('相対パス', ()=>{
         return resource(req, './file').then(r=>{
             assert.ok(r instanceof LiuLian);
@@ -71,6 +73,7 @@ suite('resource', ()=>{
     });
 
     suiteTeardown(()=>{
+        fs.unlinkSync(join(HOME, '/docs/null'));
         for (let file of files) {
             fs.unlinkSync(join(HOME, '/docs/', file));
         }
