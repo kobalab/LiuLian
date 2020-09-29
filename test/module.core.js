@@ -136,6 +136,11 @@ suite('module/core', ()=>{
             result = '<img src="/path/file.png" alt="">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
+        test('URLには多バイト文字も指定できること', ()=>{
+            r.text = '#img(画像.png)\n';
+            result = '<img src="/path/%E7%94%BB%E5%83%8F.png" alt="">';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
         test('代替文字列が指定できること', ()=>{
             r.text = '#img(file.png,代替文字列)\n';
             result = '<img src="/path/file.png" alt="代替文字列">';
@@ -277,12 +282,14 @@ suite('module/core', ()=>{
         test('スタイルシートが指定できること', ()=>{
             r.text = '#style(url)\n';
             return liulian(r).then(html=>
-                        assert.deepEqual(r._.stylesheet, ['url']));
+                        assert.deepEqual(r._.stylesheet,
+                                        ['/path/url', undefined]));
         });
         test('スタイルシートの media が指定できること', ()=>{
             r.text = '#style(url, media)\n';
             return liulian(r).then(html=>
-                        assert.deepEqual(r._.stylesheet, ['url','media']));
+                        assert.deepEqual(r._.stylesheet,
+                                        ['/path/url','media']));
         });
         test('スタイルを展開できること', ()=>{
             r.text = '#style<<++\nbody { color: #333; }\n++\n';
@@ -294,7 +301,7 @@ suite('module/core', ()=>{
     suite('icon - アイコンを指定する', ()=>{
         test('アイコンが指定できること', ()=>{
             r.text = '#icon(url)\n';
-            return liulian(r).then(html=>assert.equal(r._.icon, 'url'));
+            return liulian(r).then(html=>assert.equal(r._.icon, '/path/url'));
         });
     });
 
@@ -314,7 +321,8 @@ suite('module/core', ()=>{
     suite('script - JavaScriptを使う', ()=>{
         test('外部スクリプトを指定できること', ()=>{
             r.text = '#script(url)\n';
-            return liulian(r).then(html=>assert.equal(r._.script.url, 'url'));
+            return liulian(r).then(html=>assert.equal(r._.script.url,
+                                                      '/path/url'));
         });
         test('スクリプトを展開できること', ()=>{
             r.text = '#script<<++\nvar a = 1 + 2;\n++\n';
