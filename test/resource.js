@@ -20,11 +20,20 @@ const req = {
 
 suite('resource', ()=>{
 
+    let skip_dev_test;
+
     suiteSetup(()=>{
         for (let file of files) {
             fs.writeFileSync(join(HOME, '/docs/', file));
         }
-        fs.symlinkSync('/dev/null', join(HOME, '/docs/null'));
+        try {
+            if (! fs.statSync('/dev/null').isFile())
+                fs.symlinkSync('/dev/null', join(HOME, '/docs/null'));
+            else skip_dev_test = true;
+        }
+        catch(err) {
+            skip_dev_test = true;
+        }
     });
 
     test('モジュールが存在すること', ()=>assert.ok(resource));
@@ -47,7 +56,8 @@ suite('resource', ()=>{
             assert.equal(r.location, '/');
         });
     });
-    test('特殊ファイル', ()=>{
+    test('特殊ファイル', function(){
+        if (skip_dev_test) this.skip();
         return resource(req, 'null').then(assert.fail)
                                     .catch(code=>assert.equal(code, 404));
     });
@@ -73,7 +83,7 @@ suite('resource', ()=>{
     });
 
     suiteTeardown(()=>{
-        fs.unlinkSync(join(HOME, '/docs/null'));
+        if (! skip_dev_test) fs.unlinkSync(join(HOME, '/docs/null'));
         for (let file of files) {
             fs.unlinkSync(join(HOME, '/docs/', file));
         }
