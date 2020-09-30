@@ -96,7 +96,7 @@ suite('resource/file', ()=>{
             return r.update().then(()=>{
                 assert.equal(
                     fs.readFileSync(join(HOME, '/docs/file.png')).length, 200);
-                assert.deepEqual(r.redirect, [ 303, './' ]);
+                assert.deepEqual(r.redirect, [ 303, './?cmd=edit' ]);
             });
         });
         test('アクセス権なし', ()=>{
@@ -122,7 +122,7 @@ suite('resource/file', ()=>{
                 }
                 catch(err) {
                     assert.equal(err.code, 'ENOENT');
-                    assert.deepEqual(r.redirect, [ 303, './' ]);
+                    assert.deepEqual(r.redirect, [ 303, './?cmd=edit' ]);
                 }
             });
         });
