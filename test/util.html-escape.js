@@ -7,7 +7,7 @@ function do_test(func, test_case) {
     }
 }
 
-suite('util.html-escape', ()=>{
+suite('util/html-escape', ()=>{
 
     const escape = require('../lib/util/html-escape');
     test('モジュールが存在すること', ()=>assert.ok(escape));

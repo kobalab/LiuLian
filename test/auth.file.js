@@ -23,8 +23,7 @@ suite('auth/file', ()=>{
     });
 
     suite('.add()', ()=>{
-        test('追加後にユーザ数が増えていること', (done)=>{
-            auth._callback = done;
+        test('追加後にユーザ数が増えていること', ()=>{
             auth.add('admin', 'passwd');
             assert.deepEqual(auth.users(), ['admin']);
         });

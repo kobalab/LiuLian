@@ -1,11 +1,14 @@
 const assert  = require('assert');
 
-class Parser {
-    constructor() { this._note = [] }
+const parser = {
+
+    _note: [],
+    _r: { _req: { fixpath(path){ return '/path/' + path } } },
+
     inlineModule(str, name, param, value) {
         if (param || value) return `&${name}(${param}){${value}};`;
         else return `&${name};`;
-    }
+    },
     noteref(str) {
         this._note.push(str);
         return '.' + this._note.length;
@@ -22,6 +25,8 @@ function do_test(inline, test_case, parser) {
     }
 }
 
+suite('text/inline', ()=>{
+
 suite('inline()', ()=>{
 
   const inline = require('../lib/text/inline')();
@@ -37,7 +42,8 @@ suite('inline()', ()=>{
         [ '&_(tag);',                 '<tag>'                               ],
         [ '&_(tag param="1" param);', '<tag param="1" param>'               ],
         [ '&_(tag param=">");',       '&amp;_(tag param=&quot;&gt;&quot;);' ],
-        [ '&tag;',                    '&amp;tag;'                           ],
+        [ '&tag;',                    '&tag;'                               ],
+        [ '&tag();',                  '&amp;tag();'                         ],
         [ '&_(tag){}};',              '<tag>}</tag>'                        ],
         [ '&_(tag1){&_(tag2){}};};' , '<tag1><tag2>}</tag2></tag1>'         ],
       ];
@@ -131,7 +137,6 @@ suite('inline()', ()=>{
 
 suite('inline(module, noteref)', ()=>{
 
-  const parser = new Parser();
   const inline = require('../lib/text/inline')(parser);
   test('require', ()=>assert.ok(inline));
 
@@ -151,8 +156,10 @@ suite('inline(module, noteref)', ()=>{
       [ '(([[&note]]))',
         '<sup class="l-footnote"><a id="l-noteref.2" href="#l-footnote.2" '
           + 'title="&amp;note">*2</a></sup>',
-        '<a href="&amp;note">&amp;note</a>'                                 ],
+        '<a href="/path/&amp;note">&amp;note</a>'                                 ],
     ];
     do_test(inline, test_case, parser);
   });
+});
+
 });

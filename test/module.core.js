@@ -5,8 +5,9 @@ const r = {
     _req: {
         config: { home: __dirname + '/data/' },
         pathDir: '/path/',
-        fixpath: (path)=>path,
+        fixpath: (path)=>path.match(/^#/) ? path : '/path/' + path,
     },
+    openFile: require('../lib/resource'),
     _: {},
     title(title) { this._.title = title },
     stylesheet(...arg) { this._.stylesheet = arg },
@@ -52,6 +53,30 @@ suite('module/core', ()=>{
                    + '</div>\n\n'
                    + '<h2 id="l-sec.1">見出し1</h2>\n\n'
                    + '<h3 id="anchor">見出し2</h3>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('すでに登場済の見出しは目次に含めないこと', ()=>{
+            r.text = '* 見出し1\n#contents\n* 見出し2\n';
+            result = '<h2 id="l-sec.1">見出し1</h2>\n\n'
+                   + '<div class="l-contents">\n'
+                   + '<ul>\n'
+                   + '<li><a href="#l-sec.2">見出し2</a></li>\n'
+                   + '</ul>\n'
+                   + '</div>\n\n'
+                   + '<h2 id="l-sec.2">見出し2</h2>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('「ブロック外」の見出しは目次に含めないこと', ()=>{
+            r.text = '#class(class)<<++\n#contents\n* 見出し1\n++\n* 見出し2\n';
+            result = '<div class="class">\n'
+                   + '<div class="l-contents">\n'
+                   + '<ul>\n'
+                   + '<li><a href="#l-sec.1">見出し1</a></li>\n'
+                   + '</ul>\n'
+                   + '</div>\n\n'
+                   + '<h2 id="l-sec.1">見出し1</h2>\n'
+                   + '</div>\n\n'
+                   + '<h2 id="l-sec.2">見出し2</h2>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
     });
@@ -107,74 +132,79 @@ suite('module/core', ()=>{
 
     suite('img - 画像を埋め込む', ()=>{
         test('URLが指定できること', ()=>{
-            r.text = '#img(path/file.png)\n';
-            result = '<img src="path/file.png" alt="">';
+            r.text = '#img(file.png)\n';
+            result = '<img src="/path/file.png" alt="">';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('URLには多バイト文字も指定できること', ()=>{
+            r.text = '#img(画像.png)\n';
+            result = '<img src="/path/%E7%94%BB%E5%83%8F.png" alt="">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('代替文字列が指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列)\n';
-            result = '<img src="path/file.png" alt="代替文字列">';
+            r.text = '#img(file.png,代替文字列)\n';
+            result = '<img src="/path/file.png" alt="代替文字列">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('リンクが貼れること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,link)\n';
-            result = '<a href="path/file.png">'
-                   + '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,link)\n';
+            result = '<a href="/path/file.png">'
+                   + '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="border:solid 1px"></a>';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('回り込みが指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,left)\n';
-            result = '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,left)\n';
+            result = '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="float:left">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('位置合わせが指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,top)\n';
-            result = '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,top)\n';
+            result = '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="vertical-align:top">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('枠幅が指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,b3)\n';
-            result = '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,b3)\n';
+            result = '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="border:solid 3px">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('枠幅なしが指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,link,b0)\n';
-            result = '<a href="path/file.png">'
-                   + '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,link,b0)\n';
+            result = '<a href="/path/file.png">'
+                   + '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="border:none"></a>';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('幅が指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,w32)\n';
-            result = '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,w32)\n';
+            result = '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="width:32px">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('高さが指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,h24)\n';
-            result = '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,h24)\n';
+            result = '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="height:24px">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('幅と高さが指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,32x24)\n';
-            result = '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,32x24)\n';
+            result = '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="width:32px;height:24px">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('CSSが指定できること', ()=>{
-            r.text = '#img(path/file.png,代替文字列,opacity:0.8)\n';
-            result = '<img src="path/file.png" alt="代替文字列" '
+            r.text = '#img(file.png,代替文字列,opacity:0.8)\n';
+            result = '<img src="/path/file.png" alt="代替文字列" '
                    + 'style="opacity:0.8">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('インラインでも使用できること', ()=>{
-            r.text = '&img(path/file.png);\n';
-            result = '<p><img src="path/file.png" alt=""></p>\n\n';
+            r.text = '&img(file.png);\n';
+            result = '<p><img src="/path/file.png" alt=""></p>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
     });
@@ -198,12 +228,24 @@ suite('module/core', ()=>{
                    + 'border-radius:2px;">縁取色</span></p>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
+        test('文字飾りが使えること', ()=>{
+            r.text = '&color(red){**文字色**};\n';
+            result = '<p><span style="color:red;"><strong>'
+                   + '文字色</strong></span></p>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
     });
 
     suite('size - 文字の大きさを変える', ()=>{
         test('文字サイズが指定できること', ()=>{
             r.text = '&size(18px){サイズ};\n';
             result = '<p><span style="font-size:18px">サイズ</span></p>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('文字飾りが使えること', ()=>{
+            r.text = '&size(18px){**サイズ**};\n';
+            result = '<p><span style="font-size:18px"><strong>'
+                   + 'サイズ</strong></span></p>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
     });
@@ -240,12 +282,14 @@ suite('module/core', ()=>{
         test('スタイルシートが指定できること', ()=>{
             r.text = '#style(url)\n';
             return liulian(r).then(html=>
-                        assert.deepEqual(r._.stylesheet, ['url']));
+                        assert.deepEqual(r._.stylesheet,
+                                        ['/path/url', undefined]));
         });
         test('スタイルシートの media が指定できること', ()=>{
             r.text = '#style(url, media)\n';
             return liulian(r).then(html=>
-                        assert.deepEqual(r._.stylesheet, ['url','media']));
+                        assert.deepEqual(r._.stylesheet,
+                                        ['/path/url','media']));
         });
         test('スタイルを展開できること', ()=>{
             r.text = '#style<<++\nbody { color: #333; }\n++\n';
@@ -257,7 +301,7 @@ suite('module/core', ()=>{
     suite('icon - アイコンを指定する', ()=>{
         test('アイコンが指定できること', ()=>{
             r.text = '#icon(url)\n';
-            return liulian(r).then(html=>assert.equal(r._.icon, 'url'));
+            return liulian(r).then(html=>assert.equal(r._.icon, '/path/url'));
         });
     });
 
@@ -277,7 +321,8 @@ suite('module/core', ()=>{
     suite('script - JavaScriptを使う', ()=>{
         test('外部スクリプトを指定できること', ()=>{
             r.text = '#script(url)\n';
-            return liulian(r).then(html=>assert.equal(r._.script.url, 'url'));
+            return liulian(r).then(html=>assert.equal(r._.script.url,
+                                                      '/path/url'));
         });
         test('スクリプトを展開できること', ()=>{
             r.text = '#script<<++\nvar a = 1 + 2;\n++\n';
