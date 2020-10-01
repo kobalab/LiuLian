@@ -3,7 +3,7 @@ const assert  = require('assert');
 const parser = {
 
     _note: [],
-    _r: { _req: { fixpath(path){ return '/path/' + path } } },
+    _r: { _req: { baseUrl: '/base' } },
 
     inlineModule(str, name, param, value) {
         if (param || value) return `&${name}(${param}){${value}};`;
@@ -100,8 +100,8 @@ suite('inline()', ()=>{
         [ '[[|bracket||./]]',    '<a href="./">|bracket|</a>'               ],
         [ '[[``bracket``]]', '<a href="%60%60bracket%60%60">``bracket``</a>'],
         [ '[[``bracket``|./]]',  '<a href="./"><code>bracket</code></a>'    ],
-        [ '[[テスト|%E3%83%86%E3%82%B9%E3%83%88]]',
-                          '<a href="%E3%83%86%E3%82%B9%E3%83%88">テスト</a>' ],
+        [ '[[Home|/]]',          '<a href="/">Home</a>'                     ],
+        [ '[[テスト]]',    '<a href="%E3%83%86%E3%82%B9%E3%83%88">テスト</a>' ],
         [ '[[100%|100%]]',       '<a href="100%25">100%</a>'                ],
       ];
       do_test(inline, test_case);
@@ -135,7 +135,7 @@ suite('inline()', ()=>{
   });
 });
 
-suite('inline(module, noteref)', ()=>{
+suite('inline(parser)', ()=>{
 
   const inline = require('../lib/text/inline')(parser);
   test('require', ()=>assert.ok(inline));
@@ -156,9 +156,15 @@ suite('inline(module, noteref)', ()=>{
       [ '(([[&note]]))',
         '<sup class="l-footnote"><a id="l-noteref.2" href="#l-footnote.2" '
           + 'title="&amp;note">*2</a></sup>',
-        '<a href="/path/&amp;note">&amp;note</a>'                                 ],
+        '<a href="&amp;note">&amp;note</a>'                                 ],
     ];
     do_test(inline, test_case, parser);
+  });
+  suite('bracket', ()=>{
+      const test_case = [
+        [ '[[Home|/]]',          '<a href="/base/">Home</a>'                ],
+      ];
+      do_test(inline, test_case);
   });
 });
 

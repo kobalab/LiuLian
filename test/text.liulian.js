@@ -2,7 +2,7 @@ const assert = require('assert');
 
 const liulian = require('../lib/text/liulian');
 const r = {
-    _req: { fixpath(path) { return '/path/' + path } },
+    _req: { baseUrl: '/base' },
     _title: null,
     title(title) { this._title = title },
 };
@@ -100,8 +100,8 @@ suite('text/liulian', ()=>{
             });
         });
         test('タイトルにリンクを貼ることもできる', ()=>{
-            r.text = '! [[タイトル|url]]\n';
-            result = '<h1><a href="/path/url">タイトル</a></h1>\n\n';
+            r.text = '! [[タイトル|/url]]\n';
+            result = '<h1><a href="/base/url">タイトル</a></h1>\n\n';
             return liulian(r).then(html=>{
                 assert.equal(html, result);
                 assert.equal(r._title, 'タイトル');
@@ -139,8 +139,8 @@ suite('text/liulian', ()=>{
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('見出しにリンクを貼ることもできる', ()=>{
-            r.text = '* [[見出し|url]]\n';
-            result = '<h2 id="l-sec.1"><a href="/path/url">見出し</a></h2>\n\n';
+            r.text = '* [[見出し|/url]]\n';
+            result = '<h2 id="l-sec.1"><a href="/base/url">見出し</a></h2>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
         test('見出しは段落を終了させる', ()=>{
