@@ -44,4 +44,24 @@ suite('util/html-escape', ()=>{
         do_test(strip, test_case);
         test('パラメータなし', ()=>assert.equal(strip(), ''));
     });
+    suite('fixpath', ()=>{
+        const { fixpath } = require('../lib/util/html-escape');
+        const test_case1 = [
+            [ '/テスト',                       '/%E3%83%86%E3%82%B9%E3%83%88' ],
+            [ '/%E3%83%86%E3%82%B9%E3%83%88', '/%E3%83%86%E3%82%B9%E3%83%88' ],
+            [ '/?x=テスト',                 '/?x=%E3%83%86%E3%82%B9%E3%83%88' ],
+            [ '/?x=100%',                    '/?x=100%25'                    ],
+            [ './テスト',                     './%E3%83%86%E3%82%B9%E3%83%88' ],
+        ];
+        do_test(fixpath, test_case1);
+        const test_case2 = [
+            [ '/テスト',                  '/base/%E3%83%86%E3%82%B9%E3%83%88' ],
+            [ '/%E3%83%86%E3%82%B9%E3%83%88',
+                                         '/base/%E3%83%86%E3%82%B9%E3%83%88' ],
+            [ '/?x=テスト',            '/base/?x=%E3%83%86%E3%82%B9%E3%83%88' ],
+            [ '/?x=100%',                    '/base/?x=100%25'               ],
+            [ './テスト',                     './%E3%83%86%E3%82%B9%E3%83%88' ],
+        ];
+        do_test((url)=>fixpath(url, '/base'), test_case2);
+    });
 });
