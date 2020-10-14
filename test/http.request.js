@@ -125,14 +125,6 @@ suite('http/request', ()=>{
             test('項目取得', ()=>assert.equal(req.header('User-Agent'),
                                                         'Mozilla/5.0'));
         });
-        suite('.fixpath()', ()=>{
-            test('file → file', ()=>
-                        assert.equal(req.fixpath('file'), 'file'));
-            test('/file → /base/file', ()=>
-                        assert.equal(req.fixpath('/file'), '/base/file'));
-            test('//file → //file', ()=>
-                        assert.equal(req.fixpath('//file'), '//file'));
-        });
         suite('.fullUrl()', ()=>{
             test('外部URL: http://', ()=>
                 assert.equal(req.fullUrl('http://kobalab.net/'),
