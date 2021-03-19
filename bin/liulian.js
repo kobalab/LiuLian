@@ -15,6 +15,8 @@ const home  = argv._[0];
 const port  = argv.port;
 const mount = argv.mount;
 
+require('../lib/setup')(home);
+
 const locale   = require('../lib/util/locale')(
                             path.join(__dirname, '../locale'),
                             'en');
