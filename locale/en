@@ -14,6 +14,11 @@ toolbar.login:Login
 toolbar.logout:Logout
 toolbar.edit:Edit
 # -----------------------------------------------------------------------------
+adduser.title:Sign Up
+adduser.user:Login Name
+adduser.passwd:Password
+adduser.submit:SIGN UP
+# -----------------------------------------------------------------------------
 login.title:Login
 login.user:Login Name
 login.passwd:Password

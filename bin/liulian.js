@@ -42,6 +42,7 @@ const liulian  = require('../lib/liulian')({
                             home:     home,
                             locale:   locale,
                             mount:    mount,
+                            auth:     auth,
                             passport: passport  });
 
 const app = express();

@@ -14,6 +14,11 @@ toolbar.login:登录
 toolbar.logout:注销
 toolbar.edit:编辑
 # -----------------------------------------------------------------------------
+adduser.title:注册
+adduser.user:账号
+adduser.passwd:密码
+adduser.submit:注册
+# -----------------------------------------------------------------------------
 login.title:登录
 login.user:账号
 login.passwd:密码

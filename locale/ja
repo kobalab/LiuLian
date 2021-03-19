@@ -14,6 +14,11 @@ toolbar.login:ログイン
 toolbar.logout:ログアウト
 toolbar.edit:編集
 # -----------------------------------------------------------------------------
+adduser.title:ユーザー登録
+adduser.user:ログイン名
+adduser.passwd:パスワード
+adduser.submit:登録
+# -----------------------------------------------------------------------------
 login.title:ログイン
 login.user:ログイン名
 login.passwd:パスワード
