@@ -24,7 +24,7 @@ suite('resource', ()=>{
 
     suiteSetup(()=>{
         for (let file of files) {
-            fs.writeFileSync(join(HOME, '/docs/', file));
+            fs.writeFileSync(join(HOME, '/docs/', file), '');
         }
         try {
             if (! fs.statSync('/dev/null').isFile())
