@@ -181,6 +181,9 @@ input[type="submit"] {
     color: #090;
     text-align: right;
 }
+#l-footer a {
+    text-decoration: none;
+}
 #l-footer hr {
     display: none;
 }
