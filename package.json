@@ -17,7 +17,9 @@
     "type": "git",
     "url": "git+https://github.com/kobalab/LiuLian.git"
   },
-  "keywords": [],
+  "keywords": [
+    "CMS"
+  ],
   "author": "Satoshi Kobayashi",
   "license": "MIT",
   "bugs": {
