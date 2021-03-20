@@ -1,6 +1,6 @@
-<h1><img src="css/icon.png" alt="[icon]" height=62><img src="css/liulian.png" alt="liulian" height=62></h1>
+<h1><img src="https://kobalab.net/liulian/css/icon.png" alt="[icon]" height=62><img src="https://kobalab.net/liulian/css/liulian.png" alt="liulian" height=62></h1>
 
-<a href="http://kobalab.net/xiumai/"><img src="http://kobalab.net/xiumai/theme/xiumai.png" alt="XiuMai" height=24 valign=bottom></a>
+<a href="https://kobalab.net/xiumai/"><img src="https://kobalab.net/xiumai/theme/xiumai.png" alt="XiuMai" height=24 valign=bottom></a>
 の後継。Node.jsで動作するWebサイト作成ツール。
 
 ## インストール
