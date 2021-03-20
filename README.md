@@ -26,6 +26,8 @@ $ liulian ~/Documents/LiuLian
 </dl>
 
 ## ドキュメント
+ - [インストールと起動](https://kobalab.net/liulian/man/install)
+ - [コンテンツ作成](https://kobalab.net/liulian/man/contents)
  - [LiuLian記法](https://kobalab.net/liulian/man/text-liulian)
  - [モジュール](https://kobalab.net/liulian/man/module)
 
