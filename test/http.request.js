@@ -27,10 +27,12 @@ suite('http/request', ()=>{
 
     suite('--mount なし', ()=>{
         const liulian = { _version: '1.0.0',
+                          _productUrl: 'http://hostname/',
                           _: { locale: (lang)=>lang == 'ja' } };
         const req = new Request(liulian, _req);
         test('インスタンスが生成できること', ()=>assert.ok(req));
         test('.version',   ()=>assert.equal(req.version,   '1.0.0'));
+        test('.productUrl',()=>assert.equal(req.productUrl,'http://hostname/'));
         test('.config',    ()=>assert.strictEqual(req.config, liulian._));
         test('.method',    ()=>assert.equal(req.method,    'GET'));
         test('.scheme',    ()=>assert.equal(req.scheme,    'http'));

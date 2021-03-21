@@ -11,7 +11,7 @@ const argv = yargs
     .option('mount',    { alias: 'm'                })
     .demandCommand(1)
     .argv;
-const home  = argv._[0];
+const home  = path.resolve(argv._[0]);
 const port  = argv.port;
 const mount = argv.mount;
 
@@ -53,7 +53,8 @@ app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ limit: '4mb', extended: false }));
-app.use('/css', express.static(path.join(__dirname, '../css')));
+app.use('/css', express.static(path.join(__dirname, '../css'),
+                               { cacheControl: false }));
 app.use(upload.fields([{name: 'file'}]));
 app.use(liulian);
 
