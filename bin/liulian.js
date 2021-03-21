@@ -11,7 +11,7 @@ const argv = yargs
     .option('mount',    { alias: 'm'                })
     .demandCommand(1)
     .argv;
-const home  = argv._[0];
+const home  = path.resolve(argv._[0]);
 const port  = argv.port;
 const mount = argv.mount;
 
