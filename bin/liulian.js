@@ -33,6 +33,7 @@ const session  = require('express-session')({
                             resave: false,
                             saveUninitialized: false,
                             store: store,
+                            rolling: true,
                             cookie: { maxAge: 1000*60*60*24*14 } });
 const upload   = require('multer')({
                             dest:   path.join(home, '/tmp') });
