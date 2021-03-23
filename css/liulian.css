@@ -1,11 +1,14 @@
 @charset "UTF-8";
 
+html {
+    margin: 0 10px 10px;
+}
 body {
     font-family: "Century Gothic", sans-serif;
     font-size: 14px;
     color: #333;
     -webkit-text-size-adjust: 100%;
-    margin-top: 0;
+    margin: 0 auto;
 }
 
 a:link {
@@ -13,6 +16,9 @@ a:link {
 }
 a:visited {
     color: #080;
+}
+img {
+    max-width: 100%;
 }
 code, kbd, tt {
     font-family: Menlo, Consolas, Courier, monospace;
