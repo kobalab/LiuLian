@@ -30,6 +30,9 @@ $ liulian ~/Documents/LiuLian
  - [コンテンツ作成](https://kobalab.net/liulian/man/contents)
  - [LiuLian記法](https://kobalab.net/liulian/man/text-liulian)
  - [モジュール](https://kobalab.net/liulian/man/module)
+ - [README と index](https://kobalab.net/liulian/man/readme&index)
+ - [HEAD と TAIL](https://kobalab.net/liulian/man/head&tail)
+ - [リバースプロキシを使う](https://kobalab.net/liulian/man/proxy-setting)
 
 ## ライセンス
 [MIT](https://github.com/kobalab/LiuLian/blob/master/LICENSE)
