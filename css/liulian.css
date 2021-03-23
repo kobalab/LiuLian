@@ -57,6 +57,27 @@ h6 {
     font-size: 100%;
 }
 
+@media screen and (max-width: 480px) {
+
+    h1 { font-size: 180%; }
+    h2 { font-size: 150%; }
+    h3 { font-size: 125%; }
+    h4 { font-size: 110%; }
+    h5 { font-size: 100%; }
+    h6 { font-size: 100%; }
+
+    dd { margin-left: 1em; }
+    ul, ol {
+        margin-left: 0;
+        padding-left: 1.5em;
+    }
+
+    table {
+        display: block;
+        overflow: auto;
+    }
+}
+
 hr {
     border-style: solid;
     border-color: #F1E054;
