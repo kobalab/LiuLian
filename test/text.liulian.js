@@ -423,6 +423,15 @@ suite('text/liulian', ()=>{
                    + '</code></pre>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
+        test('言語が不正な場合は推定する', ()=>{
+            r.text = '>|_\n$ echo "Hello"\n|<\n';
+            result = '<pre><code><span class="hljs-meta">$</span>'
+                   + '<span class="bash"> '
+                   + '<span class="hljs-built_in">echo</span> '
+                   + '<span class="hljs-string">&quot;Hello&quot;</span></span>'
+                   + '</code></pre>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
         test('>|| と ||< で囲まれた整形済みテキストでは文字飾りが使用可能', ()=>{
             r.text = '>||\n! **整形済み**\n* 継続\n||<\n';
             result = '<pre>! <strong>整形済み</strong>\n* 継続</pre>\n\n';
