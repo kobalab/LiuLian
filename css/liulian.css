@@ -9,6 +9,7 @@ body {
     color: #333;
     -webkit-text-size-adjust: 100%;
     margin: 0 auto;
+    overflow-wrap: break-word;
 }
 
 a:link {
@@ -228,6 +229,7 @@ input[type="submit"] {
 }
 
 #l-folder {
+    display: table;
     width: 100%;
 }
 #l-folder th.l-asc,

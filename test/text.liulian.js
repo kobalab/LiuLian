@@ -381,6 +381,13 @@ suite('text/liulian', ()=>{
                    + '</table>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
+        test('リンクを使うことができる', ()=>{
+            r.text = '|[[テーブル|table]]|\n';
+            result = '<table>\n'
+                   + '<tr><td><a href="table">テーブル</a></td></tr>\n'
+                   + '</table>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
     });
 
     suite('整形済みテキスト (pre)', ()=>{
@@ -413,6 +420,15 @@ suite('text/liulian', ()=>{
             r.text = '>|bash\n$ echo "Hello"\n|<\n';
             result = '<pre><code>$ <span class="hljs-built_in">echo</span> '
                    + '<span class="hljs-string">&quot;Hello&quot;</span>'
+                   + '</code></pre>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('言語が不正な場合は推定する', ()=>{
+            r.text = '>|_\n$ echo "Hello"\n|<\n';
+            result = '<pre><code><span class="hljs-meta">$</span>'
+                   + '<span class="bash"> '
+                   + '<span class="hljs-built_in">echo</span> '
+                   + '<span class="hljs-string">&quot;Hello&quot;</span></span>'
                    + '</code></pre>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
