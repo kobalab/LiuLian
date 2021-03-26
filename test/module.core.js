@@ -146,6 +146,11 @@ suite('module/core', ()=>{
             result = '<img src="file.png" alt="代替文字列">';
             return liulian(r).then(html=>assert.equal(html, result));
         });
+        test('代替文字列に文字参照が指定できること', ()=>{
+            r.text = '#img(file.png,&copy;)\n';
+            result = '<img src="file.png" alt="&copy;">';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
         test('リンクが貼れること', ()=>{
             r.text = '#img(file.png,代替文字列,link)\n';
             result = '<a href="file.png">'
