@@ -99,6 +99,7 @@ pre {
     border: solid 1px #080;
     background: #eee;
     overflow: auto;
+    overflow-wrap: normal;
     font-family: Osaka-Mono, "ＭＳ ゴシック", Courier, monospace;
     font-size: 100%;
 }
