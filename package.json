@@ -1,6 +1,6 @@
 {
   "name": "@kobalab/liulian",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "Node.jsで動作するWebサイト作成ツール",
   "publishConfig": {
     "access": "public"
