@@ -374,6 +374,33 @@ suite('text/liulian', ()=>{
                    + '</table>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
+        test('.name の形式でclassを指定できる', ()=>{
+            r.text = '|~<ヘッダ|~>ヘッダ|\n|=.name セル|-|\n';
+            result = '<table>\n'
+                   + '<tr><th style="text-align:left">ヘッダ</th>'
+                        + '<th style="text-align:right">ヘッダ</th></tr>\n'
+                   + '<tr><td colspan="2" class="name" '
+                        + 'style="text-align:center">'
+                        + ' セル</td></tr>\n'
+                   + '</table>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('classは背景色の前に指定する', ()=>{
+            r.text = '|.name#123 セル|\n';
+            result = '<table>\n'
+                   + '<tr><td class="name" style="background:#123"> '
+                        + 'セル</td></tr>\n'
+                   + '</table>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('classは複数指定できる', ()=>{
+            r.text = '|.n-1.n-2.n-3#123 セル|\n';
+            result = '<table>\n'
+                   + '<tr><td class="n-1 n-2 n-3" style="background:#123"> '
+                        + 'セル</td></tr>\n'
+                   + '</table>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
         test('文字飾りを使うことができる', ()=>{
             r.text = '|**テーブル**|\n';
             result = '<table>\n'
