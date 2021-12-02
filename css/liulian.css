@@ -74,11 +74,6 @@ h6 {
         margin-left: 0;
         padding-left: 1.5em;
     }
-
-    table {
-        display: block;
-        overflow: auto;
-    }
 }
 
 hr {
@@ -113,6 +108,8 @@ blockquote {
 
 table {
     border-collapse: collapse;
+    display: block;
+    overflow: auto;
 }
 th, td {
     border:  solid 1px #9c9;

@@ -415,6 +415,13 @@ suite('text/liulian', ()=>{
                    + '</table>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
+        test('| のみの行も処理できる', ()=>{
+            r.text = '|\n';
+            result = '<table>\n'
+                   + '<tr></tr>\n'
+                   + '</table>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
     });
 
     suite('整形済みテキスト (pre)', ()=>{
