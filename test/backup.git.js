@@ -13,8 +13,11 @@ suite('backup/git', ()=>{
 
     test('モジュールが存在すること', ()=>assert.ok(require('../lib/backup/git')));
 
-    test('インスタンスが生成できること', ()=>{
-        assert.ok(require('../lib/backup/git')(GitDir));
+    test('インスタンスが生成できること', async ()=>{
+        let git = require('../lib/backup/git')(GitDir);
+        assert.ok(git);
+
+        await git.log('test.txt');
     });
 
     test('checkIn()', async ()=>{
