@@ -32,6 +32,8 @@ suite('backup/git', ()=>{
         let log = await git.log('test.txt');
 
         assert.ok(time1 <= log[0].time && log[0].time <= time2);
+
+        await git.checkIn('test.txt', 'user');
     });
 
     test('log()', async ()=>{
@@ -46,7 +48,6 @@ suite('backup/git', ()=>{
         let log = await git.log('test.txt');
 
         assert.equal(log.length, 2);
-        assert.ok(time1 <= log[0].time && log[0].time <= time2);
     });
 
     test('diff()', async ()=>{
