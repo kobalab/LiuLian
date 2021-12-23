@@ -13,6 +13,7 @@ toolbar.home:Home
 toolbar.login:Login
 toolbar.logout:Logout
 toolbar.edit:Edit
+toolbar.log:History
 # -----------------------------------------------------------------------------
 adduser.title:Sign Up
 adduser.user:Login Name

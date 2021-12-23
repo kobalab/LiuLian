@@ -13,6 +13,7 @@ toolbar.home:主页
 toolbar.login:登录
 toolbar.logout:注销
 toolbar.edit:编辑
+toolbar.log:历史
 # -----------------------------------------------------------------------------
 adduser.title:注册
 adduser.user:账号

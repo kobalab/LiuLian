@@ -13,6 +13,7 @@ toolbar.home:ホーム
 toolbar.login:ログイン
 toolbar.logout:ログアウト
 toolbar.edit:編集
+toolbar.log:履歴
 # -----------------------------------------------------------------------------
 adduser.title:ユーザー登録
 adduser.user:ログイン名
