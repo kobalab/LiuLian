@@ -19,7 +19,8 @@ suite('backup/git', ()=>{
         let git = require('../lib/backup/git')(GitDir);
         assert.ok(git);
 
-        await git.log(location);
+        let log = await git.log(location);
+        assert.equal(log.length, 0);
     });
 
     test('checkIn()', async ()=>{
