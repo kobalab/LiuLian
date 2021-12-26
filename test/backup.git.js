@@ -27,25 +27,24 @@ suite('backup/git', ()=>{
         const git = require('../lib/backup/git')(GitDir);
 
         fs.writeFileSync(path.join(GitDir, location), 'revision 1\n');
-        let time1 = Math.floor(Date.now() / 1000) * 1000;
+        let time = fs.statSync(path.join(GitDir, location)).mtimeMs;
 
-        await git.checkIn(location, 'user');
+        await git.checkIn(location, time, 'user');
 
-        let time2 = Math.floor(Date.now() / 1000) * 1000;
         let log = await git.log(location);
 
-        assert.ok(time1 <= log[0].time && log[0].time <= time2);
+        assert.equal(log[0].time, time);
 
-        await git.checkIn(location, 'user');
+        await git.checkIn(location, time, 'user');
     });
 
     test('log()', async ()=>{
         const git = require('../lib/backup/git')(GitDir);
 
         fs.writeFileSync(path.join(GitDir, location), 'revision 2\n');
-        let time1 = Math.floor(Date.now() / 1000) * 1000;
-        await git.checkIn(location, 'user');
-        let time2 = Math.floor(Date.now() / 1000) * 1000;
+        let time = fs.statSync(path.join(GitDir, location)).mtimeMs;
+        await git.checkIn(location, time, 'user');
+
         fs.writeFileSync(path.join(GitDir, location), 'revision 3\n');
 
         let log = await git.log(location);
