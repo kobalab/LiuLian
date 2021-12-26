@@ -296,6 +296,9 @@ input[type="submit"] {
     width: 100%;
     height: 70vh;
 }
+#l-log .l-time {
+    text-align: right;
+}
 
 .l-error {
     color: red;
