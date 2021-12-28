@@ -68,6 +68,19 @@ suite('backup/git', ()=>{
                                         'revision 1\n');
     });
 
+    test('checkOutStream()', (done)=>{
+        const git = require('../lib/backup/git')(GitDir);
+        git.log(location).then((log)=>{
+            let out = git.checkOutStream(location, log[0].rev);
+            let rv  = '';
+            out.on('data', (chunk)=>{ rv += chunk });
+            out.on('end', ()=>{
+                assert.equal(rv, 'revision 2\n');
+                done();
+            });
+        });
+    });
+
     test('gitで初期化されていない場合、インスタンスを生成しないこと', ()=>{
         fs.rmSync(path.join(GitDir, '.git'), {recursive: true});
         assert.ok(! require('../lib/backup/git')(GitDir));
