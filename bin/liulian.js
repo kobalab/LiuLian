@@ -17,6 +17,8 @@ const mount = argv.mount;
 
 require('../lib/setup')(home);
 
+const backup   = require('../lib/backup/git')(path.join(home, 'docs'));
+
 const locale   = require('../lib/util/locale')(
                             path.join(__dirname, '../locale'),
                             'en');
@@ -44,7 +46,8 @@ const liulian  = require('../lib/liulian')({
                             locale:   locale,
                             mount:    mount,
                             auth:     auth,
-                            passport: passport  });
+                            passport: passport,
+                            backup:   backup    });
 
 const app = express();
 

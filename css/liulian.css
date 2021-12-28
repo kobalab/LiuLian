@@ -296,6 +296,37 @@ input[type="submit"] {
     width: 100%;
     height: 70vh;
 }
+#l-log .l-time {
+    text-align: right;
+}
+#l-diff {
+    border-radius: 0.2em;
+    border: solid 1px #080;
+    padding: 0;
+    background: #ddd;
+}
+#l-diff > * {
+    display: block;
+    padding: 2px 0.5em;
+    margin: 1px 0;
+    font-family: Osaka-Mono, "ＭＳ ゴシック", Courier, monospace;
+    text-decoration: none;
+    white-space: pre-wrap;
+    color: #666;
+    background: #ffe;
+}
+#l-diff .l-head {
+    color: #999;
+    background: #cdf;
+}
+#l-diff ins {
+    color: #393;
+    background: #dfd;
+}
+#l-diff del {
+    color: #c33;
+    background: #fdd;
+}
 
 .l-error {
     color: red;

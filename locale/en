@@ -13,6 +13,7 @@ toolbar.home:Home
 toolbar.login:Login
 toolbar.logout:Logout
 toolbar.edit:Edit
+toolbar.log:History
 # -----------------------------------------------------------------------------
 adduser.title:Sign Up
 adduser.user:Login Name
@@ -45,3 +46,12 @@ rmdir.submit:REMOVE
 # -----------------------------------------------------------------------------
 udtext.submit:SAVE
 # -----------------------------------------------------------------------------
+log.title:Revision history of {$1}
+log.rev:Revision
+log.time:Modified
+log.diff:Difference
+log.prev:from previous
+log.curr:to current
+log.show:Show
+log.edit:Edit
+diff.title:Difference of {$1}
