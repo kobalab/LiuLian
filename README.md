@@ -36,6 +36,7 @@ $ liulian ~/Documents/LiuLian
  - [README と index](https://kobalab.net/liulian/man/readme&index)
  - [HEAD と TAIL](https://kobalab.net/liulian/man/head&tail)
  - [リバースプロキシを使う](https://kobalab.net/liulian/man/proxy-setting)
+ - [Gitで自動バックアップする](https://kobalab.net/liulian/man/git)
 
 ## ライセンス
 [MIT](https://github.com/kobalab/LiuLian/blob/master/LICENSE)
