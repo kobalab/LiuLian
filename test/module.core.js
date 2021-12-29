@@ -6,7 +6,8 @@ const r = {
         config: { home: __dirname + '/data/' },
         pathDir: '/path/',
         baseUrl: '/base',
-        param() {}
+        param() {},
+        openFile() {},
     },
     openFile: require('../lib/resource'),
     _: {},

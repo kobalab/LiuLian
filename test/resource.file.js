@@ -13,6 +13,7 @@ const req = {
     files()  { return this._files },
     msg(key) { return key },
     fixpath(path) { return path },
+    openFile() {},
 };
 const res = {
     sendFile(path) { this._path = path },
