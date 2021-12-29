@@ -309,6 +309,7 @@ input[type="submit"] {
     display: block;
     padding: 2px 0.5em;
     margin: 1px 0;
+    min-height: 1em;
     font-family: Osaka-Mono, "ＭＳ ゴシック", Courier, monospace;
     text-decoration: none;
     white-space: pre-wrap;
