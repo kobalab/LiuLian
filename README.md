@@ -3,6 +3,9 @@
 <a href="https://kobalab.net/xiumai/"><img src="https://kobalab.net/xiumai/theme/xiumai.png" alt="XiuMai" height=24 valign=bottom></a>
 の後継。Node.jsで動作するWebサイト作成ツール。
 
+## デモ
+https://kobalab.net/liulian/
+
 ## インストール
 ```sh
 $ npm i -g @kobalab/liulian
@@ -33,6 +36,7 @@ $ liulian ~/Documents/LiuLian
  - [README と index](https://kobalab.net/liulian/man/readme&index)
  - [HEAD と TAIL](https://kobalab.net/liulian/man/head&tail)
  - [リバースプロキシを使う](https://kobalab.net/liulian/man/proxy-setting)
+ - [Gitで自動バックアップする](https://kobalab.net/liulian/man/git)
 
 ## ライセンス
 [MIT](https://github.com/kobalab/LiuLian/blob/master/LICENSE)

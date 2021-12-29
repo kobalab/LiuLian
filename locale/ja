@@ -13,6 +13,7 @@ toolbar.home:ホーム
 toolbar.login:ログイン
 toolbar.logout:ログアウト
 toolbar.edit:編集
+toolbar.log:履歴
 # -----------------------------------------------------------------------------
 adduser.title:ユーザー登録
 adduser.user:ログイン名
@@ -45,3 +46,12 @@ rmdir.submit:削除
 # -----------------------------------------------------------------------------
 udtext.submit:保存
 # -----------------------------------------------------------------------------
+log.title:{$1} の変更履歴
+log.rev:リビジョン
+log.time:変更日
+log.diff:差分
+log.prev:前の版との差分
+log.curr:現在との差分
+log.show:表示
+log.edit:編集
+diff.title:{$1} の差分

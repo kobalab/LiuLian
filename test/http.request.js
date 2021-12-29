@@ -184,4 +184,16 @@ suite('http/request', ()=>{
                              'https://kobalab.net/liulian/file'));
         });
     });
+
+    suite('openFile()', ()=>{
+        test('ファイルオープン数オーバー', ()=>{
+            const liulian = { _version: '1.0.0',
+                              _productUrl: 'http://hostname/',
+                              _: { locale: (lang)=>lang == 'ja' } };
+            const req = new Request(liulian, _req);
+            assert.throws(()=>{
+                for (;;) req.openFile();
+            });
+        });
+    });
 });

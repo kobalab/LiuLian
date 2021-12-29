@@ -5,7 +5,9 @@ const r = {
     _req: {
         config: { home: __dirname + '/data/' },
         pathDir: '/path/',
-        baseUrl: '/base'
+        baseUrl: '/base',
+        param() {},
+        openFile() {},
     },
     openFile: require('../lib/resource'),
     _: {},
@@ -14,6 +16,7 @@ const r = {
     style(text) { this._.style = text },
     icon(url) { this._.icon = url },
     lang(lang) { this._.lang = lang },
+    meta(attr) { this._.meta = attr },
     script(script) { this._.script = script }
 };
 let result;
@@ -320,6 +323,19 @@ suite('module/core', ()=>{
             result = '<div lang="ja">\n<p>日本語</p>\n</div>\n\n'
                    + '<p><span lang="ja">日本語</span></p>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
+        });
+    });
+
+    suite('redirect - 指定したURLにリダイレクトする', ()=>{
+        test('即時指定', ()=>{
+            r.text = '#redirect(/url)\n';
+            return liulian(r).then(html=>assert.deepEqual(
+                r._.meta, {'http-equiv':'refresh','content':'0; URL=/url'}));
+        });
+        test('秒数指定', ()=>{
+            r.text = '#redirect(/url, 5)\n';
+            return liulian(r).then(html=>assert.deepEqual(
+                r._.meta, {'http-equiv':'refresh','content':'5; URL=/url'}));
         });
     });
 

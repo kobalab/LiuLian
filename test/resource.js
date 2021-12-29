@@ -16,6 +16,7 @@ const req = {
     config: { home: HOME },
     path: '/',
     pathDir: '/',
+    openFile() {},
 };
 
 suite('resource', ()=>{
