@@ -3,6 +3,9 @@
 <a href="https://kobalab.net/xiumai/"><img src="https://kobalab.net/xiumai/theme/xiumai.png" alt="XiuMai" height=24 valign=bottom></a>
 の後継。Node.jsで動作するWebサイト作成ツール。
 
+## デモ
+https://kobalab.net/liulian/
+
 ## インストール
 ```sh
 $ npm i -g @kobalab/liulian
