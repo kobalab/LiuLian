@@ -1,6 +1,6 @@
 {
   "name": "@kobalab/liulian",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Node.jsで動作するWebサイト作成ツール",
   "publishConfig": {
     "access": "public"
@@ -27,7 +27,7 @@
   },
   "homepage": "https://kobalab.net/liulian/",
   "devDependencies": {
-    "mocha": "^9.1.3",
+    "mocha": "^9.2.0",
     "nyc": "^15.1.0"
   },
   "dependencies": {
