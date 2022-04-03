@@ -7,6 +7,7 @@ const r = {
     title(title) { this._title = title },
 };
 let result;
+const CONSOLE_LOG = console.log;
 
 suite('text/liulian', ()=>{
 
@@ -600,6 +601,24 @@ suite('text/liulian', ()=>{
             result = '<div style="color:red">'
                    + '#_(tag param=1)</div>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('モジュールを import できること', ()=>{
+            r.text = '#import(paiga)\n&paiga{m1};';
+            result = '<p><span class="l-mod-paiga" style="white-space:pre;">'
+                   + '<img src="//kobalab.github.io/paiga/man1.gif"'
+                   + ' width="24" height="34" alt="m1">'
+                   + '</span></p>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('モジュールの import に失敗したときはエラー表示すること', ()=>{
+            console.log = ()=>{};
+            r.text = '#import(param)\n';
+            result = '<div style="color:red">'
+                   + '#import(param)</div>\n\n';
+            return liulian(r).then(html=>{
+                assert.equal(html, result);
+                console.log = CONSOLE_LOG;
+            });
         });
         test('#module(param)', ()=>{
             r.text = '#module(param)\n';
