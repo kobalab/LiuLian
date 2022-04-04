@@ -37,9 +37,13 @@ suite('util/html-escape', ()=>{
     suite('strip', ()=>{
         const { strip } = require('../lib/util/html-escape');
         const test_case = [
-            [ '<title>&amp;</title>',       '&'                     ],
-            [ '&lt; &amp; &gt;',            '< & >'                 ],
-            [ '&quot; &amp; &quot;',        '" & "'                 ]
+            [ '<title>&amp;</title>',           '&'                 ],
+            [ '&lt; &amp; &gt;',                '< & >'             ],
+            [ '&quot; &amp; &quot;',            '" & "'             ],
+            [ '<img src="" alt="alt"> title',   'alt title'         ],
+            [ '<img src="" alt="">title',       'title'             ],
+            [ '<img src="">title',              'title'             ],
+            [ '<img src="" alt="&amp;&">',      '&&'                ]
         ];
         do_test(strip, test_case);
         test('パラメータなし', ()=>assert.equal(strip(), ''));

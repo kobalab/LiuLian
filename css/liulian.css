@@ -333,6 +333,13 @@ input[type="submit"] {
     color: red;
 }
 
+.footnotes {
+    font-size: 90%;
+}
+.footnotes li p {
+    margin: 0.2em auto;
+}
+
 .hljs-comment,
 .hljs-quote {
   color: #a0a1a7;
