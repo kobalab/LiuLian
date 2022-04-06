@@ -217,6 +217,12 @@ suite('module/paiga', ()=>{
                    + '</span></p>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
+        test('空文字列', ()=>{
+            r.text = '#import(paiga)\n\n&paiga{};\n';
+            result = '<p><span class="l-mod-paiga" style="white-space:pre;">'
+                   + '</span></p>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
         test('サイズL', ()=>{
             r.text = '#import(paiga)\n\n&paiga(L){m1};\n';
             result = '<p><span class="l-mod-paiga" style="white-space:pre;">'
