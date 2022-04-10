@@ -235,7 +235,7 @@ suite('module/paiga', ()=>{
             r.text = '#import(paiga)\n\n&paiga(M){m1};\n';
             result = '<p><span class="l-mod-paiga" style="white-space:pre;">'
                    + '<img src="//kobalab.github.io/paiga/man1.gif"'
-                   + ' width="19" height="24" alt="m1">'
+                   + ' width="19" height="26" alt="m1">'
                    + '</span></p>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
