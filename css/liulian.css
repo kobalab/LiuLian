@@ -95,7 +95,7 @@ pre {
     background: #eee;
     overflow: auto;
     overflow-wrap: normal;
-    font-family: Osaka-Mono, "HGｺﾞｼｯｸM", "ＭＳ ゴシック", Courier, monospace;
+    font-family: Osaka-Mono, "BIZ UDゴシック", "ＭＳ ゴシック", Courier, monospace;
     font-size: 100%;
 }
 
@@ -151,7 +151,7 @@ input[disabled] {
 }
 textarea {
     padding: 4px;
-    font-family: Osaka-Mono, "HGｺﾞｼｯｸM", "ＭＳ ゴシック", Courier, monospace;
+    font-family: Osaka-Mono, "BIZ UDゴシック", "ＭＳ ゴシック", Courier, monospace;
     font-size: 100%;
     border: solid 1px #999;
     border-radius: 4px;
