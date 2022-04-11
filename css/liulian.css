@@ -133,6 +133,16 @@ div.l-footnote a[id] {
 form {
     margin: 1em auto;
 }
+@media screen and (max-width: 640px) {
+    form {
+        font-size: 16px;
+    }
+}
+@media screen and (max-height: 640px) {
+    form {
+        font-size: 16px;
+    }
+}
 fieldset {
     border: solid 1px #080;
     border-radius: 4px;
@@ -285,7 +295,7 @@ input[type="submit"] {
 #l-mkfile input[name="filename"],
 #l-udfile input[name="filename"],
 #l-mkdir  input[name="dirname"]   {
-    width: 240px;
+    width: 200px;
 }
 #l-udfile input[disable] {
     pointer-events: none;
