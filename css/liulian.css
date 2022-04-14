@@ -343,6 +343,68 @@ input[type="submit"] {
     color: red;
 }
 
+.l-nav {
+    margin: 1.5em auto 0.5em;
+}
+.l-nav a {
+    text-decoration: none;
+}
+.l-nav::after {
+    display: block;
+    content: '';
+    clear: both;
+}
+.l-nav-prev {
+    text-align: left;
+    float: left;
+    width: 35%;
+}
+.l-nav-prev::before {
+    content: '≪ ';
+}
+.l-nav-next {
+    text-align: right;
+    float: right;
+    width: 35%;
+}
+.l-nav-next::after {
+    content: ' ≫';
+}
+.l-nav-top {
+    text-align: center;
+    margin: 0 35%;
+}
+@media screen and (max-width: 480px) {
+    .l-nav-prev {
+        text-align: left;
+        float: none;
+        width: auto;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .l-nav-next {
+        text-align: left;
+        float: none;
+        width: auto;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .l-nav-top {
+        margin: auto;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .l-nav-next::before {
+        content: '≫ ';
+    }
+    .l-nav-next::after {
+        content: none;
+    }
+}
+
 .footnotes {
     font-size: 90%;
 }

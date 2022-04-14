@@ -1,6 +1,31 @@
 const assert = require('assert');
 
 const liulian = require('../lib/text/liulian');
+
+function resource(text, url = '/path/') {
+    const r = {
+        _req: {
+            config: { home: __dirname + '/data/' },
+            path:    url,
+            pathDir: url.replace(/[^\/]*$/,''),
+            baseUrl: '/base',
+            param() {},
+            openFile() {},
+        },
+        text: text,
+        location: url,
+        openFile: require('../lib/resource'),
+        _: {},
+        title(title) { this._.title = title },
+        stylesheet(...arg) { this._.stylesheet = arg },
+        style(text) { this._.style = text },
+        icon(url) { this._.icon = url },
+        lang(lang) { this._.lang = lang },
+        meta(attr) { this._.meta = attr },
+        script(script) { this._.script = script }
+    };
+    return r;
+}
 const r = {
     _req: {
         config: { home: __dirname + '/data/' },
@@ -80,6 +105,70 @@ suite('module/core', ()=>{
                    + '<h2 id="l-sec.1">見出し1</h2>\n'
                    + '</div>\n\n'
                    + '<h2 id="l-sec.2">見出し2</h2>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+    });
+
+    suite('nav - ナビゲーション用のリンクを生成する', ()=>{
+        test('ナビゲーション用のリンクを生成すること', ()=>{
+            let r = resource('#nav(toc)', '/nav/content');
+            result = '<div class="l-nav">\n'
+                   + '<div class="l-nav-prev"><a href="./">TOP</a></div>\n'
+                   + '<div class="l-nav-next"><a href="other">other</a></div>\n'
+                   + '</div>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('最初のページの場合', ()=>{
+            let r = resource('#nav(toc)', '/nav/index');
+            result = '<div class="l-nav">\n'
+                   + '<div class="l-nav-next"><a href="content">'
+                        + 'content</a></div>\n'
+                   + '</div>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('最後のページの場合', ()=>{
+            let r = resource('#nav(toc)', '/nav/toc');
+            result = '<div class="l-nav">\n'
+                   + '<div class="l-nav-prev"><a href="other">other</a></div>\n'
+                   + '</div>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('目次へのリンクあり(URL省略)', ()=>{
+            let r = resource('#nav(toc,TOC)', '/nav/content');
+            result = '<div class="l-nav">\n'
+                   + '<div class="l-nav-prev"><a href="./">TOP</a></div>\n'
+                   + '<div class="l-nav-next"><a href="other">other</a></div>\n'
+                   + '<div class="l-nav-top"><a href="toc">TOC</a></div>\n'
+                   + '</div>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('目次へのリンクあり(URL指定)', ()=>{
+            let r = resource('#nav(toc,TOC,./)', '/nav/content');
+            result = '<div class="l-nav">\n'
+                   + '<div class="l-nav-prev"><a href="./">TOP</a></div>\n'
+                   + '<div class="l-nav-next"><a href="other">other</a></div>\n'
+                   + '<div class="l-nav-top"><a href="./">TOC</a></div>\n'
+                   + '</div>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('ナビゲーション対象外', ()=>{
+            let r = resource('#nav(toc)', '/nav/other');
+            result = '';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('目次ページにリンクなし', ()=>{
+            let r = resource('#nav(content)', '/nav/content');
+            result = '';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('目次ページが存在しない', ()=>{
+            let r = resource('#nav(other)', '/nav/content');
+            result = '<div style="color:red">#nav(other)</div>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('目次ページがLiuLian形式でない', ()=>{
+            let r = resource('#nav(/path/file.txt)', '/nav/content');
+            result = '<div style="color:red">#nav(/path/file.txt)</div>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
     });
