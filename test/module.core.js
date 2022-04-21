@@ -154,6 +154,11 @@ suite('module/core', ()=>{
             result = '<div style="color:red">#nav(/path/file.txt)</div>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
+        test('目次ページの指定なし', ()=>{
+            r = resource('#nav()', '/nav/content');
+            result = '<div style="color:red">#nav()</div>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
     });
 
     suite('footnote - 脚注を表示する', ()=>{
