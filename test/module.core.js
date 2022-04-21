@@ -90,6 +90,36 @@ suite('module/core', ()=>{
                    + '<h2 id="l-sec.2">見出し2</h2>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
+        test('目次のレベルを変更できること', ()=>{
+            r = resource('#contents(2)\n** 見出し\n');
+            result = '<div class="l-contents">\n'
+                   + '<ul>\n'
+                   + '<li><a href="#l-sec.1">見出し</a></li>\n'
+                   + '</ul>\n'
+                   + '</div>\n\n'
+                   + '<h3 id="l-sec.1">見出し</h3>\n\n'
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('目次の範囲を変更できること', ()=>{
+            r = resource('#contents(2,2)\n* 見出し1\n** 見出し2\n*** 見出し3\n');
+            result = '<div class="l-contents">\n'
+                   + '<ul>\n'
+                   + '<li><a href="#l-sec.2">見出し2</a></li>\n'
+                   + '</ul>\n'
+                   + '</div>\n\n'
+                   + '<h2 id="l-sec.1">見出し1</h2>\n\n'
+                   + '<h3 id="l-sec.2">見出し2</h3>\n\n'
+                   + '<h4 id="l-sec.3">見出し3</h4>\n\n'
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('最終レベルの表示方法を変更できること', ()=>{
+            r = resource('#contents(1,2,\\)\n');
+            return liulian(r).then(html=>
+                    assert.equal(r._.style,
+                                '.l-contents li li { display: inline-block; }\n'
+                              + '.l-contents li li + li:before'
+                                + ' { content: \' \\\\ \'; }\n'));
+        });
     });
 
     suite('nav - ナビゲーション用のリンクを生成する', ()=>{
