@@ -1,14 +1,14 @@
 @charset "UTF-8";
 
 html {
-    margin: 0 10px 10px;
+    margin: 0 10px;
 }
 body {
     font-family: "Century Gothic", sans-serif;
     font-size: 14px;
     color: #333;
     -webkit-text-size-adjust: 100%;
-    margin: 0 auto;
+    margin: 0 auto 10px;
     overflow-wrap: break-word;
 }
 
@@ -55,9 +55,11 @@ h4 {
 }
 h5 {
     font-size: 110%;
+    margin: 1em auto;
 }
 h6 {
     font-size: 100%;
+    margin: 1em auto;
 }
 
 @media screen and (max-width: 480px) {
