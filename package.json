@@ -38,7 +38,7 @@
     "markdown-it-footnote": "^3.0.3",
     "mime": "^2.4.6",
     "multer": "^1.4.5-lts.1",
-    "passport": "^0.4.1",
+    "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "session-file-store": "^1.4.0",
     "yargs": "^15.4.1"
