@@ -363,6 +363,13 @@ suite('module/core', ()=>{
                    + 'サイズ</strong></span></p>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
+        test('ブロックでも使えること', ()=>{
+            r = resource('#size(90%)<<++\nサイズ\n++\n');
+            result = '<div style="font-size:90%">\n'
+                   + '<p>サイズ</p>\n'
+                   + '</div>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
     });
 
     suite('br - 改行する', ()=>{
