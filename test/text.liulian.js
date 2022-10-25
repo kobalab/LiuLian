@@ -472,6 +472,21 @@ suite('text/liulian', ()=>{
             result = '<pre>! <strong>整形済み</strong>\n* 継続</pre>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
+        test('整形済みテキスト内では行末の \\ で連結しない', ()=>{
+            r.text = ' ! 整形済み\\\n * 継続\\\n';
+            result = '<pre>! 整形済み\\\n* 継続\\</pre>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('整形済みテキスト内では行末の \\ で連結しない(hard)', ()=>{
+            r.text = '>|\n! 整形済み\\\n* 継続\\\n|<\n';
+            result = '<pre>! 整形済み\\\n* 継続\\</pre>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
+        test('整形済みテキスト内では行末の \\ で連結しない(soft)', ()=>{
+            r.text = '>||\n! **整形済み**\\\n* 継続\\\n||<\n';
+            result = '<pre>! <strong>整形済み</strong>\\\n* 継続\\</pre>\n\n';
+            return liulian(r).then(html=>assert.equal(html, result));
+        });
     });
 
     suite('引用 (blockquote)', ()=>{

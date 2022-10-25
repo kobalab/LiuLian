@@ -418,6 +418,16 @@ suite('module/core', ()=>{
             return liulian(r).then(html=>
                     assert.equal(r._.style, 'body { color: #333; }\n'));
         });
+        test('行末の \\ を連結しないこと', ()=>{
+            r = resource('#style<<++\n'
+                            + '  p:after { content: \'Hello,\\\n'
+                            + '  world.\'; }\n'
+                            + '++\n');
+            return liulian(r).then(html=>
+                    assert.equal(r._.style,
+                                 '  p:after { content: \'Hello,\\\n'
+                                    + '  world.\'; }\n'));
+        });
     });
 
     suite('icon - アイコンを指定する', ()=>{
@@ -462,6 +472,16 @@ suite('module/core', ()=>{
             r = resource('#script<<++\nvar a = 1 + 2;\n++\n');
             return liulian(r).then(html=>
                     assert.equal(r._.script.code, 'var a = 1 + 2;\n'));
+        });
+        test('行末の \\ を連結しないこと', ()=>{
+            r = resource('#script<<++\n'
+                            + 'console.log(\'Hello,\\\n'
+                            + '  world.\');\n'
+                            + '++\n');
+            return liulian(r).then(html=>
+                    assert.equal(r._.script.code,
+                                 'console.log(\'Hello,\\\n'
+                                    + '  world.\');\n'));
         });
     });
 });
