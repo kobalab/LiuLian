@@ -103,6 +103,11 @@ suite('inline()', ()=>{
         [ '[[Home|/]]',          '<a href="/">Home</a>'                     ],
         [ '[[テスト]]',    '<a href="%E3%83%86%E3%82%B9%E3%83%88">テスト</a>' ],
         [ '[[100%|100%]]',       '<a href="100%25">100%</a>'                ],
+        [ '[[https://www.google.com/]]',
+                        '<a href="https://www.google.com/" target="_blank">'
+                                + 'https://www.google.com/</a>'             ],
+        [ '[[Google|https://www.google.com/]]',
+            '<a href="https://www.google.com/" target="_blank">Google</a>'  ],
       ];
       do_test(inline, test_case);
     });
@@ -119,13 +124,14 @@ suite('inline()', ()=>{
     suite('link', ()=>{
       const test_case = [
         [ 'http://kobalab.net/',
-          '<a href="http://kobalab.net/">http://kobalab.net/</a>'           ],
+          '<a href="http://kobalab.net/" target="_blank">'
+            + 'http://kobalab.net/</a>'                                     ],
         [ 'mailto:koba@kobalab.net',
           '<a href="mailto:koba@kobalab.net">mailto:koba@kobalab.net</a>'   ],
         [ 'koba@kobalab.net',
           '<a href="mailto:koba@kobalab.net">koba@kobalab.net</a>'          ],
         [ 'http://kobalab.net/?a=1&b=2',
-          '<a href="http://kobalab.net/?a=1&amp;b=2">'
+          '<a href="http://kobalab.net/?a=1&amp;b=2" target="_blank">'
             + 'http://kobalab.net/?a=1&amp;b=2</a>'                         ],
         [ '<koba@kobalab.net>',
           '&lt;<a href="mailto:koba@kobalab.net">koba@kobalab.net</a>&gt;'  ],
