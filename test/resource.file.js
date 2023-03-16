@@ -10,6 +10,7 @@ const req = {
     config:  { home: HOME },
     path:    '/',
     pathDir: '/',
+    productUrl: '',
     files()  { return this._files },
     msg(key) { return key },
     fixpath(path) { return path },
