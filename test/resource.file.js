@@ -10,10 +10,12 @@ const req = {
     config:  { home: HOME },
     path:    '/',
     pathDir: '/',
+    productUrl: '',
     files()  { return this._files },
     msg(key) { return key },
     fixpath(path) { return path },
     openFile() {},
+    fullUrl(path) { return path },
 };
 const res = {
     sendFile(path) { this._path = path },
