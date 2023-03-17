@@ -108,6 +108,8 @@ suite('inline()', ()=>{
                                 + 'https://www.google.com/</a>'             ],
         [ '[[Google|https://www.google.com/]]',
             '<a href="https://www.google.com/" target="_blank">Google</a>'  ],
+        [ '[[Google|//www.google.com/]]',
+            '<a href="//www.google.com/" target="_blank">Google</a>'],
       ];
       do_test(inline, test_case);
     });
