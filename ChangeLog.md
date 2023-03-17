@@ -1,3 +1,9 @@
+### v1.1.7 / 2023-03-17
+
+ - [Twitterカード](https://developer.twitter.com/ja/docs/tweets/optimize-with-cards/guides/getting-started) に対応
+ - 外部リンクを別タブで開くよう修正
+ - 脆弱性警告に対処(json5 2.1.3 → 2.2.3)
+
 ### v1.1.6 / 2022-12-08
 
  - highlight() の deprecated な呼び出し方法を修正
