@@ -1,3 +1,7 @@
+### v1.1.8 / 2023-03-17
+
+ - アイコンが表示されないバグを修正
+
 ### v1.1.7 / 2023-03-17
 
  - [Twitterカード](https://developer.twitter.com/ja/docs/tweets/optimize-with-cards/guides/getting-started) に対応
