@@ -4,7 +4,7 @@ html {
     margin: 0 10px;
 }
 body {
-    font-family: "Century Gothic", sans-serif;
+    font-family: "Century Gothic", "Google Sans", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-size: 14px;
     color: #333;
     -webkit-text-size-adjust: 100%;
