@@ -31,7 +31,7 @@
     "nyc": "^15.1.0"
   },
   "dependencies": {
-    "express": "^4.18.2",
+    "express": "^4.21.0",
     "express-session": "^1.17.3",
     "highlight.js": "^10.7.3",
     "markdown-it": "^12.3.2",
