@@ -27,7 +27,7 @@
   },
   "homepage": "https://kobalab.net/liulian/",
   "devDependencies": {
-    "mocha": "^9.2.0",
+    "mocha": "^11.5.0",
     "nyc": "^15.1.0"
   },
   "dependencies": {
