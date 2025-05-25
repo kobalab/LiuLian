@@ -28,7 +28,8 @@ const auth     = require('../lib/auth/file')(
 const express  = require('express');
 const store    = new (require('session-file-store')(
                         require('express-session')))({
-                                path: path.join(home, '/auth/session') });
+                                path:  path.join(home, '/auth/session'),
+                                logFn: ()=>{} });
 const session  = require('express-session')({
                             name:   'LIULIAN',
                             secret: 'keyboard cat',
