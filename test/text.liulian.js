@@ -620,8 +620,8 @@ suite('text/liulian', ()=>{
         test('モジュールを import できること', ()=>{
             r.text = '#import(paiga)\n&paiga{m1};';
             result = '<p><span class="l-mod-paiga" style="white-space:pre;">'
-                   + '<img src="//kobalab.github.io/paiga/man1.gif"'
-                   + ' width="24" height="34" alt="m1">'
+                   + '<img src="//kobalab.github.io/paiga/2/m1.png"'
+                   + ' width="24" height="32" alt="m1">'
                    + '</span></p>\n\n';
             return liulian(r).then(html=>assert.equal(html, result));
         });
