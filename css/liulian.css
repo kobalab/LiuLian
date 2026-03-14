@@ -306,7 +306,7 @@ input[type="submit"] {
 #l-udtext textarea {
     box-sizing: border-box;
     width: 100%;
-    height: 70vh;
+    height: 70svh;
 }
 #l-log .l-time {
     text-align: right;
