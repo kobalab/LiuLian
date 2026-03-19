@@ -460,8 +460,8 @@ suite('text/liulian', ()=>{
         });
         test('言語が不正な場合は推定する', ()=>{
             r.text = '>|_\n$ echo "Hello"\n|<\n';
-            result = '<pre><code><span class="hljs-meta">$</span>'
-                   + '<span class="bash"> '
+            result = '<pre><code><span class="hljs-meta prompt_">$ </span>'
+                   + '<span class="language-bash">'
                    + '<span class="hljs-built_in">echo</span> '
                    + '<span class="hljs-string">&quot;Hello&quot;</span></span>'
                    + '</code></pre>\n\n';
