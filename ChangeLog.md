@@ -1,3 +1,21 @@
+## v1.2.0 / 2026-09-09
+
+  - express-session の secret にランダムな値を使用するよう修正
+  - uid にsessionID のハッシュ値を使うよう修正
+  - パッケージを最新化
+    - express 4.22.1 → 5.2.1
+    - highlight.js 11.11.1 → 11.12.0
+    - markdown-it 14.1.1 → 15.0.1
+    - multer 2.1.1 → 2.3.0
+    - yargs 17.7.2 → 17.7.3
+    - mocha 11.7.5 → 12.0.0
+  - 脆弱性警告に対処
+    - @babel/core 7.29.0 → 7.29.7
+    - baseline-browser-mapping 2.10.7 → 2.11.21
+    - brace-expansion 5.0.4 → 5.0.9
+    - browserslist 4.28.1 → 4.28.9
+    - js-yaml 3.14.2 → 3.15.2
+
 ### v1.1.15 / 2026-03-19
 
   - パッケージを最新化
