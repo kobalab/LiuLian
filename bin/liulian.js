@@ -32,7 +32,8 @@ const store    = new (require('session-file-store')(
                                 logFn: ()=>{} });
 const session  = require('express-session')({
                             name:   'LIULIAN',
-                            secret: 'keyboard cat',
+                            secret: require('../lib/util/secret')
+                                        (path.join(home, '/auth/session')),
                             resave: false,
                             saveUninitialized: false,
                             store: store,
