@@ -1,3 +1,11 @@
+### v1.2.1 / 2026-10-10
+
+  - 脆弱性警告に対処
+    - brace-expansion 5.0.9 → 5.0.12
+    - multer 2.3.0 → 2.4.0
+    - proxy-addr 2.0.7 → 2.0.8
+    - serialize-javascript 7.1.1 → 7.1.2
+
 ## v1.2.0 / 2026-09-09
 
   - express-session の secret にランダムな値を使用するよう修正
